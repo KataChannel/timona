@@ -1,6 +1,6 @@
-# 🚀 rausachcore - Modern Fullstack Starter Kit
+# 🚀 Timona - Modern Fullstack Platform
 
-![rausachcore](https://img.shields.io/badge/rausachcore-Starter%20Kit-blue)
+![Timona](https://img.shields.io/badge/Timona-Platform-blue)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.0-black)](https://nextjs.org/)
@@ -26,78 +26,106 @@ A modern, production-ready fullstack starter kit built with the latest technolog
 ## 🚀 Quick Start
 
 ```bash
-# Deploy to production server
-./deploy.sh
+# Interactive development menu
+./vscode-menu.sh
 
-# Or use interactive menu
-./menu.sh
+# Start development
+bun run dev:timona
+
+# Start Docker services
+docker compose -f docker-compose.hybrid.yml up -d
 ```
 
-### 🎯 **Frontend (Next.js 15 + React 19)**
+## 🌐 Access URLs
 
-## 🌐 Access URLs- ⚡ **Next.js 15** with App Router
+### Development
+- **Frontend**: http://116.118.49.243:15000
+- **Backend API**: http://116.118.49.243:15001
+- **GraphQL**: http://116.118.49.243:15001/graphql
+- **PgAdmin**: http://116.118.49.243:15002
+- **MinIO Console**: http://116.118.49.243:15008
 
-- ⚛️ **React 19** with latest features
+### Production
+- **Frontend**: https://timona.com
+- **API**: https://api.timona.com
+- **Storage**: https://storage.timona.com
 
-- **Rausach**: http://116.118.49.243:12000- 🎨 **TailwindCSS v4** with latest improvements
-
-- **Tazagroup**: http://116.118.49.243:13000- 📱 **Responsive Design** with mobile-first approach
-
-- 🔒 **NextAuth.js** authentication
-
-## 🏗️ Architecture- 📊 **Apollo Client** for GraphQL
-
-- 🧪 **Comprehensive Testing** (Jest + Cypress)
+## �️ Architecture
 
 - **Backend**: NestJS + Bun.js + GraphQL + PostgreSQL
+- **Frontend**: Next.js 15 (App Router) + React 19
+- **Database**: PostgreSQL 16 (Port 15003)
+- **Cache**: Redis 7 (Port 15004)
+- **Storage**: MinIO (Ports 15007-15008)
+- **Management**: PgAdmin (Port 15002)
 
-- **Frontend**: Next.js 16 (App Router)### 🏗️ **Backend (NestJS + GraphQL)**
+## ⚡ Tech Stack
 
-- **Shared**: Redis (Cache) + Minio (Storage)- 🚀 **NestJS 11** with modern architecture
+### 🎯 Frontend (Next.js 15 + React 19)
+- ⚡ **Next.js 15** with App Router
+- ⚛️ **React 19** with latest features
+- 🎨 **TailwindCSS v4** with latest improvements
+- 📱 **Responsive Design** with mobile-first approach
+- 🔒 **NextAuth.js** authentication
+- 📊 **Apollo Client** for GraphQL
+- 🧪 **Comprehensive Testing** (Jest + Cypress)
 
-- **Server**: 2 Core, 4GB RAM, Ubuntu 22.04- 🔗 **GraphQL API** with Apollo Server
-
+### 🏗️ Backend (NestJS + GraphQL)
+- 🚀 **NestJS 11** with modern architecture
+- 🔗 **GraphQL API** with Apollo Server
 - 🗄️ **Prisma ORM** with PostgreSQL
-
-## 📁 Project Structure- 🔐 **JWT Authentication** & authorization
-
+- 🔐 **JWT Authentication** & authorization
 - ⚡ **Redis** for caching and sessions
+- 📦 **File Upload** with MinIO
+- 🛡️ **Security** best practices
+- 📈 **Health Checks** and monitoring
 
-```- 📦 **File Upload** with MinIO
+### 🛠️ Developer Experience
+- 🏃‍♂️ **Bun.js** for ultra-fast package management
+- 🐳 **Docker** containerization
+- 📝 **TypeScript** throughout the stack
+- 📝 **ESLint** and **Prettier** configured
+- 🧪 **Testing** setup for both frontend and backend
+- 📚 **Comprehensive documentation**
 
-├── backend/              # NestJS Backend- 🛡️ **Security** best practices
+## � Project Structure
 
-├── frontend/             # Next.js Frontend  - 📈 **Health Checks** and monitoring
-
+```
+├── backend/              # NestJS Backend
+├── frontend/             # Next.js Frontend
 ├── docker/               # Docker configs
+├── docker-compose.hybrid.yml  # Main Docker compose
+├── .env                  # Environment variables
+├── .env.timona          # Timona specific config
+├── vscode-menu.sh       # Interactive menu
+└── setup-ssl-timona.sh  # SSL setup script
+```
 
-├── docker-compose.hybrid.yml### 🛠️ **Developer Experience**
+## 🛠️ Development Commands
 
-├── .env.rausach- 🏃‍♂️ **Bun.js** for ultra-fast package management
+| Command | Description |
+|---------|-------------|
+| `./vscode-menu.sh` | Interactive menu |
+| `bun run dev:timona` | Start full stack |
+| `bun run dev:timona:backend` | Backend only |
+| `bun run dev:timona:frontend` | Frontend only |
+| `bun run db:studio:timona` | Open Prisma Studio |
+| `bun run db:migrate:timona` | Run migrations |
 
-├── .env.tazagroup- 🐳 **Docker** containerization
+## 🐳 Docker Commands
 
-├── deploy.sh            # Main deployment- � **TypeScript** throughout the stack
+| Command | Description |
+|---------|-------------|
+| `docker compose -f docker-compose.hybrid.yml up -d` | Start all services |
+| `docker compose -f docker-compose.hybrid.yml down` | Stop all services |
+| `docker compose -f docker-compose.hybrid.yml logs -f` | View logs |
 
-├── cleanup-server.sh    # Disk cleanup- 📝 **ESLint** and **Prettier** configured
+## 🔧 Setup
 
-└── menu.sh              # Interactive menu- 🧪 **Testing** setup for both frontend and backend
-
-```- 📚 **Comprehensive documentation**
-
-
-
-## 🛠️ Scripts### Local Development Setup
-
-
-
-| Command | Description |1. **Clone the repository**
-
-|---------|-------------|   ```bash
-
-| `./deploy.sh` | Deploy to production |   git clone https://github.com/rausachcore/rausachcore.git
-
-| `./menu.sh` | Management menu |   cd rausachcore
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/KataChannel/timona.git
+   cd timona
 
 | `./cleanup-server.sh` | Clean disk space |   ```
 
