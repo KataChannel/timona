@@ -1,0 +1,35 @@
+import { PrismaService } from '../../prisma/prisma.service';
+import { Permission, UserRoleAssignment, UserPermission } from '@prisma/client';
+import { RoleWithPermissions, UserRoleInfo, CreateRoleDto, CreatePermissionDto, AssignRoleDto, GrantPermissionDto, CheckPermissionDto } from '../dto/rbac.types';
+export declare class RbacService {
+    private prisma;
+    private readonly logger;
+    constructor(prisma: PrismaService);
+    createRole(createRoleDto: CreateRoleDto, createdBy: string): Promise<RoleWithPermissions>;
+    updateRole(roleId: string, updateData: Partial<CreateRoleDto>): Promise<RoleWithPermissions>;
+    deleteRole(roleId: string): Promise<void>;
+    getRoleById(roleId: string): Promise<RoleWithPermissions>;
+    getAllRoles(includeInactive?: boolean): Promise<RoleWithPermissions[]>;
+    getRoleHierarchy(): Promise<RoleWithPermissions[]>;
+    createPermission(createPermissionDto: CreatePermissionDto): Promise<Permission>;
+    updatePermission(permissionId: string, updateData: Partial<CreatePermissionDto>): Promise<Permission>;
+    deletePermission(permissionId: string): Promise<void>;
+    getPermissionById(permissionId: string): Promise<Permission>;
+    getAllPermissions(category?: string, resource?: string): Promise<Permission[]>;
+    assignPermissionsToRole(roleId: string, permissionIds: string[], grantedBy: string): Promise<void>;
+    removePermissionsFromRole(roleId: string, permissionIds: string[]): Promise<void>;
+    assignRoleToUser(assignRoleDto: AssignRoleDto, assignedBy: string): Promise<UserRoleAssignment>;
+    removeRoleFromUser(userId: string, roleId: string): Promise<void>;
+    grantPermissionToUser(grantPermissionDto: GrantPermissionDto, grantedBy: string): Promise<UserPermission>;
+    revokePermissionFromUser(userId: string, permissionId: string): Promise<void>;
+    checkPermission(checkPermissionDto: CheckPermissionDto): Promise<boolean>;
+    getUserRoleInfo(userId: string): Promise<UserRoleInfo>;
+    private getRoleChildren;
+    private formatRoleWithPermissions;
+    private wouldCreateCircularHierarchy;
+    private hasDirectPermission;
+    private hasRolePermission;
+    private hasResourceAccess;
+    private checkResourcePermissions;
+    private validateUserExists;
+}

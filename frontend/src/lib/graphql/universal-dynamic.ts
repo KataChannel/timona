@@ -1,0 +1,96 @@
+/**
+ * Universal Dynamic Query System - Main Export File
+ * 
+ * Import everything from here for convenience:
+ * import { useDynamicFindMany, FindManyInput } from '@/lib/graphql/universal-dynamic';
+ */
+
+// ==================== QUERIES ====================
+export {
+  UNIVERSAL_QUERY,
+  UNIVERSAL_MUTATION,
+  DYNAMIC_FIND_MANY,
+  DYNAMIC_FIND_UNIQUE,
+  DYNAMIC_FIND_FIRST,
+  DYNAMIC_CREATE,
+  DYNAMIC_CREATE_MANY,
+  DYNAMIC_UPDATE,
+  DYNAMIC_UPDATE_MANY,
+  DYNAMIC_UPSERT,
+  DYNAMIC_DELETE,
+  DYNAMIC_DELETE_MANY,
+  DYNAMIC_COUNT,
+  DYNAMIC_AGGREGATE,
+  DYNAMIC_GROUP_BY,
+  LIST_AVAILABLE_MODELS,
+  DYNAMIC_OPERATIONS,
+  getDynamicOperation,
+  isQueryOperation,
+  isMutationOperation,
+} from './universal-dynamic-queries';
+
+// ==================== TYPES ====================
+export type {
+  JSONValue,
+  JSONObject,
+  JSONArray,
+  PaginationInput,
+  PaginationMeta,
+  UniversalQueryInput,
+  FindManyInput,
+  FindUniqueInput,
+  FindFirstInput,
+  CreateInput,
+  CreateManyInput,
+  UpdateInput,
+  UpdateManyInput,
+  UpsertInput,
+  DeleteInput,
+  DeleteManyInput,
+  CountInput,
+  AggregateInput,
+  GroupByInput,
+  DynamicQueryResult,
+  CreateManyResult,
+  UpdateManyResult,
+  DeleteManyResult,
+  CountResult,
+  AggregateResult,
+  GroupByResult,
+  StringFilter,
+  NumberFilter,
+  BooleanFilter,
+  DateTimeFilter,
+  ModelName,
+  DeepRequired,
+  DeepPartial,
+  KeysOfType,
+  QueryOperation,
+  MutationOperation,
+  DynamicOperation,
+  DynamicQueryOptions,
+  DynamicMutationOptions,
+  DynamicQueryError,
+  DynamicQueryResponse,
+} from './universal-dynamic-types';
+
+// ==================== HOOKS ====================
+export {
+  useDynamicFindMany,
+  useDynamicFindUnique,
+  useDynamicFindFirst,
+  useDynamicCreate,
+  useDynamicCreateMany,
+  useDynamicUpdate,
+  useDynamicUpdateMany,
+  useDynamicUpsert,
+  useDynamicDelete,
+  useDynamicDeleteMany,
+  useDynamicCount,
+  useDynamicAggregate,
+  useDynamicGroupBy,
+  useListAvailableModels,
+  useDynamicCRUD,
+  useLazyDynamicFindMany,
+  withErrorHandler,
+} from './universal-dynamic-hooks';

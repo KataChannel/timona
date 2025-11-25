@@ -1,0 +1,114 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun.lockb
+
+# Production builds
+.next/
+.next-*/
+dist/
+build/
+# Exception: Include backend/dist for Docker builds
+!backend/dist
+
+# Environment variables - ALL env files are ignored
+.env*
+!.env.example
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.dev.*
+.env.prod.*
+
+# Frontend environment files
+frontend/.env*
+!frontend/.env.example
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Backend environment files
+backend/.env*
+!backend/.env.example
+backend/.env
+backend/.env.local
+backend/.env.*.local
+backend/kata_json
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+logs/
+*.log
+.pnpm-debug.log*
+dev-*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Prisma
+backend/prisma/migrations/
+!backend/prisma/migrations/.gitkeep
+
+# Next.js
+.next/
+out/
+
+# Storybook
+storybook-static/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary folders
+tmp/
+temp/
+
+# SSL certificates (development)
+docker/nginx/ssl/
+docker/minio/certs/
+
+# Monitoring data
+docker/prometheus/data/
+docker/grafana/data/
+
+# Backup files
+*.backup
+*.bak
+backups/
+
+# Local development
+.local/
+

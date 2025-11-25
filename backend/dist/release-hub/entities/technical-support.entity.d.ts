@@ -1,0 +1,50 @@
+import { SupportTicketStatus, SupportTicketPriority, SupportTicketCategory } from '@prisma/client';
+export declare class TechnicalSupportTicket {
+    id: string;
+    ticketNumber: string;
+    subject: string;
+    description: string;
+    category: SupportTicketCategory;
+    priority: SupportTicketPriority;
+    status: SupportTicketStatus;
+    customerId?: string;
+    customerEmail?: string;
+    customerName?: string;
+    customerPhone?: string;
+    assignedToId?: string;
+    assignedAt?: Date;
+    environment?: string;
+    browserInfo?: string;
+    osInfo?: string;
+    deviceInfo?: string;
+    errorLogs?: string;
+    attachmentUrls: string[];
+    screenshotUrls: string[];
+    relatedUrl?: string;
+    relatedOrderId?: string;
+    resolution?: string;
+    resolvedAt?: Date;
+    resolvedById?: string;
+    customerRating?: number;
+    customerFeedback?: string;
+    tags: string[];
+    createdAt: Date;
+    updatedAt: Date;
+    closedAt?: Date;
+    firstResponseAt?: Date;
+    lastResponseAt?: Date;
+}
+export declare class TechnicalSupportMessage {
+    id: string;
+    content: string;
+    isInternal: boolean;
+    attachmentUrls: string[];
+    ticketId: string;
+    authorId?: string;
+    authorName?: string;
+    authorEmail?: string;
+    isRead: boolean;
+    readAt?: Date;
+    createdAt: Date;
+    updatedAt: Date;
+}

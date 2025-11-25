@@ -1,0 +1,4 @@
+1. Bổ sung thêm phần tài liệu nguồn. Được upload file, video, nhập liệu
+2. Sử dụng AI để phân tích tổng hợp nội dung và tạo khóa học tương ứng
+3. Tạo khóa học liên kết với tài liệu nguồn
+4. Tài liệu nguồn được phân theo các danh mục

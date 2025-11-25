@@ -1,0 +1,255 @@
+/**
+ * Mock Order Data for Testing
+ * Dùng để test UI khi chưa có data thật từ backend
+ */
+
+import { type OrderListItem, type OrderDetail } from '@/types/order.types';
+
+export const mockOrders: OrderListItem[] = [
+  {
+    id: 'mock-order-1',
+    orderNumber: 'ORD-2024-001',
+    status: 'DELIVERED',
+    total: 1250000,
+    paymentMethod: 'CASH_ON_DELIVERY',
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+    items: [
+      {
+        id: 'item-1',
+        productId: 'prod-1',
+        productName: 'Áo thun cotton cao cấp',
+        variantName: 'Màu trắng, Size M',
+        sku: 'AT-001-M',
+        thumbnail: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
+        quantity: 2,
+        price: 350000,
+        subtotal: 700000,
+      },
+      {
+        id: 'item-2',
+        productId: 'prod-2',
+        productName: 'Quần jean slim fit',
+        variantName: 'Màu xanh đen, Size 30',
+        sku: 'QJ-002-30',
+        thumbnail: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400',
+        quantity: 1,
+        price: 550000,
+        subtotal: 550000,
+      },
+    ],
+  },
+  {
+    id: 'mock-order-2',
+    orderNumber: 'ORD-2024-002',
+    status: 'SHIPPING',
+    total: 980000,
+    paymentMethod: 'VNPAY',
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+    items: [
+      {
+        id: 'item-3',
+        productId: 'prod-3',
+        productName: 'Giày sneaker thể thao',
+        variantName: 'Màu đen, Size 42',
+        sku: 'GS-003-42',
+        thumbnail: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400',
+        quantity: 1,
+        price: 890000,
+        subtotal: 890000,
+      },
+      {
+        id: 'item-4',
+        productId: 'prod-4',
+        productName: 'Tất thể thao',
+        variantName: 'Màu trắng, Size L',
+        sku: 'TT-004-L',
+        thumbnail: 'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=400',
+        quantity: 3,
+        price: 30000,
+        subtotal: 90000,
+      },
+    ],
+  },
+  {
+    id: 'mock-order-3',
+    orderNumber: 'ORD-2024-003',
+    status: 'PROCESSING',
+    total: 2150000,
+    paymentMethod: 'BANK_TRANSFER',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+    items: [
+      {
+        id: 'item-5',
+        productId: 'prod-5',
+        productName: 'Áo khoác hoodie',
+        variantName: 'Màu đen, Size L',
+        sku: 'AK-005-L',
+        thumbnail: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+        quantity: 1,
+        price: 850000,
+        subtotal: 850000,
+      },
+      {
+        id: 'item-6',
+        productId: 'prod-6',
+        productName: 'Quần jogger',
+        variantName: 'Màu xám, Size L',
+        sku: 'QJG-006-L',
+        thumbnail: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400',
+        quantity: 2,
+        price: 650000,
+        subtotal: 1300000,
+      },
+    ],
+  },
+  {
+    id: 'mock-order-4',
+    orderNumber: 'ORD-2024-004',
+    status: 'PENDING',
+    total: 450000,
+    paymentMethod: 'MOMO',
+    createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
+    items: [
+      {
+        id: 'item-7',
+        productId: 'prod-7',
+        productName: 'Túi xách canvas',
+        variantName: 'Màu be',
+        sku: 'TX-007',
+        thumbnail: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400',
+        quantity: 1,
+        price: 450000,
+        subtotal: 450000,
+      },
+    ],
+  },
+  {
+    id: 'mock-order-5',
+    orderNumber: 'ORD-2024-005',
+    status: 'CANCELLED',
+    total: 320000,
+    paymentMethod: 'CASH_ON_DELIVERY',
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+    items: [
+      {
+        id: 'item-8',
+        productId: 'prod-8',
+        productName: 'Mũ lưỡi trai',
+        variantName: 'Màu đen',
+        sku: 'ML-008',
+        thumbnail: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400',
+        quantity: 2,
+        price: 160000,
+        subtotal: 320000,
+      },
+    ],
+  },
+];
+
+export const mockOrderDetail: OrderDetail = {
+  id: 'mock-order-1',
+  orderNumber: 'ORD-2024-001',
+  status: 'DELIVERED',
+  total: 1290000,
+  subtotal: 1250000,
+  shippingFee: 40000,
+  tax: 0,
+  discount: 0,
+  paymentMethod: 'CASH_ON_DELIVERY',
+  paymentStatus: 'PAID',
+  shippingMethod: 'STANDARD',
+  customerNote: 'Giao hàng giờ hành chính, gọi trước 15 phút',
+  createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  deliveredAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  items: [
+    {
+      id: 'item-1',
+      productId: 'prod-1',
+      productName: 'Áo thun cotton cao cấp',
+      variantName: 'Màu trắng, Size M',
+      sku: 'AT-001-M',
+      thumbnail: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
+      quantity: 2,
+      price: 350000,
+      subtotal: 700000,
+    },
+    {
+      id: 'item-2',
+      productId: 'prod-2',
+      productName: 'Quần jean slim fit',
+      variantName: 'Màu xanh đen, Size 30',
+      sku: 'QJ-002-30',
+      thumbnail: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400',
+      quantity: 1,
+      price: 550000,
+      subtotal: 550000,
+    },
+  ],
+  shippingAddress: {
+    fullName: 'Nguyễn Văn A',
+    phone: '0901234567',
+    email: 'nguyenvana@email.com',
+    address: '123 Đường ABC',
+    ward: 'Phường 1',
+    district: 'Quận 1',
+    city: 'TP. Hồ Chí Minh',
+  },
+  tracking: {
+    id: 'track-1',
+    status: 'DELIVERED',
+    carrier: 'Giao Hàng Nhanh',
+    trackingNumber: 'GHN123456789',
+    events: [
+      {
+        id: 'evt-1',
+        type: 'ORDER_CREATED',
+        status: 'Đơn hàng đã tạo',
+        description: 'Đơn hàng của bạn đã được tạo thành công',
+        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: 'evt-2',
+        type: 'ORDER_CONFIRMED',
+        status: 'Đã xác nhận',
+        description: 'Đơn hàng đã được xác nhận và đang chuẩn bị',
+        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: 'evt-3',
+        type: 'PICKED_UP',
+        status: 'Đã lấy hàng',
+        description: 'Shipper đã lấy hàng từ kho',
+        location: 'Kho Quận 1',
+        timestamp: new Date(Date.now() - 1.5 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: 'evt-4',
+        type: 'IN_TRANSIT',
+        status: 'Đang vận chuyển',
+        description: 'Đơn hàng đang trên đường giao đến bạn',
+        location: 'Trung tâm phân loại',
+        timestamp: new Date(Date.now() - 1.2 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: 'evt-5',
+        type: 'OUT_FOR_DELIVERY',
+        status: 'Đang giao hàng',
+        description: 'Shipper đang giao hàng đến địa chỉ của bạn',
+        location: 'Quận 1',
+        timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: 'evt-6',
+        type: 'DELIVERED',
+        status: 'Đã giao hàng',
+        description: 'Giao hàng thành công',
+        location: '123 Đường ABC, Phường 1, Quận 1',
+        timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000).toISOString(),
+      },
+    ],
+  },
+};
+
+// Flag to enable/disable mock data (for development only)
+export const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_ORDERS === 'true';

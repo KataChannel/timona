@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Viên VTTECH - Pro</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // API Helper
+        const API_BASE = 'http://127.0.0.1:3001';
+
+        const fetchData = async (endpoint, credentials) => {
+            try {
+                const response = await axios.post(`${API_BASE}${endpoint}`, credentials);
+                return {
+                    success: response.data.success || response.status < 400,
+                    data: response.data.data || response.data,
+                    error: response.data.error || null
+                };
+            } catch (err) {
+                return {
+                    success: false,
+                    data: null,
+                    error: err.message
+                };
+            }
+        };
+
+        // Tab Component
+        function TabButton({ label, icon, isActive, onClick }) {
+            return (
+                <button
+                    onClick={onClick}
+                    className={`flex items-center gap-2 px-4 py-3 font-semibold transition ${
+                        isActive
+                            ? 'bg-blue-600 text-white border-b-4 border-blue-400'
+                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    }`}
+                >
+                    <i className={`fas ${icon}`}></i>
+                    {label}
+                </button>
+            );
+        }
+
+        // Data Table Component
+        function DataTable({ data, columns, isLoading }) {
+            if (isLoading) {
+                return (
+                    <div className="flex justify-center items-center h-64">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                );
+            }
+
+            if (!Array.isArray(data) || data.length === 0) {
+                return (
+                    <div className="text-center py-8 text-gray-400">
+                        <i className="fas fa-inbox text-4xl mb-4"></i>
+                        <p>Không có dữ liệu</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                        <thead className="bg-gray-800 sticky top-0">
+                            <tr>
+                                {columns.map((col, idx) => (
+                                    <th key={idx} className="px-4 py-3 text-left text-gray-300 font-semibold">
+                                        {col}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((item, idx) => (
+                                <tr key={idx} className="border-b border-gray-700 hover:bg-gray-800">
+                                    {Object.values(item).slice(0, columns.length).map((val, colIdx) => (
+                                        <td key={colIdx} className="px-4 py-3 text-gray-300 truncate max-w-xs">
+                                            {val ? String(val).substring(0, 100) : '-'}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        // Main App
+        function App() {
+            const [activeTab, setActiveTab] = useState('employees');
+            const [cookie, setCookie] = useState('');
+            const [xsrfToken, setXsrfToken] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [error, setError] = useState(null);
+            const [success, setSuccess] = useState(false);
+            
+            // Data states
+            const [employees, setEmployees] = useState([]);
+            const [employeeGroups, setEmployeeGroups] = useState([]);
+            const [userTypes, setUserTypes] = useState([]);
+            const [users, setUsers] = useState([]);
+            const [permissionsMenu, setPermissionsMenu] = useState([]);
+            const [permissionFunctions, setPermissionFunctions] = useState([]);
+            const [menuAllowGroup, setMenuAllowGroup] = useState([]);
+
+            // Load credentials from localStorage
+            useEffect(() => {
+                const savedCookie = localStorage.getItem('vttech_cookie') || '';
+                const savedXsrf = localStorage.getItem('vttech_xsrf_token') || '';
+                setCookie(savedCookie);
+                setXsrfToken(savedXsrf);
+            }, []);
+
+            const handleCookieChange = (e) => {
+                const value = e.target.value;
+                setCookie(value);
+                localStorage.setItem('vttech_cookie', value);
+            };
+
+            const handleXsrfChange = (e) => {
+                const value = e.target.value;
+                setXsrfToken(value);
+                localStorage.setItem('vttech_xsrf_token', value);
+            };
+
+            const loadEmployees = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/employees', { cookie, xsrfToken });
+                if (result.success) {
+                    setEmployees(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const loadEmployeeGroups = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/employee-groups', { cookie, xsrfToken });
+                if (result.success) {
+                    setEmployeeGroups(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const loadUserTypes = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/user-types', { cookie, xsrfToken });
+                if (result.success) {
+                    setUserTypes(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const loadUsers = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/users', { cookie, xsrfToken });
+                if (result.success) {
+                    setUsers(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const loadPermissionsMenu = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/permissions-menu', { cookie, xsrfToken });
+                if (result.success) {
+                    setPermissionsMenu(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const loadPermissionFunctions = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/permission-functions', { cookie, xsrfToken });
+                if (result.success) {
+                    setPermissionFunctions(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const loadMenuAllowGroup = async () => {
+                setLoading(true);
+                setError(null);
+                const result = await fetchData('/api/menu-allow-group', { cookie, xsrfToken });
+                if (result.success) {
+                    setMenuAllowGroup(Array.isArray(result.data) ? result.data : []);
+                    setSuccess(true);
+                    setTimeout(() => setSuccess(false), 2000);
+                } else {
+                    setError(result.error || 'Lỗi tải dữ liệu');
+                }
+                setLoading(false);
+            };
+
+            const downloadJSON = (data, filename) => {
+                const json = JSON.stringify(data, null, 2);
+                const blob = new Blob([json], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-900">
+                    {/* Header */}
+                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 px-8 shadow-lg">
+                        <div className="max-w-7xl mx-auto">
+                            <h1 className="text-3xl font-bold flex items-center gap-3">
+                                <i className="fas fa-building"></i>
+                                Quản Lý Nhân Viên VTTECH - Pro
+                            </h1>
+                            <p className="text-blue-100 mt-2">Hệ thống quản lý toàn diện nhân sự</p>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="max-w-7xl mx-auto p-6">
+                        {/* Alerts */}
+                        {error && (
+                            <div className="mb-4 bg-red-900 border-l-4 border-red-500 text-red-100 p-4 rounded">
+                                <p className="font-semibold"><i className="fas fa-exclamation-circle"></i> Lỗi</p>
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {success && (
+                            <div className="mb-4 bg-green-900 border-l-4 border-green-500 text-green-100 p-4 rounded">
+                                <p className="font-semibold"><i className="fas fa-check-circle"></i> Thành công</p>
+                            </div>
+                        )}
+
+                        {/* Credentials Section */}
+                        <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                            <h2 className="text-xl font-bold text-white mb-4">
+                                <i className="fas fa-lock"></i> Xác Thực
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Cookie</label>
+                                    <textarea
+                                        value={cookie}
+                                        onChange={handleCookieChange}
+                                        placeholder="Dán Cookie tại đây..."
+                                        className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none text-xs"
+                                        rows="3"
+                                    />
+                                    <p className="text-xs text-gray-400 mt-1">Được lưu tự động vào localStorage</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Xsrf-Token</label>
+                                    <textarea
+                                        value={xsrfToken}
+                                        onChange={handleXsrfChange}
+                                        placeholder="Dán Xsrf-Token tại đây..."
+                                        className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none text-xs"
+                                        rows="3"
+                                    />
+                                    <p className="text-xs text-gray-400 mt-1">Được lưu tự động vào localStorage</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Tabs */}
+                        <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                            <div className="flex flex-wrap border-b border-gray-700 overflow-x-auto">
+                                <TabButton label="Nhân Viên" icon="fa-users" isActive={activeTab === 'employees'} onClick={() => { setActiveTab('employees'); if (employees.length === 0) loadEmployees(); }} />
+                                <TabButton label="Nhóm NV" icon="fa-object-group" isActive={activeTab === 'groups'} onClick={() => { setActiveTab('groups'); if (employeeGroups.length === 0) loadEmployeeGroups(); }} />
+                                <TabButton label="Loại User" icon="fa-layer-group" isActive={activeTab === 'user-types'} onClick={() => { setActiveTab('user-types'); if (userTypes.length === 0) loadUserTypes(); }} />
+                                <TabButton label="Người Dùng" icon="fa-user-tie" isActive={activeTab === 'users'} onClick={() => { setActiveTab('users'); if (users.length === 0) loadUsers(); }} />
+                                <TabButton label="Quyền Menu" icon="fa-sitemap" isActive={activeTab === 'permissions-menu'} onClick={() => { setActiveTab('permissions-menu'); if (permissionsMenu.length === 0) loadPermissionsMenu(); }} />
+                                <TabButton label="Hàm Quyền" icon="fa-code" isActive={activeTab === 'permission-functions'} onClick={() => { setActiveTab('permission-functions'); if (permissionFunctions.length === 0) loadPermissionFunctions(); }} />
+                                <TabButton label="Quyền Nhóm" icon="fa-shield-alt" isActive={activeTab === 'menu-allow-group'} onClick={() => { setActiveTab('menu-allow-group'); if (menuAllowGroup.length === 0) loadMenuAllowGroup(); }} />
+                            </div>
+
+                            {/* Tab Content */}
+                            <div className="p-6">
+                                {activeTab === 'employees' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Danh Sách Nhân Viên</h3>
+                                            <button
+                                                onClick={loadEmployees}
+                                                disabled={loading}
+                                                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+                                            >
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {employees.length > 0 && (
+                                            <button onClick={() => downloadJSON(employees, 'employees.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={employees} columns={Object.keys(employees[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'employees'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {employees.length} bản ghi</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'groups' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Danh Sách Nhóm Nhân Viên</h3>
+                                            <button onClick={loadEmployeeGroups} disabled={loading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {employeeGroups.length > 0 && (
+                                            <button onClick={() => downloadJSON(employeeGroups, 'employee-groups.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={employeeGroups} columns={Object.keys(employeeGroups[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'groups'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {employeeGroups.length} bản ghi</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'user-types' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Loại Người Dùng</h3>
+                                            <button onClick={loadUserTypes} disabled={loading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {userTypes.length > 0 && (
+                                            <button onClick={() => downloadJSON(userTypes, 'user-types.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={userTypes} columns={Object.keys(userTypes[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'user-types'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {userTypes.length} bản ghi</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'users' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Danh Sách Người Dùng</h3>
+                                            <button onClick={loadUsers} disabled={loading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {users.length > 0 && (
+                                            <button onClick={() => downloadJSON(users, 'users.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={users} columns={Object.keys(users[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'users'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {users.length} bản ghi</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'permissions-menu' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Menu Quyền</h3>
+                                            <button onClick={loadPermissionsMenu} disabled={loading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {permissionsMenu.length > 0 && (
+                                            <button onClick={() => downloadJSON(permissionsMenu, 'permissions-menu.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={permissionsMenu} columns={Object.keys(permissionsMenu[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'permissions-menu'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {permissionsMenu.length} bản ghi</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'permission-functions' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Hàm Quyền</h3>
+                                            <button onClick={loadPermissionFunctions} disabled={loading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {permissionFunctions.length > 0 && (
+                                            <button onClick={() => downloadJSON(permissionFunctions, 'permission-functions.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={permissionFunctions} columns={Object.keys(permissionFunctions[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'permission-functions'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {permissionFunctions.length} bản ghi</p>
+                                    </div>
+                                )}
+
+                                {activeTab === 'menu-allow-group' && (
+                                    <div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-bold text-white">Quyền Menu Theo Nhóm</h3>
+                                            <button onClick={loadMenuAllowGroup} disabled={loading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                                                <i className={`fas fa-sync ${loading ? 'animate-spin' : ''}`}></i>
+                                                {loading ? 'Đang tải...' : 'Tải dữ liệu'}
+                                            </button>
+                                        </div>
+                                        {menuAllowGroup.length > 0 && (
+                                            <button onClick={() => downloadJSON(menuAllowGroup, 'menu-allow-group.json')} className="mb-4 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                <i className="fas fa-download"></i> Tải JSON
+                                            </button>
+                                        )}
+                                        <DataTable data={menuAllowGroup} columns={Object.keys(menuAllowGroup[0] || {}).slice(0, 5)} isLoading={loading && activeTab === 'menu-allow-group'} />
+                                        <p className="text-gray-400 text-sm mt-4">Tổng: {menuAllowGroup.length} bản ghi</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Footer Info */}
+                        <div className="mt-6 bg-gray-800 rounded-lg shadow-lg p-6">
+                            <p className="text-sm text-gray-400">
+                                <i className="fas fa-info-circle"></i> Hệ thống quản lý nhân sự chuyên nghiệp - Lưu ý: Luôn cập nhật Cookie và Xsrf-Token từ trang admin VTTECH
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+/**
+ * PageBuilder Fullscreen Styles
+ * 
+ * Add this CSS to your global styles or component styles
+ * to ensure fullscreen mode works correctly with high z-index
+ */
+
+/* Fullscreen container styles */
+.fullscreen-active {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  background-color: white !important;
+  overflow: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Lock body scroll when fullscreen is active */
+body.fullscreen-open {
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* Ensure all child elements respect fullscreen container */
+.fullscreen-active * {
+  box-sizing: border-box;
+}
+
+/* Smooth transition when entering/exiting fullscreen */
+.fullscreen-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Optional: Add backdrop blur effect */
+.fullscreen-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9998;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Fullscreen toolbar adjustments */
+.fullscreen-active .editor-toolbar {
+  z-index: 10000;
+  position: sticky;
+  top: 0;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Canvas adjustments in fullscreen */
+.fullscreen-active .editor-canvas {
+  height: calc(100vh - 56px); /* 56px is toolbar height */
+  overflow: auto;
+}
+
+/* Hide external UI when fullscreen */
+.fullscreen-active ~ * {
+  display: none !important;
+}
+
+/* Responsive fullscreen on mobile */
+@media (max-width: 768px) {
+  .fullscreen-active {
+    z-index: 10000 !important;
+  }
+  
+  .fullscreen-active .editor-toolbar {
+    font-size: 0.875rem;
+  }
+  
+  .fullscreen-active .editor-toolbar button {
+    padding: 0.5rem;
+  }
+}
+
+/* Print styles - disable fullscreen during print */
+@media print {
+  .fullscreen-active {
+    position: static !important;
+    z-index: auto !important;
+  }
+}
+
+/* Accessibility - Focus visible in fullscreen */
+.fullscreen-active *:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Animation when entering fullscreen */
+@keyframes fullscreen-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fullscreen-active.animate-enter {
+  animation: fullscreen-enter 0.2s ease-out;
+}
+
+/* Animation when exiting fullscreen */
+@keyframes fullscreen-exit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.fullscreen-active.animate-exit {
+  animation: fullscreen-exit 0.2s ease-in;
+}
+
+/* Ensure modals and dialogs appear above fullscreen */
+.dialog-overlay,
+.modal-overlay {
+  z-index: 10001 !important;
+}
+
+/* Toast notifications in fullscreen */
+.toast-container {
+  z-index: 10002 !important;
+}
+
+/* Loading overlay in fullscreen */
+.loading-overlay {
+  z-index: 10003 !important;
+}

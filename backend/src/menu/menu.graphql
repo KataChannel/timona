@@ -1,0 +1,272 @@
+type Menu {
+  id: ID!
+  title: String!
+  slug: String!
+  description: String
+  type: MenuType!
+  
+  # Hierarchy
+  parentId: String
+  parent: Menu
+  children: [Menu!]!
+  order: Int!
+  level: Int!
+  path: String
+  
+  # Navigation
+  url: String
+  route: String
+  externalUrl: String
+  target: MenuTarget!
+  
+  # Dynamic Linking
+  linkType: MenuLinkType
+  productId: String
+  blogPostId: String
+  pageId: String
+  categoryId: String
+  blogCategoryId: String
+  queryConditions: JSON
+  
+  # Display
+  icon: String
+  iconType: String
+  badge: String
+  badgeColor: String
+  image: String
+  
+  # Permissions & Access
+  requiredPermissions: [String!]!
+  requiredRoles: [String!]!
+  isPublic: Boolean!
+  
+  # State
+  isActive: Boolean!
+  isVisible: Boolean!
+  isProtected: Boolean!
+  
+  # Metadata
+  metadata: JSON
+  cssClass: String
+  customData: JSON
+  
+  # Timestamps
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: String
+  updatedBy: String
+  
+  # Relations
+  creator: User
+  updater: User
+}
+
+enum MenuType {
+  SIDEBAR
+  HEADER
+  FOOTER
+  MOBILE
+  CUSTOM
+}
+
+enum MenuTarget {
+  SELF
+  BLANK
+  MODAL
+}
+
+enum MenuLinkType {
+  URL
+  ROUTE
+  EXTERNAL
+  PRODUCT_LIST
+  PRODUCT_DETAIL
+  BLOG_LIST
+  BLOG_DETAIL
+  CATEGORY
+  BLOG_CATEGORY
+  PAGE
+}
+
+input CreateMenuInput {
+  title: String!
+  slug: String!
+  description: String
+  type: MenuType
+  
+  # Hierarchy
+  parentId: String
+  order: Int
+  
+  # Navigation
+  url: String
+  route: String
+  externalUrl: String
+  target: MenuTarget
+  
+  # Dynamic Linking
+  linkType: MenuLinkType
+  productId: String
+  blogPostId: String
+  pageId: String
+  categoryId: String
+  blogCategoryId: String
+  queryConditions: JSON
+  
+  # Display
+  icon: String
+  iconType: String
+  badge: String
+  badgeColor: String
+  image: String
+  
+  # Permissions & Access
+  requiredPermissions: [String!]
+  requiredRoles: [String!]
+  isPublic: Boolean
+  
+  # State
+  isActive: Boolean
+  isVisible: Boolean
+  
+  # Metadata
+  metadata: JSON
+  cssClass: String
+  customData: JSON
+}
+
+input UpdateMenuInput {
+  title: String
+  slug: String
+  description: String
+  type: MenuType
+  
+  # Hierarchy
+  parentId: String
+  order: Int
+  
+  # Navigation
+  url: String
+  route: String
+  externalUrl: String
+  target: MenuTarget
+  
+  # Dynamic Linking
+  linkType: MenuLinkType
+  productId: String
+  blogPostId: String
+  pageId: String
+  categoryId: String
+  blogCategoryId: String
+  queryConditions: JSON
+  
+  # Display
+  icon: String
+  iconType: String
+  badge: String
+  badgeColor: String
+  image: String
+  
+  # Permissions & Access
+  requiredPermissions: [String!]
+  requiredRoles: [String!]
+  isPublic: Boolean
+  
+  # State
+  isActive: Boolean
+  isVisible: Boolean
+  isProtected: Boolean
+  
+  # Metadata
+  metadata: JSON
+  cssClass: String
+  customData: JSON
+}
+
+input MenuFilterInput {
+  type: MenuType
+  parentId: String
+  isActive: Boolean
+  isVisible: Boolean
+  isPublic: Boolean
+  search: String
+}
+
+input MenuOrderInput {
+  field: MenuOrderField!
+  direction: OrderDirection!
+}
+
+enum MenuOrderField {
+  TITLE
+  SLUG
+  ORDER
+  CREATED_AT
+  UPDATED_AT
+  TYPE
+}
+
+type MenuPagination {
+  items: [Menu!]!
+  total: Int!
+  page: Int!
+  pageSize: Int!
+  totalPages: Int!
+  hasMore: Boolean!
+}
+
+type Query {
+  # Get single menu
+  menu(id: ID!): Menu
+  menuBySlug(slug: String!): Menu
+  
+  # Get multiple menus
+  menus(
+    filter: MenuFilterInput
+    orderBy: MenuOrderInput
+    page: Int
+    pageSize: Int
+  ): MenuPagination!
+  
+  # Get menu tree/hierarchy
+  menuTree(type: MenuType, parentId: String): [Menu!]!
+  menuHierarchy(type: MenuType): [Menu!]!
+  
+  # Get menus by type
+  sidebarMenus: [Menu!]!
+  headerMenus: [Menu!]!
+  footerMenus: [Menu!]!
+  mobileMenus: [Menu!]!
+  
+  # Get accessible menus for current user
+  myMenus(type: MenuType): [Menu!]!
+  myMenuTree(type: MenuType): [Menu!]!
+}
+
+type Mutation {
+  # Create
+  createMenu(input: CreateMenuInput!): Menu!
+  
+  # Update
+  updateMenu(id: ID!, input: UpdateMenuInput!): Menu!
+  
+  # Delete
+  deleteMenu(id: ID!): Boolean!
+  deleteManyMenus(ids: [ID!]!): Int!
+  
+  # Reorder
+  reorderMenus(ids: [ID!]!): [Menu!]!
+  updateMenuOrder(id: ID!, order: Int!): Menu!
+  
+  # Toggle state
+  toggleMenuActive(id: ID!): Menu!
+  toggleMenuVisibility(id: ID!): Menu!
+  
+  # Bulk operations
+  bulkUpdateMenus(ids: [ID!]!, input: UpdateMenuInput!): [Menu!]!
+  bulkToggleActive(ids: [ID!]!, isActive: Boolean!): [Menu!]!
+  bulkToggleVisibility(ids: [ID!]!, isVisible: Boolean!): [Menu!]!
+  
+  # Move menu
+  moveMenu(id: ID!, newParentId: String, newOrder: Int): Menu!
+}

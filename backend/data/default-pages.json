@@ -1,0 +1,732 @@
+{
+  "pages": [
+    {
+      "id": "page-home-default",
+      "title": "Trang Chủ",
+      "slug": "trang-chu",
+      "content": {
+        "blocks": [
+          {
+            "id": "hero-1",
+            "type": "hero",
+            "data": {
+              "title": "Chào Mừng Đến Với Công Ty Chúng Tôi",
+              "subtitle": "Giải pháp công nghệ hàng đầu cho doanh nghiệp",
+              "backgroundImage": "/images/hero-home.jpg",
+              "ctaText": "Tìm Hiểu Thêm",
+              "ctaLink": "/gioi-thieu"
+            }
+          },
+          {
+            "id": "features-1",
+            "type": "features",
+            "data": {
+              "title": "Dịch Vụ Của Chúng Tôi",
+              "features": [
+                {
+                  "icon": "rocket",
+                  "title": "Phát Triển Nhanh",
+                  "description": "Triển khai dự án nhanh chóng với công nghệ hiện đại"
+                },
+                {
+                  "icon": "shield",
+                  "title": "Bảo Mật Cao",
+                  "description": "Đảm bảo an toàn dữ liệu với các tiêu chuẩn quốc tế"
+                },
+                {
+                  "icon": "chart",
+                  "title": "Tối Ưu Hiệu Suất",
+                  "description": "Hệ thống hoạt động mượt mà, xử lý tốc độ cao"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "seoTitle": "Trang Chủ - Công Ty TNHH ABC",
+      "seoDescription": "Công ty cung cấp giải pháp công nghệ hàng đầu cho doanh nghiệp Việt Nam",
+      "seoKeywords": "công nghệ, giải pháp, doanh nghiệp, phần mềm",
+      "status": "PUBLISHED",
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerVariant": "default",
+        "headerStyle": "fixed",
+        "footerVariant": "extended",
+        "footerStyle": "default",
+        "headerConfig": {
+          "variant": "default",
+          "brand": {
+            "name": "Công Ty ABC",
+            "logo": "/images/logo.png",
+            "tagline": "Giải pháp công nghệ hàng đầu"
+          },
+          "menuItems": [
+            {
+              "label": "Trang Chủ",
+              "href": "/trang-chu",
+              "icon": "home"
+            },
+            {
+              "label": "Giới Thiệu",
+              "href": "/gioi-thieu",
+              "icon": "info"
+            },
+            {
+              "label": "Sản Phẩm",
+              "href": "/san-pham",
+              "icon": "package",
+              "children": [
+                {
+                  "label": "Phần Mềm Quản Lý",
+                  "href": "/san-pham/quan-ly"
+                },
+                {
+                  "label": "Ứng Dụng Di Động",
+                  "href": "/san-pham/mobile"
+                },
+                {
+                  "label": "Website",
+                  "href": "/san-pham/website"
+                }
+              ]
+            },
+            {
+              "label": "Liên Hệ",
+              "href": "/lien-he",
+              "icon": "phone"
+            }
+          ],
+          "colors": {
+            "background": "#ffffff",
+            "text": "#1f2937",
+            "primary": "#3b82f6"
+          },
+          "ctaButton": {
+            "text": "Tư Vấn Miễn Phí",
+            "href": "/lien-he",
+            "variant": "primary"
+          },
+          "showSearch": true
+        },
+        "footerConfig": {
+          "variant": "extended",
+          "columns": [
+            {
+              "title": "Về Chúng Tôi",
+              "links": [
+                {
+                  "label": "Giới Thiệu",
+                  "href": "/gioi-thieu"
+                },
+                {
+                  "label": "Đội Ngũ",
+                  "href": "/doi-ngu"
+                },
+                {
+                  "label": "Tuyển Dụng",
+                  "href": "/tuyen-dung"
+                }
+              ]
+            },
+            {
+              "title": "Sản Phẩm",
+              "links": [
+                {
+                  "label": "Phần Mềm Quản Lý",
+                  "href": "/san-pham/quan-ly"
+                },
+                {
+                  "label": "Ứng Dụng Mobile",
+                  "href": "/san-pham/mobile"
+                },
+                {
+                  "label": "Website",
+                  "href": "/san-pham/website"
+                }
+              ]
+            },
+            {
+              "title": "Hỗ Trợ",
+              "links": [
+                {
+                  "label": "Tài Liệu",
+                  "href": "/tai-lieu"
+                },
+                {
+                  "label": "FAQ",
+                  "href": "/faq"
+                },
+                {
+                  "label": "Liên Hệ",
+                  "href": "/lien-he"
+                }
+              ]
+            },
+            {
+              "title": "Pháp Lý",
+              "links": [
+                {
+                  "label": "Điều Khoản Sử Dụng",
+                  "href": "/dieu-khoan"
+                },
+                {
+                  "label": "Chính Sách Bảo Mật",
+                  "href": "/chinh-sach"
+                }
+              ]
+            }
+          ],
+          "socialLinks": [
+            {
+              "platform": "facebook",
+              "url": "https://facebook.com/congtyabc",
+              "icon": "facebook"
+            },
+            {
+              "platform": "twitter",
+              "url": "https://twitter.com/congtyabc",
+              "icon": "twitter"
+            },
+            {
+              "platform": "linkedin",
+              "url": "https://linkedin.com/company/congtyabc",
+              "icon": "linkedin"
+            }
+          ],
+          "showNewsletter": true,
+          "newsletterTitle": "Đăng Ký Nhận Tin Tức",
+          "newsletterSubtitle": "Cập nhật những xu hướng công nghệ mới nhất",
+          "copyright": "© 2025 Công Ty TNHH ABC. All rights reserved."
+        }
+      }
+    },
+    {
+      "id": "page-about-default",
+      "title": "Giới Thiệu Công Ty",
+      "slug": "gioi-thieu",
+      "content": {
+        "blocks": [
+          {
+            "id": "about-hero",
+            "type": "hero",
+            "data": {
+              "title": "Về Chúng Tôi",
+              "subtitle": "Hơn 10 năm kinh nghiệm trong lĩnh vực công nghệ",
+              "backgroundImage": "/images/about-hero.jpg"
+            }
+          },
+          {
+            "id": "about-content",
+            "type": "content",
+            "data": {
+              "title": "Câu Chuyện Của Chúng Tôi",
+              "content": "Công ty ABC được thành lập vào năm 2015 với sứ mệnh mang đến các giải pháp công nghệ tiên tiến cho doanh nghiệp Việt Nam. Với đội ngũ kỹ sư giàu kinh nghiệm và đam mê công nghệ, chúng tôi đã triển khai thành công hơn 500 dự án cho các khách hàng trong và ngoài nước."
+            }
+          },
+          {
+            "id": "about-values",
+            "type": "grid",
+            "data": {
+              "title": "Giá Trị Cốt Lõi",
+              "items": [
+                {
+                  "icon": "star",
+                  "title": "Chất Lượng",
+                  "description": "Cam kết mang đến sản phẩm chất lượng cao nhất"
+                },
+                {
+                  "icon": "users",
+                  "title": "Đội Ngũ",
+                  "description": "Đội ngũ chuyên nghiệp, tận tâm với khách hàng"
+                },
+                {
+                  "icon": "lightbulb",
+                  "title": "Đổi Mới",
+                  "description": "Không ngừng đổi mới, cập nhật công nghệ mới"
+                },
+                {
+                  "icon": "heart",
+                  "title": "Tận Tâm",
+                  "description": "Đặt lợi ích khách hàng lên hàng đầu"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "seoTitle": "Giới Thiệu - Công Ty TNHH ABC",
+      "seoDescription": "Tìm hiểu về lịch sử, giá trị cốt lõi và đội ngũ của Công Ty ABC - Đối tác tin cậy trong lĩnh vực công nghệ",
+      "seoKeywords": "giới thiệu, về chúng tôi, công ty ABC, lịch sử, giá trị",
+      "status": "PUBLISHED",
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerVariant": "centered",
+        "headerStyle": "sticky",
+        "footerVariant": "default",
+        "footerStyle": "default",
+        "headerConfig": {
+          "variant": "centered",
+          "brand": {
+            "name": "Công Ty ABC",
+            "logo": "/images/logo.png",
+            "tagline": "Về Chúng Tôi"
+          },
+          "menuItems": [
+            {
+              "label": "Trang Chủ",
+              "href": "/trang-chu"
+            },
+            {
+              "label": "Giới Thiệu",
+              "href": "/gioi-thieu"
+            },
+            {
+              "label": "Sản Phẩm",
+              "href": "/san-pham"
+            },
+            {
+              "label": "Liên Hệ",
+              "href": "/lien-he"
+            }
+          ],
+          "colors": {
+            "background": "#f9fafb",
+            "text": "#374151",
+            "primary": "#10b981"
+          },
+          "centered": true
+        },
+        "footerConfig": {
+          "variant": "default",
+          "columns": [
+            {
+              "title": "Liên Kết",
+              "links": [
+                {
+                  "label": "Trang Chủ",
+                  "href": "/trang-chu"
+                },
+                {
+                  "label": "Sản Phẩm",
+                  "href": "/san-pham"
+                },
+                {
+                  "label": "Liên Hệ",
+                  "href": "/lien-he"
+                }
+              ]
+            },
+            {
+              "title": "Liên Hệ",
+              "links": [
+                {
+                  "label": "Email: info@abc.vn",
+                  "href": "mailto:info@abc.vn"
+                },
+                {
+                  "label": "Phone: 0123 456 789",
+                  "href": "tel:0123456789"
+                }
+              ]
+            }
+          ],
+          "socialLinks": [
+            {
+              "platform": "facebook",
+              "url": "https://facebook.com/congtyabc",
+              "icon": "facebook"
+            },
+            {
+              "platform": "linkedin",
+              "url": "https://linkedin.com/company/congtyabc",
+              "icon": "linkedin"
+            }
+          ],
+          "copyright": "© 2025 Công Ty TNHH ABC"
+        }
+      }
+    },
+    {
+      "id": "page-product-default",
+      "title": "Giới Thiệu Sản Phẩm",
+      "slug": "san-pham",
+      "content": {
+        "blocks": [
+          {
+            "id": "product-hero",
+            "type": "hero",
+            "data": {
+              "title": "Sản Phẩm Của Chúng Tôi",
+              "subtitle": "Giải pháp toàn diện cho mọi nhu cầu",
+              "backgroundImage": "/images/product-hero.jpg",
+              "ctaText": "Xem Demo",
+              "ctaLink": "/demo"
+            }
+          },
+          {
+            "id": "product-grid",
+            "type": "productGrid",
+            "data": {
+              "title": "Danh Sách Sản Phẩm",
+              "products": [
+                {
+                  "name": "Phần Mềm Quản Lý ERP",
+                  "description": "Giải pháp quản lý doanh nghiệp toàn diện",
+                  "image": "/images/product-erp.jpg",
+                  "price": "Liên hệ",
+                  "features": [
+                    "Quản lý kho",
+                    "Quản lý bán hàng",
+                    "Quản lý nhân sự",
+                    "Báo cáo thống kê"
+                  ]
+                },
+                {
+                  "name": "Ứng Dụng Di Động",
+                  "description": "App mobile đa nền tảng iOS & Android",
+                  "image": "/images/product-mobile.jpg",
+                  "price": "Từ 50 triệu",
+                  "features": [
+                    "Responsive design",
+                    "Push notification",
+                    "Offline mode",
+                    "Multi-language"
+                  ]
+                },
+                {
+                  "name": "Website Doanh Nghiệp",
+                  "description": "Website chuyên nghiệp, chuẩn SEO",
+                  "image": "/images/product-website.jpg",
+                  "price": "Từ 20 triệu",
+                  "features": [
+                    "Responsive design",
+                    "SEO optimize",
+                    "CMS quản lý",
+                    "Tích hợp thanh toán"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "seoTitle": "Sản Phẩm - Công Ty TNHH ABC",
+      "seoDescription": "Khám phá các sản phẩm và dịch vụ công nghệ của Công Ty ABC: ERP, Mobile App, Website",
+      "seoKeywords": "sản phẩm, dịch vụ, ERP, mobile app, website, phần mềm",
+      "status": "PUBLISHED",
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerVariant": "mega",
+        "headerStyle": "fixed",
+        "footerVariant": "extended",
+        "footerStyle": "default",
+        "headerConfig": {
+          "variant": "mega",
+          "brand": {
+            "name": "Công Ty ABC",
+            "logo": "/images/logo.png",
+            "tagline": "Sản Phẩm & Dịch Vụ"
+          },
+          "menuItems": [
+            {
+              "label": "Trang Chủ",
+              "href": "/trang-chu",
+              "icon": "home"
+            },
+            {
+              "label": "Sản Phẩm",
+              "href": "/san-pham",
+              "icon": "package",
+              "children": [
+                {
+                  "label": "Phần Mềm Quản Lý",
+                  "href": "/san-pham/quan-ly",
+                  "description": "ERP, CRM, HRM",
+                  "icon": "desktop",
+                  "featured": true
+                },
+                {
+                  "label": "Ứng Dụng Di Động",
+                  "href": "/san-pham/mobile",
+                  "description": "iOS & Android App",
+                  "icon": "smartphone"
+                },
+                {
+                  "label": "Website",
+                  "href": "/san-pham/website",
+                  "description": "Landing page, E-commerce",
+                  "icon": "globe"
+                },
+                {
+                  "label": "AI & Machine Learning",
+                  "href": "/san-pham/ai",
+                  "description": "Chatbot, Recommendation",
+                  "icon": "brain"
+                }
+              ]
+            },
+            {
+              "label": "Giải Pháp",
+              "href": "/giai-phap",
+              "children": [
+                {
+                  "label": "Doanh Nghiệp Nhỏ",
+                  "href": "/giai-phap/doanh-nghiep-nho"
+                },
+                {
+                  "label": "Doanh Nghiệp Vừa",
+                  "href": "/giai-phap/doanh-nghiep-vua"
+                },
+                {
+                  "label": "Tập Đoàn Lớn",
+                  "href": "/giai-phap/tap-doan"
+                }
+              ]
+            },
+            {
+              "label": "Giá Cả",
+              "href": "/gia-ca",
+              "icon": "dollar-sign"
+            },
+            {
+              "label": "Liên Hệ",
+              "href": "/lien-he",
+              "icon": "phone"
+            }
+          ],
+          "colors": {
+            "background": "#ffffff",
+            "text": "#111827",
+            "primary": "#8b5cf6"
+          },
+          "ctaButton": {
+            "text": "Đặt Demo",
+            "href": "/demo",
+            "variant": "primary"
+          },
+          "showSearch": true,
+          "showCart": false
+        },
+        "footerConfig": {
+          "variant": "extended",
+          "columns": [
+            {
+              "title": "Sản Phẩm",
+              "links": [
+                {
+                  "label": "Phần Mềm ERP",
+                  "href": "/san-pham/erp"
+                },
+                {
+                  "label": "Mobile App",
+                  "href": "/san-pham/mobile"
+                },
+                {
+                  "label": "Website",
+                  "href": "/san-pham/website"
+                },
+                {
+                  "label": "AI Solutions",
+                  "href": "/san-pham/ai"
+                }
+              ]
+            },
+            {
+              "title": "Giải Pháp",
+              "links": [
+                {
+                  "label": "SME",
+                  "href": "/giai-phap/sme"
+                },
+                {
+                  "label": "Enterprise",
+                  "href": "/giai-phap/enterprise"
+                },
+                {
+                  "label": "Startup",
+                  "href": "/giai-phap/startup"
+                }
+              ]
+            },
+            {
+              "title": "Hỗ Trợ",
+              "links": [
+                {
+                  "label": "Tài Liệu",
+                  "href": "/docs"
+                },
+                {
+                  "label": "Video Tutorial",
+                  "href": "/tutorials"
+                },
+                {
+                  "label": "FAQ",
+                  "href": "/faq"
+                }
+              ]
+            },
+            {
+              "title": "Công Ty",
+              "links": [
+                {
+                  "label": "Về Chúng Tôi",
+                  "href": "/gioi-thieu"
+                },
+                {
+                  "label": "Blog",
+                  "href": "/blog"
+                },
+                {
+                  "label": "Liên Hệ",
+                  "href": "/lien-he"
+                }
+              ]
+            }
+          ],
+          "socialLinks": [
+            {
+              "platform": "facebook",
+              "url": "https://facebook.com/congtyabc"
+            },
+            {
+              "platform": "twitter",
+              "url": "https://twitter.com/congtyabc"
+            },
+            {
+              "platform": "linkedin",
+              "url": "https://linkedin.com/company/congtyabc"
+            },
+            {
+              "platform": "youtube",
+              "url": "https://youtube.com/congtyabc"
+            }
+          ],
+          "showNewsletter": true,
+          "newsletterTitle": "Nhận Bản Demo Miễn Phí",
+          "newsletterSubtitle": "Đăng ký để trải nghiệm sản phẩm ngay hôm nay",
+          "copyright": "© 2025 Công Ty TNHH ABC. All rights reserved."
+        }
+      }
+    },
+    {
+      "id": "page-landing-default",
+      "title": "Landing Page - Khuyến Mãi Đặc Biệt",
+      "slug": "khuyen-mai",
+      "content": {
+        "blocks": [
+          {
+            "id": "landing-hero",
+            "type": "hero",
+            "data": {
+              "title": "Giảm Giá 50% Cho Khách Hàng Mới",
+              "subtitle": "Ưu đãi có thời hạn - Chỉ còn 7 ngày",
+              "backgroundImage": "/images/promo-hero.jpg",
+              "backgroundGradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              "ctaText": "Đăng Ký Ngay",
+              "ctaLink": "/dang-ky",
+              "countdown": {
+                "endDate": "2025-10-20T23:59:59",
+                "showCountdown": true
+              }
+            }
+          },
+          {
+            "id": "landing-benefits",
+            "type": "benefits",
+            "data": {
+              "title": "Tại Sao Chọn Chúng Tôi?",
+              "benefits": [
+                {
+                  "icon": "zap",
+                  "title": "Triển Khai Nhanh",
+                  "description": "Chỉ 24 giờ để có sản phẩm hoàn chỉnh"
+                },
+                {
+                  "icon": "shield-check",
+                  "title": "Bảo Hành 12 Tháng",
+                  "description": "Hỗ trợ miễn phí trong 1 năm đầu"
+                },
+                {
+                  "icon": "dollar-sign",
+                  "title": "Giá Tốt Nhất",
+                  "description": "Cam kết giá cạnh tranh nhất thị trường"
+                }
+              ]
+            }
+          },
+          {
+            "id": "landing-cta",
+            "type": "cta",
+            "data": {
+              "title": "Đừng Bỏ Lỡ Cơ Hội Này!",
+              "description": "Chương trình ưu đãi chỉ áp dụng cho 100 khách hàng đầu tiên",
+              "primaryButton": {
+                "text": "Đăng Ký Ngay",
+                "href": "/dang-ky"
+              },
+              "secondaryButton": {
+                "text": "Tìm Hiểu Thêm",
+                "href": "/gioi-thieu"
+              },
+              "background": "gradient"
+            }
+          }
+        ]
+      },
+      "seoTitle": "Khuyến Mãi 50% - Ưu Đãi Đặc Biệt | Công Ty ABC",
+      "seoDescription": "Giảm giá 50% cho tất cả sản phẩm - Chỉ còn 7 ngày. Đăng ký ngay để nhận ưu đãi!",
+      "seoKeywords": "khuyến mãi, giảm giá, ưu đãi, promotion, sale",
+      "status": "PUBLISHED",
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerVariant": "minimal",
+        "headerStyle": "transparent",
+        "footerVariant": "minimal",
+        "footerStyle": "minimal",
+        "headerConfig": {
+          "variant": "minimal",
+          "brand": {
+            "name": "Công Ty ABC",
+            "logo": "/images/logo-white.png"
+          },
+          "colors": {
+            "background": "transparent",
+            "text": "#ffffff",
+            "primary": "#fbbf24"
+          },
+          "ctaButton": {
+            "text": "Đăng Ký",
+            "href": "/dang-ky",
+            "variant": "primary",
+            "size": "lg",
+            "highlight": true
+          },
+          "transparent": true,
+          "fixed": false
+        },
+        "footerConfig": {
+          "variant": "minimal",
+          "copyright": "© 2025 Công Ty ABC - Hotline: 0123 456 789",
+          "links": [
+            {
+              "label": "Điều Khoản",
+              "href": "/dieu-khoan"
+            },
+            {
+              "label": "Chính Sách",
+              "href": "/chinh-sach"
+            }
+          ],
+          "colors": {
+            "background": "#1f2937",
+            "text": "#9ca3af"
+          }
+        }
+      }
+    }
+  ]
+}

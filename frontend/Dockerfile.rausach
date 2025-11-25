@@ -1,0 +1,38 @@
+# ============================================================================
+# RAUSACH Frontend Dockerfile - Uses .next-rausach build
+# ============================================================================
+
+FROM node:22-alpine AS runtime
+
+# Install minimal runtime dependencies
+RUN apk add --no-cache curl dumb-init && \
+    rm -rf /var/cache/apk/* && \
+    addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs --ingroup nodejs
+
+WORKDIR /app
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Copy pre-built application from .next-rausach
+COPY --chown=nextjs:nodejs frontend/.next-rausach/standalone/ ./
+COPY --chown=nextjs:nodejs frontend/.next-rausach/static/ ./frontend/.next/static/
+COPY --chown=nextjs:nodejs frontend/public/ ./frontend/public/
+
+# Switch to non-root user
+USER nextjs
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+# Start the application
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "frontend/server.js"]

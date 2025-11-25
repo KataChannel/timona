@@ -1,0 +1,21 @@
+{
+  "name": "affiliate-system-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for the affiliate marketing system",
+  "main": "e2e-test.js",
+  "scripts": {
+    "test": "node e2e-test.js",
+    "test:watch": "nodemon e2e-test.js",
+    "test:verbose": "DEBUG=* node e2e-test.js"
+  },
+  "dependencies": {
+    "graphql-request": "^6.1.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["affiliate", "graphql", "testing", "e2e"],
+  "author": "Affiliate System Team",
+  "license": "MIT"
+}

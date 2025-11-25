@@ -1,0 +1,112 @@
+╔══════════════════════════════════════════════════════════════╗
+║                  🎯 TIMONA QUICK REFERENCE                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+📦 DOCKER PORTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  15000  →  Frontend (Next.js)
+  15001  →  Backend (NestJS + GraphQL)
+  15002  →  PgAdmin (Database UI)
+  15003  →  PostgreSQL (Database)
+  15004  →  Redis (Cache)
+  15007  →  MinIO API (Storage)
+  15008  →  MinIO Console (Storage UI)
+
+🚀 QUICK START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # Development
+  bun run dev:timona              # Full stack
+  bun run dev:timona:backend      # Backend only
+  bun run dev:timona:frontend     # Frontend only
+
+  # Docker Production
+  docker compose -f docker-compose.hybrid.yml up -d --build
+  docker compose -f docker-compose.hybrid.yml down
+
+  # Database
+  bun run db:migrate:timona       # Run migrations
+  bun run db:studio:timona        # Open Prisma Studio
+
+🌐 ACCESS URLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Development:
+    Frontend:  http://116.118.49.243:15000
+    Backend:   http://116.118.49.243:15001
+    GraphQL:   http://116.118.49.243:15001/graphql
+    PgAdmin:   http://116.118.49.243:15002
+    MinIO UI:  http://116.118.49.243:15008
+
+  Production:
+    Frontend:  https://timona.com
+    Backend:   https://api.timona.com
+    Storage:   https://storage.timona.com
+
+📁 KEY FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  .env.timona                     # Environment config
+  docker-compose.hybrid.yml       # Docker services
+  package.json                    # NPM scripts
+  vscode-menu.sh                  # Interactive menu
+  TIMONA_CONFIGURATION.md         # Full documentation
+
+🗄️ DATABASE CONNECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Host:      116.118.49.243
+  Port:      15003
+  Database:  timonacore
+  User:      postgres
+  Password:  postgres
+
+  PgAdmin:   http://116.118.49.243:15002
+  Email:     admin@timona.com
+  Password:  admin123
+
+🔧 UTILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # Kill ports
+  bun run kill:15000              # Kill frontend
+  bun run kill:15001              # Kill backend
+  bun run kill:all                # Kill all ports
+
+  # Docker logs
+  docker logs -f timona-frontend
+  docker logs -f timona-backend
+
+  # Container shell
+  docker exec -it timona-backend sh
+  docker exec -it timona-postgres psql -U postgres -d timonacore
+
+  # Menu
+  ./vscode-menu.sh
+
+📊 CONTAINER NAMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  timona-frontend
+  timona-backend
+  timona-postgres
+  timona-pgadmin
+  timona-redis
+  timona-minio
+
+🔄 COMMON COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # Setup
+  cp .env.timona backend/.env
+  cp .env.timona frontend/.env.local
+
+  # Check running containers
+  docker ps | grep timona
+
+  # Restart service
+  docker restart timona-backend
+
+  # View all logs
+  docker compose -f docker-compose.hybrid.yml logs -f
+
+  # Remove all containers
+  docker compose -f docker-compose.hybrid.yml down -v
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 Version: Timona v1.0.0 | Port Range: 15000-15008
+📅 Updated: 25/11/2025
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

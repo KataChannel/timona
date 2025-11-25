@@ -1,0 +1,351 @@
+{
+  "pages": [
+    {
+      "id": "page-001-homepage",
+      "title": "Homepage - E-commerce Demo",
+      "slug": "website/ecommerce-home",
+      "description": "Beautiful e-commerce homepage with mega menu and extended footer",
+      "status": "PUBLISHED",
+      "seoTitle": "ShopHub - Your One-Stop Online Shop",
+      "seoDescription": "Discover amazing products with free shipping and 30-day returns. Shop men's, women's, and kids' fashion.",
+      "seoKeywords": ["ecommerce", "online shopping", "fashion", "clothing"],
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerStyle": "default",
+        "footerStyle": "default",
+        "headerVariant": "mega",
+        "footerVariant": "extended",
+        "headerConfig": {
+          "brand": {
+            "name": "ShopHub",
+            "logo": "/images/shophub-logo.png",
+            "tagline": "Your Style, Our Passion"
+          },
+          "menuItems": [
+            {
+              "label": "Shop",
+              "href": "/shop",
+              "children": [
+                { "label": "Men's Fashion", "href": "/shop/men" },
+                { "label": "Women's Fashion", "href": "/shop/women" },
+                { "label": "Kids", "href": "/shop/kids" },
+                { "label": "Accessories", "href": "/shop/accessories" },
+                { "label": "Sale", "href": "/shop/sale" }
+              ]
+            },
+            {
+              "label": "New Arrivals",
+              "href": "/new"
+            },
+            {
+              "label": "Brands",
+              "href": "/brands",
+              "children": [
+                { "label": "Nike", "href": "/brands/nike" },
+                { "label": "Adidas", "href": "/brands/adidas" },
+                { "label": "Puma", "href": "/brands/puma" }
+              ]
+            },
+            {
+              "label": "About",
+              "href": "/about"
+            }
+          ],
+          "showSearch": true,
+          "showCart": true,
+          "showAuth": true,
+          "backgroundColor": "bg-white",
+          "textColor": "text-gray-900"
+        },
+        "footerConfig": {
+          "brand": {
+            "name": "ShopHub",
+            "tagline": "Your one-stop online shop for fashion and lifestyle"
+          },
+          "columns": [
+            {
+              "title": "Shop",
+              "links": [
+                { "label": "Men's Fashion", "href": "/shop/men" },
+                { "label": "Women's Fashion", "href": "/shop/women" },
+                { "label": "Kids", "href": "/shop/kids" },
+                { "label": "Accessories", "href": "/shop/accessories" },
+                { "label": "Sale", "href": "/shop/sale" }
+              ]
+            },
+            {
+              "title": "Customer Service",
+              "links": [
+                { "label": "Track Order", "href": "/track" },
+                { "label": "Returns & Exchanges", "href": "/returns" },
+                { "label": "Shipping Info", "href": "/shipping" },
+                { "label": "Size Guide", "href": "/size-guide" },
+                { "label": "Contact Us", "href": "/contact" }
+              ]
+            },
+            {
+              "title": "About",
+              "links": [
+                { "label": "Our Story", "href": "/about" },
+                { "label": "Careers", "href": "/careers" },
+                { "label": "Press", "href": "/press" },
+                { "label": "Sustainability", "href": "/sustainability" }
+              ]
+            }
+          ],
+          "socialLinks": [
+            { "platform": "instagram", "url": "https://instagram.com/shophub" },
+            { "platform": "facebook", "url": "https://facebook.com/shophub" },
+            { "platform": "twitter", "url": "https://twitter.com/shophub" }
+          ],
+          "copyright": "© 2025 ShopHub. All rights reserved.",
+          "backgroundColor": "bg-gray-900",
+          "textColor": "text-gray-300",
+          "showNewsletter": true,
+          "newsletterTitle": "Get 10% off your first order",
+          "newsletterDescription": "Subscribe to our newsletter for exclusive deals and new arrivals"
+        }
+      },
+      "createdBy": "admin",
+      "publishedAt": "2025-10-13T00:00:00.000Z"
+    },
+    {
+      "id": "page-002-saas-landing",
+      "title": "CloudApp - SaaS Landing Page",
+      "slug": "website/cloudapp-landing",
+      "description": "Clean SaaS landing page with transparent header and newsletter footer",
+      "status": "PUBLISHED",
+      "seoTitle": "CloudApp - Cloud Storage Made Simple",
+      "seoDescription": "Secure, fast, and reliable cloud storage. Start your free 30-day trial today. No credit card required.",
+      "seoKeywords": ["cloud storage", "saas", "file sharing", "backup"],
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerStyle": "transparent",
+        "footerStyle": "default",
+        "headerVariant": "minimal",
+        "footerVariant": "newsletter",
+        "headerConfig": {
+          "brand": {
+            "name": "CloudApp",
+            "logo": "/images/cloudapp-logo.png"
+          },
+          "ctaButton": {
+            "text": "Start Free Trial",
+            "href": "/signup",
+            "variant": "default"
+          },
+          "transparent": true,
+          "textColor": "text-white",
+          "backgroundColor": "bg-transparent"
+        },
+        "footerConfig": {
+          "brand": {
+            "name": "CloudApp",
+            "tagline": "Simple. Secure. Reliable."
+          },
+          "backgroundColor": "bg-gradient-to-r from-blue-600 to-purple-600",
+          "textColor": "text-white",
+          "newsletterTitle": "Start your free trial today",
+          "newsletterDescription": "No credit card required. Cancel anytime. 30-day money-back guarantee.",
+          "socialLinks": [
+            { "platform": "twitter", "url": "https://twitter.com/cloudapp" },
+            { "platform": "linkedin", "url": "https://linkedin.com/company/cloudapp" },
+            { "platform": "github", "url": "https://github.com/cloudapp" }
+          ],
+          "copyright": "© 2025 CloudApp Inc. All rights reserved."
+        }
+      },
+      "createdBy": "admin",
+      "publishedAt": "2025-10-13T00:00:00.000Z"
+    },
+    {
+      "id": "page-003-blog",
+      "title": "TechBlog - Technology Insights",
+      "slug": "website/techblog",
+      "description": "Technology blog with centered header and default footer",
+      "status": "PUBLISHED",
+      "seoTitle": "TechBlog - Insights on Technology & Innovation",
+      "seoDescription": "Stay informed with the latest technology news, insights, and tutorials from industry experts.",
+      "seoKeywords": ["technology", "blog", "innovation", "tutorials", "news"],
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerStyle": "sticky",
+        "footerStyle": "default",
+        "headerVariant": "centered",
+        "footerVariant": "default",
+        "headerConfig": {
+          "brand": {
+            "name": "TechBlog",
+            "tagline": "Insights on Technology & Innovation"
+          },
+          "menuItems": [
+            { "label": "Articles", "href": "/articles" },
+            { "label": "Videos", "href": "/videos" },
+            { "label": "Podcasts", "href": "/podcasts" },
+            { "label": "Newsletter", "href": "/newsletter" },
+            { "label": "About", "href": "/about" }
+          ],
+          "showSearch": true,
+          "backgroundColor": "bg-white",
+          "textColor": "text-gray-900",
+          "sticky": true
+        },
+        "footerConfig": {
+          "brand": {
+            "name": "TechBlog",
+            "tagline": "Stay curious, stay informed"
+          },
+          "columns": [
+            {
+              "title": "Content",
+              "links": [
+                { "label": "Latest Posts", "href": "/latest" },
+                { "label": "Categories", "href": "/categories" },
+                { "label": "Authors", "href": "/authors" },
+                { "label": "Popular", "href": "/popular" }
+              ]
+            },
+            {
+              "title": "Resources",
+              "links": [
+                { "label": "Newsletter", "href": "/newsletter" },
+                { "label": "RSS Feed", "href": "/rss" },
+                { "label": "Podcast", "href": "/podcast" }
+              ]
+            },
+            {
+              "title": "Connect",
+              "links": [
+                { "label": "Contact", "href": "/contact" },
+                { "label": "Advertise", "href": "/advertise" },
+                { "label": "Write for Us", "href": "/write" }
+              ]
+            }
+          ],
+          "socialLinks": [
+            { "platform": "twitter", "url": "https://twitter.com/techblog" },
+            { "platform": "youtube", "url": "https://youtube.com/techblog" },
+            { "platform": "linkedin", "url": "https://linkedin.com/company/techblog" }
+          ],
+          "copyright": "© 2025 TechBlog. All rights reserved.",
+          "backgroundColor": "bg-gray-900",
+          "textColor": "text-gray-300"
+        }
+      },
+      "createdBy": "admin",
+      "publishedAt": "2025-10-13T00:00:00.000Z"
+    },
+    {
+      "id": "page-004-landing-minimal",
+      "title": "Product Launch - Minimal Landing",
+      "slug": "website/product-launch",
+      "description": "Fullscreen landing page with no header or footer",
+      "status": "PUBLISHED",
+      "seoTitle": "Revolutionary Product Launch - Coming Soon",
+      "seoDescription": "Join the waitlist for the most innovative product of 2025. Limited early bird access.",
+      "seoKeywords": ["product launch", "innovation", "waitlist", "early access"],
+      "layoutSettings": {
+        "hasHeader": false,
+        "hasFooter": false
+      },
+      "createdBy": "admin",
+      "publishedAt": "2025-10-13T00:00:00.000Z"
+    },
+    {
+      "id": "page-005-startup",
+      "title": "Startup Homepage",
+      "slug": "website/startup-home",
+      "description": "Startup homepage with custom branding",
+      "status": "PUBLISHED",
+      "seoTitle": "StartupX - Innovation at Scale",
+      "seoDescription": "We're building the future of work. Join thousands of teams already using StartupX.",
+      "seoKeywords": ["startup", "innovation", "productivity", "collaboration"],
+      "layoutSettings": {
+        "hasHeader": true,
+        "hasFooter": true,
+        "headerStyle": "fixed",
+        "footerStyle": "default",
+        "headerVariant": "default",
+        "footerVariant": "default",
+        "headerConfig": {
+          "brand": {
+            "name": "StartupX",
+            "logo": "/images/startupx-logo.png"
+          },
+          "menuItems": [
+            {
+              "label": "Product",
+              "href": "/product",
+              "children": [
+                { "label": "Features", "href": "/product/features" },
+                { "label": "Integrations", "href": "/product/integrations" },
+                { "label": "Security", "href": "/product/security" }
+              ]
+            },
+            { "label": "Pricing", "href": "/pricing" },
+            { "label": "Customers", "href": "/customers" },
+            { "label": "Resources", "href": "/resources" }
+          ],
+          "showSearch": false,
+          "showCart": false,
+          "showAuth": true,
+          "backgroundColor": "bg-indigo-600",
+          "textColor": "text-white",
+          "ctaButton": {
+            "text": "Get Started Free",
+            "href": "/signup",
+            "variant": "secondary"
+          }
+        },
+        "footerConfig": {
+          "brand": {
+            "name": "StartupX",
+            "tagline": "Innovation at scale"
+          },
+          "columns": [
+            {
+              "title": "Product",
+              "links": [
+                { "label": "Features", "href": "/features" },
+                { "label": "Pricing", "href": "/pricing" },
+                { "label": "Integrations", "href": "/integrations" },
+                { "label": "Changelog", "href": "/changelog" }
+              ]
+            },
+            {
+              "title": "Company",
+              "links": [
+                { "label": "About Us", "href": "/about" },
+                { "label": "Careers", "href": "/careers" },
+                { "label": "Blog", "href": "/blog" },
+                { "label": "Press", "href": "/press" }
+              ]
+            },
+            {
+              "title": "Support",
+              "links": [
+                { "label": "Help Center", "href": "/help" },
+                { "label": "API Docs", "href": "/docs" },
+                { "label": "Community", "href": "/community" },
+                { "label": "Contact", "href": "/contact" }
+              ]
+            }
+          ],
+          "socialLinks": [
+            { "platform": "twitter", "url": "https://twitter.com/startupx" },
+            { "platform": "linkedin", "url": "https://linkedin.com/company/startupx" },
+            { "platform": "github", "url": "https://github.com/startupx" }
+          ],
+          "copyright": "© 2025 StartupX Inc. All rights reserved.",
+          "backgroundColor": "bg-gray-900",
+          "textColor": "text-gray-300"
+        }
+      },
+      "createdBy": "admin",
+      "publishedAt": "2025-10-13T00:00:00.000Z"
+    }
+  ]
+}

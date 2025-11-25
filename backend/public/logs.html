@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice System - Log Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .header {
+            background: #2d2d2d;
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #404040;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #4CAF50;
+            font-size: 1.5rem;
+        }
+
+        .header .stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .header .stats .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header .stats .stat-value {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #2d2d2d;
+            border-right: 2px solid #404040;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            color: #4CAF50;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            margin-bottom: 1rem;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .control-group select,
+        .control-group input,
+        .control-group button {
+            width: 100%;
+            padding: 0.5rem;
+            background: #404040;
+            border: 1px solid #555;
+            color: #e0e0e0;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .control-group button {
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .control-group button:hover {
+            background: #45a049;
+        }
+
+        .file-list {
+            list-style: none;
+        }
+
+        .file-list li {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: #404040;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .file-list li:hover {
+            background: #4CAF50;
+        }
+
+        .file-list li.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .file-info {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 0.2rem;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-header {
+            background: #333;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-header h2 {
+            color: #4CAF50;
+        }
+
+        .content-header .info {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+
+        .log-content {
+            flex: 1;
+            padding: 1rem 2rem;
+            overflow-y: auto;
+            font-size: 0.85rem;
+        }
+
+        .log-line {
+            margin-bottom: 0.3rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 3px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .log-line.error {
+            background: #4d1f1f;
+            border-left: 4px solid #f44336;
+        }
+
+        .log-line.warn {
+            background: #4d3d1f;
+            border-left: 4px solid #ff9800;
+        }
+
+        .log-line.debug {
+            background: #1f2d4d;
+            border-left: 4px solid #2196f3;
+        }
+
+        .log-line.info {
+            background: #1f4d2d;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .timestamp {
+            color: #888;
+        }
+
+        .level {
+            font-weight: bold;
+            margin: 0 0.5rem;
+        }
+
+        .level.ERROR {
+            color: #f44336;
+        }
+
+        .level.WARN {
+            color: #ff9800;
+        }
+
+        .level.DEBUG {
+            color: #2196f3;
+        }
+
+        .level.LOG,
+        .level.INFO {
+            color: #4CAF50;
+        }
+
+        .context {
+            color: #9c27b0;
+            margin-right: 0.5rem;
+        }
+        
+        .file-name {
+            color: #888;
+            font-size: 0.8em;
+            font-style: italic;
+        }
+
+        .message {
+            color: #e0e0e0;
+        }
+        
+        .json-content {
+            color: #ffc107;
+            font-style: italic;
+            padding-left: 2rem;
+        }
+        
+        .log-line.json-data {
+            background: #2d2d1f;
+            border-left: 2px solid #ffc107;
+            margin-left: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+
+        .error-message {
+            background: #4d1f1f;
+            color: #f44336;
+            padding: 1rem;
+            margin: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #f44336;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .search-result {
+            padding: 0.5rem;
+            cursor: pointer;
+            border-bottom: 1px solid #404040;
+            font-size: 0.8rem;
+        }
+
+        .search-result:hover {
+            background: #404040;
+        }
+
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #404040;
+        }
+
+        .auto-refresh input[type="checkbox"] {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Invoice System - Log Viewer</h1>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="total-files">-</div>
+                <div>Files</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="total-size">-</div>
+                <div>Size</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="newest-log">-</div>
+                <div>Latest</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="controls">
+                <h3>🔧 Controls</h3>
+                
+                <div class="control-group">
+                    <label for="log-level">Log Level</label>
+                    <select id="log-level">
+                        <option value="all">All Logs</option>
+                        <option value="error">Errors Only</option>
+                        <option value="warn">Warnings Only</option>
+                        <option value="log">Info Only</option>
+                        <option value="debug">Debug Only</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="lines-count">Lines to Show</label>
+                    <select id="lines-count">
+                        <option value="50">50 lines</option>
+                        <option value="100" selected>100 lines</option>
+                        <option value="200">200 lines</option>
+                        <option value="500">500 lines</option>
+                        <option value="1000">1000 lines</option>
+                    </select>
+                </div>
+
+                <div class="control-group search-box">
+                    <label for="search-input">Search Logs</label>
+                    <input type="text" id="search-input" placeholder="Search in logs...">
+                    <div class="search-results" id="search-results"></div>
+                </div>
+
+                <div class="control-group">
+                    <button onclick="refreshLogs()">🔄 Refresh</button>
+                </div>
+
+                <div class="control-group">
+                    <button onclick="clearOldLogs()">🗑️ Clear Old Logs</button>
+                </div>
+
+                <div class="auto-refresh">
+                    <input type="checkbox" id="auto-refresh" onchange="toggleAutoRefresh()">
+                    <label for="auto-refresh">Auto-refresh (30s)</label>
+                </div>
+            </div>
+
+            <div class="file-list-container">
+                <h3>📁 Log Files</h3>
+                <ul class="file-list" id="file-list">
+                    <li class="loading">Loading files...</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-header">
+                <h2 id="current-file">Recent Logs</h2>
+                <div class="info" id="log-info">Loading...</div>
+            </div>
+            <div class="log-content" id="log-content">
+                <div class="loading">Loading logs...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentFile = null;
+        let autoRefreshInterval = null;
+        const API_BASE = '/api/logs';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadFiles();
+            loadRecentLogs();
+            setupSearch();
+        });
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const stats = await response.json();
+                
+                document.getElementById('total-files').textContent = stats.totalFiles;
+                document.getElementById('total-size').textContent = stats.totalSizeFormatted;
+                document.getElementById('newest-log').textContent = stats.newestLog || 'None';
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        // Load file list
+        async function loadFiles() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const stats = await response.json();
+                
+                const fileList = document.getElementById('file-list');
+                fileList.innerHTML = '';
+                
+                if (stats.fileList.length === 0) {
+                    fileList.innerHTML = '<li>No log files found</li>';
+                    return;
+                }
+                
+                stats.fileList.forEach(file => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div>${file.name}</div>
+                        <div class="file-info">${file.sizeFormatted} • ${new Date(file.modified).toLocaleString()}</div>
+                    `;
+                    li.onclick = () => selectFile(file.name);
+                    fileList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Failed to load files:', error);
+                document.getElementById('file-list').innerHTML = '<li class="error">Failed to load files</li>';
+            }
+        }
+
+        // Select a specific file
+        function selectFile(filename) {
+            currentFile = filename;
+            
+            // Update active state
+            document.querySelectorAll('.file-list li').forEach(li => li.classList.remove('active'));
+            event.target.closest('li').classList.add('active');
+            
+            // Load file content
+            loadFileContent(filename);
+        }
+
+        // Load file content
+        async function loadFileContent(filename) {
+            const lines = document.getElementById('lines-count').value;
+            
+            try {
+                document.getElementById('log-content').innerHTML = '<div class="loading">Loading logs...</div>';
+                document.getElementById('current-file').textContent = filename;
+                
+                const response = await fetch(`${API_BASE}/view?filename=${encodeURIComponent(filename)}&lines=${lines}`);
+                const data = await response.json();
+                
+                document.getElementById('log-info').textContent = `${data.totalLines} lines (showing last ${data.requestedLines})`;
+                
+                const logContent = document.getElementById('log-content');
+                logContent.innerHTML = '';
+                
+                if (data.lines.length === 0) {
+                    logContent.innerHTML = '<div class="loading">No logs found</div>';
+                    return;
+                }
+                
+                data.lines.forEach(line => {
+                    const logLine = createLogLineElement(line);
+                    logContent.appendChild(logLine);
+                });
+                
+                // Scroll to bottom
+                logContent.scrollTop = logContent.scrollHeight;
+                
+            } catch (error) {
+                console.error('Failed to load file content:', error);
+                document.getElementById('log-content').innerHTML = '<div class="error-message">Failed to load log content</div>';
+            }
+        }
+
+        // Load recent logs
+        async function loadRecentLogs() {
+            const lines = document.getElementById('lines-count').value;
+            
+            try {
+                document.getElementById('log-content').innerHTML = '<div class="loading">Loading recent logs...</div>';
+                document.getElementById('current-file').textContent = 'Recent Logs';
+                
+                const response = await fetch(`${API_BASE}/recent?lines=${lines}`);
+                const data = await response.json();
+                
+                document.getElementById('log-info').textContent = `${data.count} recent entries`;
+                
+                const logContent = document.getElementById('log-content');
+                logContent.innerHTML = '';
+                
+                if (data.logs.length === 0) {
+                    logContent.innerHTML = '<div class="loading">No recent logs found</div>';
+                    return;
+                }
+                
+                data.logs.forEach(logEntry => {
+                    const logLine = createLogLineElement(logEntry.line, logEntry.filename);
+                    logContent.appendChild(logLine);
+                });
+                
+            } catch (error) {
+                console.error('Failed to load recent logs:', error);
+                document.getElementById('log-content').innerHTML = '<div class="error-message">Failed to load recent logs</div>';
+            }
+        }
+
+        // Create log line element
+        function createLogLineElement(line, filename = '') {
+            const div = document.createElement('div');
+            div.className = 'log-line';
+            
+            // Parse log line for styling
+            const match = line.match(/^\[([^\]]+)\]\s*\[([^\]]+)\]\s*\[([^\]]+)\]\s*(.*)/);
+            
+            if (match) {
+                const [, timestamp, level, context, message] = match;
+                const logLevel = level.toLowerCase();
+                div.classList.add(logLevel);
+                
+                // Escape HTML in message
+                const escapedMessage = escapeHtml(message);
+                
+                div.innerHTML = `
+                    <span class="timestamp">[${timestamp}]</span>
+                    <span class="level ${level}">[${level}]</span>
+                    <span class="context">[${context}]</span>
+                    <span class="message">${escapedMessage}</span>
+                    ${filename ? `<span class="file-name"> (${filename})</span>` : ''}
+                `;
+            } else {
+                // Handle continuation lines (JSON data, etc.)
+                const trimmedLine = line.trim();
+                if (trimmedLine.startsWith('{') || trimmedLine.startsWith('}') || trimmedLine.includes('":') || trimmedLine.startsWith('"')) {
+                    div.classList.add('json-data');
+                    div.innerHTML = `<span class="json-content">${escapeHtml(line)}</span>`;
+                } else {
+                    div.innerHTML = `<span class="message">${escapeHtml(line)}</span>`;
+                }
+            }
+            
+            return div;
+        }
+        
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(async () => {
+                    const query = this.value.trim();
+                    
+                    if (query.length < 2) {
+                        searchResults.style.display = 'none';
+                        return;
+                    }
+                    
+                    try {
+                        const response = await fetch(`${API_BASE}/search`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ query, maxResults: 20 })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        searchResults.innerHTML = '';
+                        
+                        if (data.results.length === 0) {
+                            searchResults.innerHTML = '<div class="search-result">No results found</div>';
+                        } else {
+                            data.results.forEach(result => {
+                                const div = document.createElement('div');
+                                div.className = 'search-result';
+                                const truncatedLine = result.line.length > 100 ? result.line.substring(0, 100) + '...' : result.line;
+                                div.innerHTML = `<strong>${escapeHtml(result.filename)}</strong>: ${escapeHtml(truncatedLine)}`;
+                                div.onclick = () => {
+                                    selectFile(result.filename);
+                                    searchResults.style.display = 'none';
+                                    searchInput.value = '';
+                                };
+                                searchResults.appendChild(div);
+                            });
+                        }
+                        
+                        searchResults.style.display = 'block';
+                        
+                    } catch (error) {
+                        console.error('Search failed:', error);
+                    }
+                }, 300);
+            });
+            
+            // Hide search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        }
+
+        // Refresh logs
+        function refreshLogs() {
+            loadStats();
+            loadFiles();
+            
+            if (currentFile) {
+                loadFileContent(currentFile);
+            } else {
+                loadRecentLogs();
+            }
+        }
+
+        // Toggle auto-refresh
+        function toggleAutoRefresh() {
+            const checkbox = document.getElementById('auto-refresh');
+            
+            if (checkbox.checked) {
+                autoRefreshInterval = setInterval(refreshLogs, 30000);
+            } else {
+                if (autoRefreshInterval) {
+                    clearInterval(autoRefreshInterval);
+                    autoRefreshInterval = null;
+                }
+            }
+        }
+
+        // Clear old logs
+        async function clearOldLogs() {
+            if (!confirm('Are you sure you want to clear logs older than 7 days?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/cleanup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ olderThanDays: 7 })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Old logs cleared successfully');
+                    refreshLogs();
+                } else {
+                    alert('Failed to clear logs');
+                }
+                
+            } catch (error) {
+                console.error('Failed to clear logs:', error);
+                alert('Failed to clear logs');
+            }
+        }
+
+        // Handle log level change
+        document.getElementById('log-level').addEventListener('change', function() {
+            const level = this.value;
+            
+            if (level === 'all') {
+                if (currentFile) {
+                    loadFileContent(currentFile);
+                } else {
+                    loadRecentLogs();
+                }
+            } else {
+                loadLogsByLevel(level);
+            }
+        });
+
+        // Load logs by level
+        async function loadLogsByLevel(level) {
+            const lines = document.getElementById('lines-count').value;
+            
+            try {
+                document.getElementById('log-content').innerHTML = '<div class="loading">Loading logs...</div>';
+                document.getElementById('current-file').textContent = `${level.toUpperCase()} Logs`;
+                
+                const response = await fetch(`${API_BASE}/level/${level}?lines=${lines}`);
+                const data = await response.json();
+                
+                document.getElementById('log-info').textContent = `${data.count} ${level} entries`;
+                
+                const logContent = document.getElementById('log-content');
+                logContent.innerHTML = '';
+                
+                if (data.logs.length === 0) {
+                    logContent.innerHTML = '<div class="loading">No logs found for this level</div>';
+                    return;
+                }
+                
+                data.logs.forEach(line => {
+                    const logLine = createLogLineElement(line);
+                    logContent.appendChild(logLine);
+                });
+                
+            } catch (error) {
+                console.error('Failed to load logs by level:', error);
+                document.getElementById('log-content').innerHTML = '<div class="error-message">Failed to load logs</div>';
+            }
+        }
+
+        // Handle lines count change
+        document.getElementById('lines-count').addEventListener('change', function() {
+            if (currentFile) {
+                loadFileContent(currentFile);
+            } else {
+                const level = document.getElementById('log-level').value;
+                if (level === 'all') {
+                    loadRecentLogs();
+                } else {
+                    loadLogsByLevel(level);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

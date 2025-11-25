@@ -1,0 +1,31 @@
+import { Post } from '../models/post.model';
+import { User } from '../models/user.model';
+import { Comment } from '../models/comment.model';
+import { PaginatedPosts } from '../models/paginated-posts.model';
+import { CreatePostInput, UpdatePostInput, PostFiltersInput } from '../inputs/post.input';
+import { PaginationInput } from '../models/pagination.model';
+import { PostService } from '../../services/post.service';
+import { UserService } from '../../services/user.service';
+import { CommentService } from '../../services/comment.service';
+import { PubSubService } from '../../services/pubsub.service';
+export declare class PostResolver {
+    private readonly postService;
+    private readonly userService;
+    private readonly commentService;
+    private readonly pubSubService;
+    constructor(postService: PostService, userService: UserService, commentService: CommentService, pubSubService: PubSubService);
+    getPosts(pagination: PaginationInput, filters?: PostFiltersInput): Promise<PaginatedPosts>;
+    getPostById(id: string): Promise<Post>;
+    getPostBySlug(slug: string): Promise<Post>;
+    getMyPosts(context: any): Promise<Post[]>;
+    createPost(input: CreatePostInput, context: any): Promise<Post>;
+    updatePost(id: string, input: UpdatePostInput, context: any): Promise<Post>;
+    deletePost(id: string, context: any): Promise<boolean>;
+    publishPost(id: string, context: any): Promise<Post>;
+    author(post: Post): Promise<User>;
+    comments(post: Post): Promise<Comment[]>;
+    likesCount(post: Post): Promise<number>;
+    commentsCount(post: Post): Promise<number>;
+    postCreated(): any;
+    postUpdated(): any;
+}

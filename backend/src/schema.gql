@@ -1,0 +1,6150 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AIProvider {
+  apiKey: String!
+  avgResponseTime: Float
+  createdAt: DateTime!
+  createdBy: String
+  creator: User
+  description: String
+  failureCount: Int!
+  id: String!
+  isActive: Boolean!
+  isDefault: Boolean!
+  lastError: String
+  lastUsedAt: DateTime
+  maxTokens: Int!
+  model: String!
+  name: String!
+  priority: Int!
+  provider: AIProviderType!
+  successCount: Int!
+  systemPrompt: String
+  tags: [String!]
+  temperature: Float!
+  totalRequests: Int!
+  updatedAt: DateTime!
+}
+
+type AIProviderStats {
+  activeProviders: Int!
+  avgResponseTime: Float!
+  successRate: Float!
+  totalProviders: Int!
+  totalRequests: Int!
+}
+
+type AIProviderTestResult {
+  error: String
+  response: String
+  responseTime: Float!
+  success: Boolean!
+  tokensUsed: Int!
+}
+
+"""AI Provider types: ChatGPT, Grok, Gemini"""
+enum AIProviderType {
+  CHATGPT
+  GEMINI
+  GROK
+}
+
+input AddMemberInput {
+  role: String = "member"
+  userId: ID!
+}
+
+input AddToCartInput {
+  metadata: JSON
+  productId: ID!
+  quantity: Int! = 1
+  sessionId: String
+  variantId: ID
+}
+
+type AddToCartResponse {
+  cart: CartType
+  errors: [String!]
+  message: String
+  success: Boolean!
+}
+
+input AdminCreateUserInput {
+  avatar: String
+  email: String
+  firstName: String
+  isActive: Boolean = true
+  isVerified: Boolean = false
+  lastName: String
+  password: String!
+  phone: String
+  roleType: UserRoleType = USER
+  username: String!
+}
+
+input AdminResetPasswordInput {
+  userId: String!
+}
+
+type AdminResetPasswordResult {
+  message: String!
+  newPassword: String!
+  success: Boolean!
+  user: User!
+}
+
+input AdminUpdateUserInput {
+  avatar: String
+  email: String
+  firstName: String
+  isActive: Boolean
+  isTwoFactorEnabled: Boolean
+  isVerified: Boolean
+  lastName: String
+  phone: String
+  roleType: UserRoleType
+  username: String
+}
+
+type AffCampaign {
+  affiliates: [AffCampaignAffiliate!]
+  averageOrderValue: Float
+  categories: [String!]
+  commissionRate: Float!
+  commissionType: String!
+  conversionRate: Float
+  conversions: [AffConversion!]
+  cookieDuration: Int
+  createdAt: DateTime!
+  creator: AffUser
+  creatorId: String!
+  description: String
+  endDate: DateTime
+  fixedAmount: Float
+  id: ID!
+  links: [AffLink!]
+  maxAffiliates: Int
+  maxPayoutAmount: Float
+  minPayoutAmount: Float
+  name: String!
+  productImage: String
+  productName: String!
+  productUrl: String!
+  requireApproval: Boolean!
+  startDate: DateTime
+  status: AffCampaignStatus!
+  targetCountries: [String!]
+  totalClicks: Int!
+  totalCommission: Float!
+  totalConversions: Int!
+  totalRevenue: Float!
+  type: String
+  updatedAt: DateTime!
+}
+
+type AffCampaignAffiliate {
+  affiliate: AffUser
+  affiliateId: String!
+  appliedAt: DateTime!
+  approvedAt: DateTime
+  campaign: AffCampaign
+  campaignId: String!
+  createdAt: DateTime!
+  id: ID!
+  reason: String
+  rejectedAt: DateTime
+  status: String!
+  totalClicks: Int!
+  totalConversions: Int!
+  totalEarnings: Float!
+  updatedAt: DateTime!
+}
+
+"""Affiliate campaign status"""
+enum AffCampaignStatus {
+  ACTIVE
+  CANCELLED
+  COMPLETED
+  DRAFT
+  PAUSED
+}
+
+type AffClick {
+  browser: String
+  city: String
+  clickedAt: DateTime!
+  country: String
+  device: String
+  id: ID!
+  ipAddress: String
+  link: AffLink
+  linkId: String!
+  referer: String
+  sessionId: String
+  userAgent: String
+  visitorId: String
+}
+
+type AffConversion {
+  affiliate: AffUser
+  affiliateId: String!
+  approvedAt: DateTime
+  campaign: AffCampaign
+  campaignId: String!
+  clickId: String
+  commission: Float!
+  conversionType: String!
+  convertedAt: DateTime!
+  createdAt: DateTime!
+  currency: String!
+  customerEmail: String
+  id: ID!
+  link: AffLink
+  linkId: String!
+  notes: String
+  orderId: String
+  paidAt: DateTime
+  rejectedAt: DateTime
+  saleAmount: Float!
+  status: AffConversionStatus!
+  updatedAt: DateTime!
+  validatedBy: String
+}
+
+input AffConversionSearchInput {
+  affiliateId: String
+  campaignId: String
+  dateRange: AffDateRangeInput
+  pagination: AffPaginationInput
+  status: AffConversionStatus
+}
+
+"""Affiliate conversion status"""
+enum AffConversionStatus {
+  APPROVED
+  PAID
+  PENDING
+  REJECTED
+}
+
+type AffConversionsResponse {
+  conversions: [AffConversion!]!
+  page: Int!
+  size: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+input AffDateRangeInput {
+  endDate: DateTime!
+  startDate: DateTime!
+}
+
+type AffEarningsReport {
+  approvedConversions: Int!
+  approvedEarnings: Float!
+  availableForWithdrawal: Float!
+  paidConversions: Int!
+  paidEarnings: Float!
+  pendingConversions: Int!
+  pendingEarnings: Float!
+  totalConversions: Int!
+  totalEarnings: Float!
+}
+
+type AffLink {
+  affiliate: AffUser
+  affiliateId: String!
+  affiliateUserId: String
+  campaign: AffCampaign
+  campaignId: String!
+  clicks: [AffClick!]
+  commission: Float
+  conversionRate: Float
+  conversions: [AffConversion!]
+  createdAt: DateTime!
+  customAlias: String
+  description: String
+  expiresAt: DateTime
+  id: ID!
+  isActive: Boolean!
+  originalUrl: String!
+  revenue: Float
+  shortUrl: String
+  title: String
+  totalClicks: Int!
+  totalConversions: Int!
+  totalEarnings: Float!
+  trackingCode: String!
+  updatedAt: DateTime!
+  utmCampaign: String
+  utmContent: String
+  utmMedium: String
+  utmSource: String
+}
+
+input AffLinkSearchInput {
+  campaignId: String
+  isActive: Boolean
+  pagination: AffPaginationInput
+}
+
+input AffPaginationInput {
+  page: Int! = 1
+  size: Int! = 20
+  sortBy: String
+  sortOrder: String
+}
+
+"""Affiliate payment methods"""
+enum AffPaymentMethod {
+  BANK_TRANSFER
+  MOMO
+  OTHER
+  PAYPAL
+  ZALOPAY
+}
+
+type AffPaymentRequest {
+  accountDetails: String
+  adminNotes: String
+  affiliate: AffUser
+  affiliateId: String!
+  amount: Float!
+  completedAt: DateTime
+  createdAt: DateTime!
+  currency: String!
+  failedAt: DateTime
+  id: ID!
+  notes: String
+  paymentMethod: AffPaymentMethod!
+  periodEnd: DateTime!
+  periodStart: DateTime!
+  processedAt: DateTime
+  processedBy: String
+  requestedAt: DateTime!
+  status: AffPaymentStatus!
+  transactionId: String
+  updatedAt: DateTime!
+}
+
+input AffPaymentRequestSearchInput {
+  affiliateId: String
+  dateRange: AffDateRangeInput
+  pagination: AffPaginationInput
+  status: AffPaymentStatus
+}
+
+"""Affiliate payment status"""
+enum AffPaymentStatus {
+  CANCELLED
+  COMPLETED
+  FAILED
+  PENDING
+  PROCESSING
+}
+
+type AffUser {
+  averageOrderValue: Float
+  bankAccount: String
+  bankDetails: String
+  businessName: String
+  businessType: String
+  campaignJoins: [AffCampaignAffiliate!]
+  campaignsCreated: [AffCampaign!]
+  companyName: String
+  complianceDocuments: [String!]
+  conversionRate: Float
+  conversions: [AffConversion!]
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  isActive: Boolean!
+  isVerified: Boolean
+  joinedAt: DateTime!
+  lastActiveAt: DateTime
+  links: [AffLink!]
+  paymentEmail: String
+  paymentMethod: AffPaymentMethod
+  paymentRequests: [AffPaymentRequest!]
+  paypalEmail: String
+  role: AffUserRole!
+  socialProfiles: [String!]
+  status: String
+  taxId: String
+  totalClicks: Int
+  totalConversions: Int
+  totalEarnings: Float
+  updatedAt: DateTime!
+  userId: String!
+  website: String
+}
+
+"""Affiliate user roles"""
+enum AffUserRole {
+  ADMIN
+  AFFILIATE
+  MERCHANT
+}
+
+type AgentPerformance {
+  agentId: String!
+  agentName: String!
+  averageResponseTime: Int!
+  conversationsHandled: Int!
+  satisfactionScore: Float!
+}
+
+input AggregateInput {
+  _avg: JSONObject
+  _count: JSONObject
+  _max: JSONObject
+  _min: JSONObject
+  _sum: JSONObject
+  model: String!
+  where: JSONObject
+}
+
+input AnalyzeDocumentsForCourseInput {
+  """Optional additional context for AI analysis"""
+  additionalContext: String
+
+  """Array of source document IDs to analyze"""
+  documentIds: [ID!]!
+}
+
+type Answer {
+  createdAt: DateTime!
+  id: ID!
+  isCorrect: Boolean!
+  order: Int!
+  questionId: String!
+  text: String!
+  updatedAt: DateTime!
+}
+
+input ApplyCouponInput {
+  cartId: ID
+  couponCode: String!
+  sessionId: String
+}
+
+type ApplyCouponResponse {
+  cart: CartType
+  discountAmount: Float
+  errors: [String!]
+  message: String
+  success: Boolean!
+}
+
+input AssignRolePermissionInput {
+  conditions: JSON
+  effect: String! = "allow"
+  expiresAt: DateTime
+  permissionIds: [String!]!
+  roleId: String!
+}
+
+input AssignUserPermissionInput {
+  assignments: [PermissionAssignmentInput!]!
+  userId: String!
+}
+
+input AssignUserRoleInput {
+  assignments: [RoleAssignmentInput!]!
+  userId: String!
+}
+
+enum AuthProvider {
+  FACEBOOK
+  GOOGLE
+  LOCAL
+  PHONE
+}
+
+type AuthResponse {
+  accessToken: String!
+  redirectUrl: String
+  refreshToken: String!
+  user: User!
+}
+
+"""The type of a page block"""
+enum BlockType {
+  BLOG_CAROUSEL
+  BOOKMARK
+  BUTTON
+  CARD
+  CAROUSEL
+  COLUMN
+  COMPLETED_TASKS
+  CONTACT_FORM
+  CONTACT_INFO
+  CONTAINER
+  DIVIDER
+  DYNAMIC
+  FAQ
+  FLEX_COLUMN
+  FLEX_ROW
+  GALLERY
+  GRID
+  HERO
+  IMAGE
+  PRODUCT_CAROUSEL
+  PRODUCT_DETAIL
+  PRODUCT_LIST
+  RICH_TEXT
+  ROW
+  SEARCH
+  SECTION
+  SPACER
+  STATS
+  TEAM
+  TESTIMONIAL
+  TEXT
+  VIDEO
+}
+
+type BlogAuthorType {
+  email: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+  username: String!
+}
+
+type BlogCategoryType {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  isActive: Boolean!
+  name: String!
+  order: Int!
+  postCount: Int!
+  slug: String!
+  thumbnail: String
+  updatedAt: DateTime!
+}
+
+type BlogTagType {
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  slug: String!
+  updatedAt: DateTime!
+}
+
+type BlogType {
+  author: BlogAuthorType!
+  bannerUrl: String
+  canonicalUrl: String
+  category: BlogCategoryType
+  commentsEnabled: Boolean!
+  content: String!
+  createdAt: DateTime!
+  excerpt: String
+  featuredImage: String
+  id: ID!
+  images: [String!]
+  isFeatured: Boolean!
+  isPinned: Boolean!
+  isPublished: Boolean!
+  metaDescription: String
+  metaKeywords: [String!]
+  metaTitle: String
+  publishedAt: DateTime
+  readingTime: Int
+  shortDescription: String
+  slug: String!
+  status: String!
+  tags: [BlogTagType!]
+  thumbnailUrl: String
+  title: String!
+  updatedAt: DateTime!
+  viewCount: Int!
+  visibility: String!
+}
+
+input BulkDeleteFilesInput {
+  fileIds: [ID!]!
+}
+
+input BulkInvoiceInput {
+  bearerToken: String
+  includeDetails: Boolean = true
+  invoices: [CreateInvoiceInput!]!
+  skipExisting: Boolean = false
+}
+
+input BulkUpdateBlockOrderInput {
+  id: ID!
+  order: Int!
+}
+
+input BulkUpdateFilesInput {
+  fileIds: [ID!]!
+  folderId: ID
+  tags: [String!]
+  visibility: FileVisibility
+}
+
+input BulkUserActionInput {
+  action: String!
+  newRole: UserRoleType
+  userIds: [String!]!
+}
+
+type BulkUserActionResult {
+  affectedCount: Float!
+  errors: [String!]!
+  message: String!
+  success: Boolean!
+}
+
+type CallCenterConfig {
+  apiKey: String
+  apiUrl: String!
+  batchSize: Int!
+  createdAt: DateTime!
+  cronExpression: String
+  defaultDaysBack: Int!
+  domain: String!
+  id: ID!
+  isActive: Boolean!
+  lastSyncAt: DateTime
+  lastSyncError: String
+  lastSyncStatus: String
+  syncMode: CallCenterSyncMode!
+  totalRecordsSynced: Int!
+  updatedAt: DateTime!
+}
+
+type CallCenterRecord {
+  answerEpoch: String
+  billsec: String
+  callStatus: CallStatus!
+  callerIdNumber: String
+  destinationNumber: String
+  direction: CallDirection!
+  domain: String
+  duration: String
+  endEpoch: String
+  externalUuid: String!
+  id: ID!
+  outboundCallerIdNumber: String
+  rawData: JSONObject
+  recordPath: String
+  sipHangupDisposition: String
+  startEpoch: String
+  syncedAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CallCenterRecordFiltersInput {
+  callStatus: CallStatus
+  callerIdNumber: String
+  destinationNumber: String
+  direction: CallDirection
+  domain: String
+  search: String
+  startDateFrom: DateTime
+  startDateTo: DateTime
+}
+
+type CallCenterRecordPaginationInfo {
+  currentPage: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+type CallCenterSyncLog {
+  completedAt: DateTime
+  configId: String
+  duration: Int
+  errorDetails: JSONObject
+  errorMessage: String
+  fromDate: DateTime!
+  id: ID!
+  offset: Int!
+  recordsCreated: Int!
+  recordsFetched: Int!
+  recordsSkipped: Int!
+  recordsUpdated: Int!
+  startedAt: DateTime!
+  status: String!
+  syncType: CallCenterSyncMode!
+  toDate: DateTime!
+}
+
+"""Sync mode for call center data"""
+enum CallCenterSyncMode {
+  MANUAL
+  SCHEDULED
+}
+
+"""Direction of the call"""
+enum CallDirection {
+  INBOUND
+  LOCAL
+  OUTBOUND
+}
+
+"""Status of the call"""
+enum CallStatus {
+  ANSWER
+  BUSY
+  CANCELED
+  FAILED
+  NO_ANSWER
+  UNKNOWN
+}
+
+input CampaignSearchInput {
+  creatorId: String
+  maxCommissionRate: Float
+  minCommissionRate: Float
+  page: Int! = 1
+  query: String
+  size: Int! = 20
+  sortBy: String
+  sortOrder: String
+  status: AffCampaignStatus
+}
+
+type CanReviewResponse {
+  canReview: Boolean!
+  isVerifiedPurchase: Boolean
+  reason: String
+}
+
+input CancelOrderInput {
+  orderId: ID!
+  reason: String
+}
+
+type CancelOrderResponse {
+  errors: [String!]
+  message: String
+  order: OrderType
+  success: Boolean!
+}
+
+type CanonicalNameAdvanced {
+  avgPrice: Float
+  canonicalDvt: String
+  canonicalName: String!
+  canonicalPrice: Float
+  matchCount: Int!
+}
+
+type CartItemType {
+  cartId: ID!
+  createdAt: DateTime!
+  id: ID!
+  isAvailable: Boolean!
+  isPriceChanged: Boolean!
+  metadata: JSON
+  price: Float!
+  product: ProductSummaryType!
+  productId: ID!
+  quantity: Int!
+  subtotal: Float!
+  updatedAt: DateTime!
+  variant: ProductVariantSummaryType
+  variantId: ID
+}
+
+type CartType {
+  createdAt: DateTime!
+  discount: Float!
+  expiresAt: DateTime
+  id: ID!
+  itemCount: Int!
+  items: [CartItemType!]!
+  metadata: JSON
+  sessionId: String
+  shippingFee: Float!
+  subtotal: Float!
+  tax: Float!
+  total: Float!
+  updatedAt: DateTime!
+  userId: ID
+}
+
+input CategoryFiltersInput {
+  hasProducts: Boolean
+  isActive: Boolean
+  isFeatured: Boolean
+  parentId: ID
+  search: String
+}
+
+type CategoryType {
+  children: [CategoryType!]
+  createdAt: DateTime!
+  createdBy: String
+  description: String
+  displayOrder: Int!
+  icon: String
+  id: ID!
+  image: String
+  isActive: Boolean!
+  isFeatured: Boolean!
+  metaDescription: String
+  metaKeywords: String
+  metaTitle: String
+  name: String!
+  parent: CategoryType
+  parentId: String
+  productCount: Int
+  products: [ProductType!]
+  slug: String!
+  updatedAt: DateTime!
+  updatedBy: String
+}
+
+type Certificate {
+  certificateNumber: String!
+  completionDate: DateTime!
+  course: Course
+  courseId: ID!
+  courseName: String!
+  createdAt: DateTime!
+  enrollmentId: ID!
+  grade: String
+  id: ID!
+  instructorName: String!
+  issueDate: DateTime!
+  updatedAt: DateTime!
+  user: User
+  userId: ID!
+  verificationUrl: String
+}
+
+type CertificateStats {
+  thisMonth: Float!
+  thisYear: Float!
+  total: Float!
+}
+
+type CertificateVerification {
+  certificate: Certificate!
+  valid: Boolean!
+}
+
+input ChangePasswordInput {
+  currentPassword: String!
+  newPassword: String!
+}
+
+type ChatMedia {
+  caption: String
+  createdAt: DateTime!
+  filename: String!
+  id: ID!
+  messageId: String!
+  mimeType: String!
+  size: Int!
+  type: MediaType!
+  updatedAt: DateTime!
+  uploadedBy: String!
+  uploader: MediaUploader
+  url: String!
+}
+
+type ClearCartResponse {
+  cart: CartType
+  errors: [String!]
+  message: String
+  success: Boolean!
+}
+
+"""Clearance status for offboarding"""
+enum ClearanceStatus {
+  COMPLETE
+  PARTIAL
+  PENDING
+}
+
+type Comment {
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  parent: Comment
+  parentId: String
+  post: Post!
+  postId: String!
+  replies: [Comment!]!
+  updatedAt: DateTime!
+  user: User!
+  userId: String!
+}
+
+"""Employment contract types"""
+enum ContractType {
+  CONTRACT
+  FREELANCE
+  FULL_TIME
+  INTERNSHIP
+  PART_TIME
+  PROBATION
+}
+
+input CountInput {
+  model: String!
+  where: JSONObject
+}
+
+type Course {
+  approvalRequested: Boolean!
+  approvalRequestedAt: DateTime
+  approvedAt: DateTime
+  approvedBy: String
+  avgRating: Float!
+  category: CourseCategory
+  categoryId: String
+  createdAt: DateTime!
+  description: String
+  duration: Int
+  enrollmentCount: Int!
+  id: ID!
+  instructor: User
+  instructorId: String!
+  level: CourseLevel!
+  metaDescription: String
+  metaTitle: String
+  modules: [CourseModule!]
+  price: Float!
+  publishedAt: DateTime
+  rejectionReason: String
+  requirements: [String!]!
+  reviewCount: Int!
+  slug: String!
+  sourceDocumentsCount: Int
+  status: CourseStatus!
+  tags: [String!]!
+  targetAudience: [String!]!
+  thumbnail: String
+  title: String!
+  trailer: String
+  updatedAt: DateTime!
+  whatYouWillLearn: [String!]!
+}
+
+type CourseAnalysisResult {
+  """Aggregated keywords from documents"""
+  aggregatedKeywords: [String!]!
+
+  """Summary of the analysis"""
+  analysisSummary: String!
+
+  """Estimated duration in minutes"""
+  estimatedDuration: Int!
+
+  """Learning objectives based on content"""
+  learningObjectives: [String!]!
+
+  """Main topics identified"""
+  mainTopics: [String!]!
+
+  """Recommended difficulty level"""
+  recommendedLevel: String!
+
+  """Prerequisites and requirements"""
+  requirements: [String!]!
+
+  """Document IDs used for analysis"""
+  sourceDocumentIds: [String!]!
+
+  """AI-generated course description"""
+  suggestedDescription: String!
+
+  """Suggested course structure (modules outline)"""
+  suggestedStructure: JSON!
+
+  """AI-generated course title suggestion"""
+  suggestedTitle: String!
+
+  """Target audience"""
+  targetAudience: [String!]!
+
+  """What students will learn"""
+  whatYouWillLearn: [String!]!
+}
+
+type CourseCategory {
+  createdAt: DateTime!
+  description: String
+  icon: String
+  id: ID!
+  name: String!
+  parentId: ID
+  slug: String!
+  updatedAt: DateTime!
+}
+
+input CourseFiltersInput {
+  categoryId: String
+  instructorId: String
+  level: CourseLevel
+  limit: Int! = 20
+  maxPrice: Float
+  minPrice: Float
+  page: Int! = 1
+  search: String
+  sortBy: String! = "createdAt"
+  sortOrder: String! = "desc"
+  status: CourseStatus
+  tags: [String!]
+}
+
+"""Course difficulty level"""
+enum CourseLevel {
+  ADVANCED
+  BEGINNER
+  EXPERT
+  INTERMEDIATE
+}
+
+type CourseModule {
+  courseId: ID!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  lessons: [Lesson!]
+  order: Int!
+  title: String!
+  updatedAt: DateTime!
+}
+
+type CourseSourceDocument {
+  addedAt: DateTime!
+  addedBy: ID
+  courseId: ID!
+  description: String
+  document: SourceDocument!
+  documentId: ID!
+  id: ID!
+  isRequired: Boolean!
+  order: Int
+}
+
+"""Course publication status"""
+enum CourseStatus {
+  ARCHIVED
+  DRAFT
+  PUBLISHED
+}
+
+input CreateAIProviderInput {
+  apiKey: String!
+  description: String
+  isActive: Boolean = false
+  isDefault: Boolean = false
+  maxTokens: Int = 2000
+  model: String!
+  name: String!
+  priority: Int = 0
+  provider: String!
+  systemPrompt: String
+  tags: [String!]
+  temperature: Float = 0.7
+}
+
+input CreateAffLinkInput {
+  campaignId: String!
+  customAlias: String
+  description: String
+  expiresAt: DateTime
+  originalUrl: String
+  title: String
+  utmCampaign: String
+  utmContent: String
+  utmMedium: String
+  utmSource: String
+}
+
+input CreateAffUserInput {
+  bankAccount: String
+  businessType: String
+  companyName: String
+  description: String
+  paymentMethod: AffPaymentMethod
+  paypalEmail: String
+  role: AffUserRole!
+  taxId: String
+  website: String
+}
+
+input CreateAnswerInput {
+  isCorrect: Boolean!
+  order: Int!
+  text: String!
+}
+
+input CreateBlogCategoryInput {
+  description: String
+  isActive: Boolean = true
+  name: String!
+  order: Int = 0
+  slug: String
+  thumbnail: String
+}
+
+input CreateBlogInput {
+  author: String
+  canonicalUrl: String
+  categoryId: String
+  commentsEnabled: Boolean = true
+  content: String!
+  excerpt: String
+  featuredImage: String
+  images: [String!]
+  isFeatured: Boolean = false
+  isPinned: Boolean = false
+  metaDescription: String
+  metaKeywords: [String!]
+  metaTitle: String
+  publishedAt: DateTime
+  readingTime: Float
+  slug: String!
+  status: String = "DRAFT"
+  tagIds: [String!]
+  title: String!
+  visibility: String = "PUBLIC"
+}
+
+input CreateBlogTagInput {
+  name: String!
+  slug: String
+}
+
+input CreateCallCenterConfigInput {
+  apiKey: String
+  apiUrl: String!
+  batchSize: Int! = 200
+  cronExpression: String
+  defaultDaysBack: Int! = 30
+  domain: String!
+  isActive: Boolean! = true
+  syncMode: CallCenterSyncMode! = MANUAL
+}
+
+input CreateCampaignInput {
+  commissionRate: Float!
+  commissionType: String! = "percentage"
+  description: String
+  endDate: DateTime
+  fixedAmount: Float
+  maxAffiliates: Int
+  name: String!
+  productImage: String
+  productName: String!
+  productUrl: String!
+  requireApproval: Boolean! = true
+  startDate: DateTime
+}
+
+input CreateCategoryInput {
+  description: String
+  displayOrder: Int! = 0
+  icon: String
+  isActive: Boolean! = true
+  isFeatured: Boolean! = false
+  metaDescription: String
+  metaKeywords: String
+  metaTitle: String
+  name: String!
+  parentId: ID
+  slug: String!
+  thumbnail: String
+}
+
+input CreateCommentInput {
+  content: String!
+  parentId: String
+  postId: String!
+}
+
+input CreateCourseCategoryInput {
+  description: String
+  icon: String
+  name: String!
+  parentId: String
+}
+
+input CreateCourseInput {
+  categoryId: String
+  description: String
+  duration: Int
+  level: CourseLevel! = BEGINNER
+  metaDescription: String
+  metaTitle: String
+  price: Float! = 0
+  requirements: [String!]! = []
+  status: CourseStatus! = DRAFT
+  tags: [String!]! = []
+  targetAudience: [String!]! = []
+  thumbnail: String
+  title: String!
+  trailer: String
+  whatYouWillLearn: [String!]! = []
+}
+
+input CreateCustomTemplateInput {
+  blocks: JSON!
+  category: TemplateCategory!
+  description: String
+  name: String!
+  thumbnail: String
+}
+
+input CreateDiscussionInput {
+  content: String!
+  courseId: ID!
+  lessonId: ID
+  title: String!
+}
+
+input CreateEmployeeProfileInput {
+  bankAccountName: String
+  bankAccountNumber: String
+  bankBranch: String
+  bankName: String
+  certifications: JSON
+  citizenId: String
+  citizenIdIssueDate: String
+  citizenIdIssuePlace: String
+  city: String
+  contractType: ContractType
+  currentAddress: String
+  dateOfBirth: String
+  department: String
+  directManager: String
+  displayName: String
+  district: String
+  education: JSON
+  emergencyContactAddress: String
+  emergencyContactName: String
+  emergencyContactPhone: String
+  emergencyContactRelationship: String
+  employeeCode: String!
+  fullName: String!
+  gender: Gender
+  healthInsuranceNumber: String
+  languages: JSON
+  level: String
+  maritalStatus: MaritalStatus
+  nationality: String = "Vietnam"
+  notes: String
+  passportExpiryDate: String
+  passportIssueDate: String
+  passportNumber: String
+  permanentAddress: String
+  personalEmail: String
+  personalPhone: String
+  placeOfBirth: String
+  position: String
+  postalCode: String
+  probationEndDate: String
+  salaryGrade: String
+  skills: [String!]
+  socialInsuranceNumber: String
+  startDate: String
+  taxCode: String
+  team: String
+  userId: String!
+  ward: String
+  workLocation: String
+}
+
+input CreateEmploymentHistoryInput {
+  approvalStatus: String
+  approvedAt: String
+  approvedBy: String
+  contractEndDate: String
+  contractNumber: String
+  contractStartDate: String
+  contractType: ContractType
+  documentIds: [String!]
+  effectiveDate: String!
+  employeeProfileId: String!
+  eventDate: String!
+  eventType: EmploymentEventType!
+  fromDepartment: String
+  fromLevel: String
+  fromPosition: String
+  internalNotes: String
+  lastWorkingDay: String
+  newSalaryGrade: String
+  newValue: JSON
+  notes: String
+  noticePeriodDays: Int
+  previousValue: JSON
+  processedBy: String
+  salaryChangePercentage: Float
+  terminationReason: String
+  terminationType: TerminationType
+  toDepartment: String
+  toLevel: String
+  toPosition: String
+  userId: String!
+}
+
+input CreateFileShareInput {
+  canDownload: Boolean! = true
+  canView: Boolean! = true
+  expiresAt: DateTime
+  fileId: ID!
+  password: String
+  sharedWith: String
+}
+
+input CreateFolderInput {
+  color: String
+  description: String
+  icon: String
+  name: String!
+  parentId: ID
+}
+
+input CreateInput {
+  data: JSONObject!
+  include: JSONObject
+  model: String!
+  select: JSONObject
+}
+
+input CreateInvoiceDetailInput {
+  dgia: Float
+  dvtinh: String
+  idhdon: String!
+  sluong: Float
+  stt: Int
+  ten: String
+  thtien: Float
+  tsuat: Float
+  tthue: Float
+}
+
+input CreateInvoiceInput {
+  brandname: String
+  cqt: String
+  gchu: String
+  hthdon: String
+  htttoan: String
+  idServer: String
+  khhdon: String
+  khmshdon: String
+  ladhddt: Boolean
+  nbdchi: String
+  nbmst: String
+  nbsdthoai: String
+  nbstkhoan: String
+  nbten: String
+  nmdchi: String
+  nmmst: String
+  nmstkhoan: String
+  nmten: String
+  shdon: String
+  tdlap: DateTime
+  tgtcthue: Float
+  tgtthue: Float
+  tgtttbchu: String
+  tgtttbso: Float
+  tthai: String
+}
+
+input CreateLessonInput {
+  content: String
+  description: String
+  duration: Int
+  moduleId: ID!
+  order: Int
+  title: String!
+  type: String!
+}
+
+input CreateManyInput {
+  data: [JSONObject!]!
+  model: String!
+  skipDuplicates: Boolean! = false
+}
+
+input CreateMenuInput {
+  badge: String
+  badgeColor: String
+  blogCategoryId: String
+  blogPostId: String
+  categoryId: String
+  cssClass: String
+  customData: JSON
+  description: String
+  externalUrl: String
+  icon: String
+  iconType: String
+  image: String
+  isActive: Boolean
+  isPublic: Boolean
+  isVisible: Boolean
+  linkType: String
+  metadata: JSON
+  order: Int
+  pageId: String
+  parentId: String
+  productId: String
+  queryConditions: JSON
+  requiredPermissions: [String!]
+  requiredRoles: [String!]
+  route: String
+  slug: String!
+  target: String
+  title: String!
+  type: String
+  url: String
+}
+
+input CreateModuleInput {
+  courseId: ID!
+  description: String
+  order: Int
+  title: String!
+}
+
+input CreateOffboardingProcessInput {
+  accessRevocationList: JSON
+  assetReturnChecklist: JSON
+  effectiveDate: String
+  eligibleForRehire: Boolean
+  employeeComments: String
+  employeeProfileId: String!
+  exitInterviewBy: String
+  exitInterviewDate: String
+  exitInterviewForm: JSON
+  exitInterviewNotes: String
+  exitInterviewScheduled: Boolean! = false
+  exitReason: String!
+  exitType: TerminationType!
+  hrNotes: String
+  initiatedBy: String!
+  knowledgeTransferPlan: JSON
+  lastWorkingDay: String!
+  managerComments: String
+  noticeGivenDate: String
+  noticePeriodDays: Int
+  noticeRequired: Boolean! = true
+  processOwner: String
+  referenceLetterRequested: Boolean! = false
+  rehireNotes: String
+  resignationLetter: String
+  userId: String!
+}
+
+input CreateOnboardingChecklistInput {
+  assignedTo: String
+  buddyId: String
+  checklistTemplate: String
+  createdBy: String
+  employeeProfileId: String!
+  hrNotes: String
+  startDate: String!
+  targetDate: String
+  tasks: JSON!
+  totalTasks: Int! = 0
+  userId: String!
+}
+
+input CreateOrderInput {
+  billingAddress: ShippingAddressInput
+  cartId: ID
+  customerNote: String
+  guestEmail: String
+  guestName: String
+  guestPhone: String
+  items: [OrderItemInput!]
+  metadata: JSON
+  paymentMethod: PaymentMethod! = CASH_ON_DELIVERY
+  sessionId: String
+  shippingAddress: ShippingAddressInput!
+  shippingMethod: ShippingMethod! = STANDARD
+}
+
+type CreateOrderResponse {
+  errors: [String!]
+  message: String
+  order: OrderType
+  success: Boolean!
+}
+
+input CreatePageBlockInput {
+  children: [CreatePageBlockInput!]
+  config: JSONObject
+  content: JSONObject
+  depth: Int! = 0
+  isVisible: Boolean! = true
+  order: Int! = 0
+  parentId: String
+  style: JSONObject
+  type: BlockType!
+}
+
+input CreatePageInput {
+  blocks: [CreatePageBlockInput!]
+  content: JSONObject
+  description: String
+  dynamicConfig: JSONObject
+  isDynamic: Boolean = false
+  isHomepage: Boolean = false
+  ogImage: String
+  seoDescription: String
+  seoKeywords: [String!]
+  seoTitle: String
+  slug: String!
+  status: PageStatus! = DRAFT
+  title: String!
+}
+
+input CreatePaymentRequestInput {
+  accountDetails: String
+  amount: Float!
+  notes: String
+  paymentMethod: AffPaymentMethod!
+  periodEnd: DateTime!
+  periodStart: DateTime!
+}
+
+input CreatePermissionInput {
+  action: String!
+  category: String! = "general"
+  conditions: JSON
+  description: String
+  displayName: String!
+  metadata: JSON
+  name: String!
+  resource: String!
+  scope: String
+}
+
+input CreatePostInput {
+  content: String!
+  excerpt: String
+  featuredImage: String
+  slug: String!
+  status: PostStatus! = DRAFT
+  tags: [String!]
+  title: String!
+}
+
+input CreateProductImageInput {
+  alt: String
+  isPrimary: Boolean! = false
+  order: Int! = 0
+  productId: ID!
+  title: String
+  url: String!
+}
+
+input CreateProductInput {
+  attributes: JSON
+  barcode: String
+  categoryId: ID!
+  costPrice: Float
+  description: String
+  displayOrder: Int! = 0
+  isBestSeller: Boolean! = false
+  isFeatured: Boolean! = false
+  isNewArrival: Boolean! = false
+  isOnSale: Boolean! = false
+  maxStock: Int
+  metaDescription: String
+  metaKeywords: String
+  metaTitle: String
+  minStock: Int! = 0
+  name: String!
+  origin: String
+  originalPrice: Float
+  price: Float!
+  shortDesc: String
+  sku: String
+  slug: String!
+  status: ProductStatus! = ACTIVE
+  stock: Int! = 0
+  thumbnail: String
+  unit: ProductUnit! = KG
+  weight: Float
+}
+
+input CreateProductVariantInput {
+  attributes: JSON
+  barcode: String
+  isActive: Boolean! = true
+  name: String!
+  order: Int! = 0
+  price: Float!
+  productId: ID!
+  sku: String
+  stock: Int! = 0
+}
+
+input CreateProjectInput {
+  avatar: String
+  description: String
+  name: String!
+}
+
+input CreateQuestionInput {
+  answers: [CreateAnswerInput!]!
+  explanation: String
+  order: Int!
+  points: Int! = 1
+  question: String!
+  type: String!
+}
+
+input CreateQuizInput {
+  description: String
+  lessonId: String!
+  passingScore: Int! = 70
+  questions: [CreateQuestionInput!]!
+  timeLimit: Int
+  title: String!
+}
+
+input CreateReplyInput {
+  content: String!
+  discussionId: ID!
+  parentId: ID
+}
+
+input CreateReviewInput {
+  comment: String
+  courseId: ID!
+  rating: Int!
+}
+
+input CreateRoleInput {
+  description: String
+  displayName: String!
+  metadata: JSON
+  name: String!
+  parentId: String
+  permissionIds: [String!]
+  priority: Int! = 0
+}
+
+input CreateSourceDocumentCategoryInput {
+  color: String
+  description: String
+  icon: String
+  name: String!
+  parentId: ID
+  slug: String!
+}
+
+input CreateSourceDocumentInput {
+  categoryId: ID
+  content: String
+  description: String
+  duration: Int
+  fileName: String
+  fileSize: Int
+  metadata: JSON
+  mimeType: String
+  status: SourceDocumentStatus! = DRAFT
+  tags: [String!]! = []
+  thumbnailUrl: String
+  title: String!
+  type: SourceDocumentType!
+  url: String
+}
+
+input CreateSupportConversationInput {
+  customerEmail: String
+  customerId: String
+  customerIp: String
+  customerName: String
+  customerPhone: String
+  platform: String
+  platformUserId: String
+  platformUserName: String
+  subject: String
+}
+
+input CreateSupportMessageInput {
+  content: String!
+  conversationId: String!
+  messageType: String
+  metadata: JSON
+  senderId: String
+  senderName: String
+  senderType: String!
+}
+
+input CreateSystemGuideInput {
+  content: String
+  description: String
+  icon: String
+  isPublished: Boolean
+  order: Float
+  parentId: String
+  title: String!
+  type: String!
+}
+
+input CreateSystemReleaseInput {
+  breakingChanges: [String!]
+  bugfixes: [String!]
+  deploymentDate: DateTime
+  deprecations: [String!]
+  description: String
+  features: [String!]
+  improvements: [String!]
+  keywords: [String!]
+  metaDescription: String
+  metaTitle: String
+  releaseDate: DateTime
+  releaseNotes: String
+  releaseType: ReleaseType!
+  screenshotUrls: [String!]
+  slug: String
+  summary: String
+  thumbnailUrl: String
+  title: String!
+  upgradeGuide: String
+  version: String!
+  versionNumber: String
+  videoUrl: String
+}
+
+input CreateTaskCommentInput {
+  content: String!
+  parentId: String
+  taskId: String!
+}
+
+input CreateTaskInput {
+  assignedTo: [ID!]
+  category: TaskCategory!
+  description: String
+  dueDate: String
+  mentions: [ID!]
+  order: Float
+  parentId: String
+  priority: TaskPriority!
+  status: TaskStatus
+  tags: [String!]
+  title: String!
+}
+
+input CreateTechnicalSupportMessageInput {
+  attachmentUrls: [String!]
+  authorEmail: String
+  authorId: String
+  authorName: String
+  content: String!
+  isInternal: Boolean! = false
+  ticketId: String!
+}
+
+input CreateTechnicalSupportTicketInput {
+  attachmentUrls: [String!]
+  browserInfo: String
+  category: SupportTicketCategory!
+  customerEmail: String
+  customerId: String
+  customerName: String
+  customerPhone: String
+  description: String!
+  deviceInfo: String
+  environment: String
+  errorLogs: String
+  osInfo: String
+  priority: SupportTicketPriority! = MEDIUM
+  relatedOrderId: String
+  relatedUrl: String
+  screenshotUrls: [String!]
+  subject: String!
+  tags: [String!]
+}
+
+input CreateWebsiteSettingInput {
+  category: String!
+  createdBy: String
+  description: String
+  group: String
+  isActive: Boolean
+  isPublic: Boolean
+  key: String!
+  label: String!
+  options: JSON
+  order: Float
+  type: String!
+  updatedBy: String
+  validation: JSON
+  value: String
+}
+
+type CustomTemplate {
+  blocks: JSON!
+  category: TemplateCategory!
+  createdAt: DateTime!
+  description: String
+  id: String!
+  isArchived: Boolean!
+  isPublic: Boolean!
+  name: String!
+  thumbnail: String
+  updatedAt: DateTime!
+  usageCount: Float!
+  user: User!
+  userId: String!
+}
+
+type DatabaseSyncResult {
+  detailsSaved: Int!
+  errors: [String!]!
+  invoicesSaved: Int!
+  message: String!
+  success: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteInput {
+  include: JSONObject
+  model: String!
+  select: JSONObject
+  where: JSONObject!
+}
+
+input DeleteManyInput {
+  model: String!
+  where: JSONObject!
+}
+
+input DeleteNotificationInput {
+  notificationId: String!
+}
+
+type DeleteResponse {
+  message: String!
+  success: Boolean!
+}
+
+type Discussion {
+  content: String!
+  course: Course
+  createdAt: DateTime!
+  id: ID!
+  isPinned: Boolean!
+  lesson: Lesson
+  replies: [DiscussionReply!]!
+  title: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type DiscussionReply {
+  children: [DiscussionReply!]
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  parentId: String
+  updatedAt: DateTime!
+  user: User!
+}
+
+type DuplicateGroup {
+  count: Int!
+  productIds: [String!]!
+  ten2: String!
+}
+
+type DuplicateGroupAdvanced {
+  dvt: String!
+  price_range: String!
+  product_count: Int!
+  product_ids: [String!]!
+  ten2: String!
+}
+
+type EmployeeListResponse {
+  employees: [EmployeeProfile!]!
+  hasMore: Boolean!
+  total: Int!
+}
+
+type EmployeeProfile {
+  bankAccountName: String
+  bankAccountNumber: String
+  bankBranch: String
+  bankName: String
+  certifications: JSON
+  citizenId: String
+  citizenIdIssueDate: DateTime
+  citizenIdIssuePlace: String
+  city: String
+  contractType: ContractType
+  createdAt: DateTime!
+  createdBy: String
+  currentAddress: String
+  dateOfBirth: DateTime
+  department: String
+  directManager: String
+  displayName: String
+  district: String
+  education: JSON
+  emergencyContactAddress: String
+  emergencyContactName: String
+  emergencyContactPhone: String
+  emergencyContactRelationship: String
+  employeeCode: String!
+  fullName: String!
+  gender: Gender
+  healthInsuranceNumber: String
+  id: ID!
+  isActive: Boolean!
+  languages: JSON
+  level: String
+  maritalStatus: MaritalStatus
+  nationality: String
+  notes: String
+  passportExpiryDate: DateTime
+  passportIssueDate: DateTime
+  passportNumber: String
+  permanentAddress: String
+  personalEmail: String
+  personalPhone: String
+  placeOfBirth: String
+  position: String
+  postalCode: String
+  probationEndDate: DateTime
+  salaryGrade: String
+  skills: [String!]
+  socialInsuranceNumber: String
+  startDate: DateTime
+  taxCode: String
+  team: String
+  updatedAt: DateTime!
+  updatedBy: String
+  userId: String!
+  ward: String
+  workLocation: String
+}
+
+"""Employment event types for tracking employment history"""
+enum EmploymentEventType {
+  DEPARTMENT_CHANGE
+  OFFBOARDING
+  ONBOARDING
+  POSITION_CHANGE
+  PROMOTION
+  SALARY_CHANGE
+  TRANSFER
+}
+
+type EmploymentHistory {
+  approvalStatus: String
+  approvedAt: DateTime
+  approvedBy: String
+  contractEndDate: DateTime
+  contractNumber: String
+  contractStartDate: DateTime
+  contractType: ContractType
+  createdAt: DateTime!
+  documentIds: [String!]
+  effectiveDate: DateTime!
+  employeeProfileId: String!
+  eventDate: DateTime!
+  eventType: EmploymentEventType!
+  fromDepartment: String
+  fromLevel: String
+  fromPosition: String
+  id: ID!
+  internalNotes: String
+  lastWorkingDay: DateTime
+  newSalaryGrade: String
+  newValue: JSON
+  notes: String
+  noticePeriodDays: Int
+  previousValue: JSON
+  processedBy: String
+  salaryChangePercentage: Float
+  terminationReason: String
+  terminationType: TerminationType
+  toDepartment: String
+  toLevel: String
+  toPosition: String
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input EnrollCourseInput {
+  courseId: ID!
+}
+
+type Enrollment {
+  completedAt: DateTime
+  course: Course
+  courseId: ID!
+  enrolledAt: DateTime!
+  expiresAt: DateTime
+  id: ID!
+  lastAccessedAt: DateTime
+  lessonProgress: [LessonProgress!]
+  progress: Int!
+  status: EnrollmentStatus!
+  userId: ID!
+}
+
+"""Status of course enrollment"""
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+
+type ExtDetailhoadon {
+  createdAt: DateTime!
+  dgia: Float
+  dvtinh: String
+  dvtte: String
+  id: ID!
+  idhdon: String!
+  invoice: ExtListhoadon
+  ltsuat: Float
+  sluong: Float
+  stbchu: String
+  stckhau: Float
+  stt: Int
+  sxep: Int
+  tchat: String
+  ten: String
+  tgia: Float
+  thtcthue: Float
+  thtien: Float
+  tlckhau: Float
+  tsuat: Float
+  tthhdtrung: String
+  tthue: Float
+  updatedAt: DateTime!
+}
+
+type ExtListhoadon {
+  brandname: String
+  cqt: String
+  createdAt: DateTime!
+  details: [ExtDetailhoadon!]
+  gchu: String
+  hdTrung: String
+  hdon: String
+  hthdon: String
+  htttoan: String
+  id: ID!
+  idServer: String
+  isHDTrung: Boolean
+  khhdon: String
+  khmshdon: String
+  ladhddt: Boolean
+  mhso: String
+  mkhang: String
+  msttcgp: String
+  nbdchi: String
+  nbdctdtu: String
+  nbfax: String
+  nbmst: String
+  nbsdthoai: String
+  nbstkhoan: String
+  nbten: String
+  nbwebsite: String
+  nmcmnd: String
+  nmdchi: String
+  nmdctdtu: String
+  nmmst: String
+  nmsdthoai: String
+  nmstkhoan: String
+  nmten: String
+  qrcode: String
+  shdon: String
+  tdlap: DateTime
+  tgia: Float
+  tgtcthue: Float
+  tgtkcthue: Float
+  tgtkhac: Float
+  tgtphi: Float
+  tgtthue: Float
+  tgtttbchu: String
+  tgtttbso: Float
+  thdon: String
+  thlap: String
+  tlhdon: String
+  tthai: String
+  tttbao: String
+  ttxly: String
+  updatedAt: DateTime!
+}
+
+type File {
+  alt: String
+  bucket: String!
+  createdAt: DateTime!
+  description: String
+  downloadCount: Int!
+  etag: String
+  fileType: FileType!
+  filename: String!
+  folder: FileFolder
+  folderId: ID
+  height: Int
+  id: ID!
+  metadata: JSON
+  mimeType: String!
+  originalName: String!
+  path: String!
+  shares: [FileShare!]!
+  size: Int!
+  tags: [String!]!
+  thumbnailUrl: String
+  title: String
+  updatedAt: DateTime!
+  url: String!
+  userId: ID!
+  viewCount: Int!
+  visibility: FileVisibility!
+  width: Int
+}
+
+input FileFiltersInput {
+  fileType: FileType
+  folderId: ID
+  mimeType: String
+  search: String
+  tags: [String!]
+  visibility: FileVisibility
+}
+
+type FileFolder {
+  children: [FileFolder!]!
+  color: String
+  createdAt: DateTime!
+  description: String
+  files: [File!]!
+  icon: String
+  id: ID!
+  isSystem: Boolean!
+  name: String!
+  parent: FileFolder
+  parentId: ID
+  path: String!
+  updatedAt: DateTime!
+  userId: ID!
+}
+
+type FileShare {
+  accessCount: Int!
+  canDownload: Boolean!
+  canView: Boolean!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  file: File!
+  fileId: ID!
+  id: ID!
+  lastAccess: DateTime
+  password: String
+  sharedBy: String!
+  sharedWith: String
+  token: String!
+}
+
+type FileStorageStats {
+  filesByType: [FileTypeCount!]!
+  filesByVisibility: [VisibilityCount!]!
+  totalFiles: Int!
+  totalFolders: Int!
+  totalSize: Int!
+}
+
+"""Type of file"""
+enum FileType {
+  ARCHIVE
+  AUDIO
+  DOCUMENT
+  IMAGE
+  OTHER
+  VIDEO
+}
+
+type FileTypeCount {
+  count: Int!
+  totalSize: Int!
+  type: FileType!
+}
+
+type FileUploadResponse {
+  file: File!
+  message: String
+  success: Boolean!
+}
+
+type FileUploadResult {
+  bucket: String!
+  filename: String!
+  id: String!
+  mimetype: String!
+  size: Int!
+  url: String!
+}
+
+"""Visibility level of the file"""
+enum FileVisibility {
+  PRIVATE
+  PUBLIC
+  SHARED
+}
+
+input FindManyInput {
+  include: JSONObject
+  model: String!
+  orderBy: JSONObject
+  pagination: PaginationQueryInput
+  select: JSONObject
+  where: JSONObject
+}
+
+input FindUniqueInput {
+  include: JSONObject
+  model: String!
+  select: JSONObject
+  where: JSONObject!
+}
+
+"""Gender types"""
+enum Gender {
+  FEMALE
+  MALE
+  OTHER
+}
+
+input GenerateCourseFromDocumentsInput {
+  """Additional context for generation"""
+  additionalContext: String
+
+  """Optional additional instructions for AI"""
+  additionalPrompt: String
+
+  """Optional category for the generated course"""
+  categoryId: String
+
+  """Course description (user can edit AI suggestion)"""
+  description: String
+
+  """Array of source document IDs to analyze"""
+  documentIds: [ID!]!
+
+  """Learning objectives (user can edit AI suggestion)"""
+  learningObjectives: [String!]
+
+  """Course level (user can edit AI suggestion)"""
+  level: String
+
+  """Requirements (user can edit AI suggestion)"""
+  requirements: [String!]
+
+  """Target audience (user can edit AI suggestion)"""
+  targetAudience: [String!]
+
+  """Course title (user can edit AI suggestion)"""
+  title: String
+
+  """What you will learn (user can edit AI suggestion)"""
+  whatYouWillLearn: [String!]
+}
+
+input GetCategoriesInput {
+  filters: CategoryFiltersInput
+  includeChildren: Boolean = false
+  limit: Int = 50
+  page: Int = 1
+  sortBy: String = "displayOrder"
+  sortOrder: String = "asc"
+}
+
+input GetFilesInput {
+  allUsers: Boolean = false
+  filters: FileFiltersInput
+  limit: Int! = 20
+  page: Int! = 1
+  sortBy: String
+  sortOrder: String
+}
+
+input GetProductsInput {
+  filters: ProductFiltersInput
+  limit: Int = 20
+  page: Int = 1
+  sortBy: String = "createdAt"
+  sortOrder: String = "desc"
+}
+
+input GetReviewsInput {
+  courseId: ID!
+  filterByRating: Int
+  page: Int = 1
+  pageSize: Int = 10
+  sortBy: String = "recent"
+}
+
+input GroupByInput {
+  _avg: JSONObject
+  _count: JSONObject
+  _max: JSONObject
+  _min: JSONObject
+  _sum: JSONObject
+  by: [String!]!
+  having: JSONObject
+  model: String!
+  orderBy: JSONObject
+  skip: Int
+  take: Int
+  where: JSONObject
+}
+
+type GuideAuthor {
+  avatar: String
+  email: String!
+  id: ID!
+  name: String
+}
+
+enum GuideType {
+  API_REFERENCE
+  BEST_PRACTICES
+  FAQ
+  QUICK_START
+  TROUBLESHOOTING
+  TUTORIAL
+  USER_GUIDE
+  VIDEO_GUIDE
+}
+
+type HRStatistics {
+  activeEmployees: Int!
+  inactiveEmployees: Int!
+  offboarding: OffboardingStats!
+  onboarding: OnboardingStats!
+  totalEmployees: Int!
+}
+
+type ImportError {
+  data: String
+  error: String!
+  row: Int!
+}
+
+type ImportStatistics {
+  detailsCreated: Int!
+  duplicatesSkipped: Int!
+  invoicesCreated: Int!
+  totalDetails: Int!
+  totalInvoices: Int!
+  validationErrors: Int!
+}
+
+enum IntegrationPlatform {
+  FACEBOOK
+  TELEGRAM
+  WEBSITE
+  WHATSAPP
+  ZALO
+}
+
+type InvoiceCreated {
+  detailsCount: Int!
+  id: ID!
+  khhdon: String!
+  nbten: String!
+  nmten: String!
+  shdon: String!
+  status: String!
+  tgtttbso: Float!
+}
+
+input InvoiceSearchInput {
+  fromDate: DateTime
+  khmshdon: String
+  nbmst: String
+  nmmst: String
+  page: Int = 0
+  shdon: String
+  size: Int = 20
+  sortBy: String = "tdlap"
+  sortOrder: String = "desc"
+  toDate: DateTime
+  tthai: String
+}
+
+type InvoiceSearchResult {
+  invoices: [ExtListhoadon!]!
+  page: Int!
+  size: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type InvoiceStats {
+  lastSyncDate: DateTime
+  totalAmount: Float!
+  totalDetails: Int!
+  totalInvoices: Int!
+  totalTax: Float!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+input JoinCampaignInput {
+  campaignId: String!
+  message: String
+}
+
+type Lesson {
+  content: String
+  createdAt: DateTime!
+  description: String
+  duration: Int
+  id: ID!
+  isFree: Boolean!
+  moduleId: ID!
+  order: Int!
+  quizzes: [Quiz!]
+  title: String!
+  type: LessonType!
+  updatedAt: DateTime!
+}
+
+type LessonProgress {
+  completed: Boolean!
+  completedAt: DateTime
+  createdAt: DateTime!
+  enrollmentId: String!
+  id: ID!
+  lessonId: String!
+  updatedAt: DateTime!
+}
+
+"""Type of lesson content"""
+enum LessonType {
+  ASSIGNMENT
+  QUIZ
+  TEXT
+  VIDEO
+}
+
+input LinkDocumentToCourseInput {
+  courseId: ID!
+  description: String
+  documentId: ID!
+  isRequired: Boolean! = false
+  order: Int
+}
+
+input LoginUserInput {
+  emailOrUsername: String!
+  password: String!
+  rememberMe: Boolean
+}
+
+"""Marital status types"""
+enum MaritalStatus {
+  DIVORCED
+  MARRIED
+  SINGLE
+  WIDOWED
+}
+
+input MarkNotificationAsReadInput {
+  notificationId: String!
+}
+
+"""Type of uploaded media"""
+enum MediaType {
+  DOCUMENT
+  IMAGE
+  VIDEO
+}
+
+type MediaUploader {
+  avatar: String
+  email: String
+  firstName: String
+  id: ID!
+  lastName: String
+}
+
+type MentionerType {
+  avatar: String
+  firstName: String
+  id: String!
+  lastName: String
+  username: String!
+}
+
+input MenuFilterDto {
+  isActive: Boolean
+  isPublic: Boolean
+  isVisible: Boolean
+  parentId: String
+  search: String
+  type: String
+}
+
+type MenuHierarchicalDto {
+  badge: String
+  badgeColor: String
+  children: [MenuHierarchicalDto!]
+  createdAt: DateTime!
+  createdBy: String
+  description: String
+  externalUrl: String
+  icon: String
+  iconType: String
+  id: String!
+  image: String
+  isActive: Boolean!
+  isProtected: Boolean!
+  isPublic: Boolean!
+  isVisible: Boolean!
+  level: Int!
+  order: Int!
+  parentId: String
+  path: String
+  requiredPermissions: [String!]!
+  requiredRoles: [String!]!
+  route: String
+  slug: String!
+  target: String!
+  title: String!
+  type: String!
+  updatedAt: DateTime!
+  updatedBy: String
+  url: String
+}
+
+input MenuOrderDto {
+  """Menu ID"""
+  id: ID!
+
+  """New order/position"""
+  order: Int!
+}
+
+type MenuPaginationResponseDto {
+  hasMore: Boolean!
+  items: [MenuResponseDto!]!
+  page: Int!
+  pageSize: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type MenuResponseDto {
+  badge: String
+  badgeColor: String
+  blogCategoryId: String
+  blogPostId: String
+  categoryId: String
+  children: [MenuResponseDto!]
+  createdAt: DateTime!
+  createdBy: String
+  cssClass: String
+  customData: JSON
+  description: String
+  externalUrl: String
+  icon: String
+  iconType: String
+  id: String!
+  image: String
+  isActive: Boolean!
+  isProtected: Boolean!
+  isPublic: Boolean!
+  isVisible: Boolean!
+  level: Int!
+  linkType: String
+  metadata: JSON
+  order: Int!
+  pageId: String
+  parentId: String
+  path: String
+  productId: String
+  queryConditions: String
+  requiredPermissions: [String!]!
+  requiredRoles: [String!]!
+  route: String
+  slug: String!
+  target: String!
+  title: String!
+  type: String!
+  updatedAt: DateTime!
+  updatedBy: String
+  url: String
+}
+
+input MergeCartsInput {
+  sessionId: String!
+  userId: ID
+}
+
+type MergeCartsResponse {
+  cart: CartType
+  errors: [String!]
+  message: String
+  success: Boolean!
+}
+
+input MoveFilesInput {
+  fileIds: [ID!]!
+  targetFolderId: ID
+}
+
+type Mutation {
+  addPageBlock(input: CreatePageBlockInput!, pageId: String!): PageBlock!
+  addProductImage(input: CreateProductImageInput!): ProductType!
+  addProductVariant(input: CreateProductVariantInput!): ProductType!
+
+  """Thêm thành viên vào project"""
+  addProjectMember(input: AddMemberInput!, projectId: ID!): ProjectMember!
+  addToCart(input: AddToCartInput!): AddToCartResponse!
+  addTrackingEvent(description: String!, location: String!, orderId: ID!, status: String): OrderType!
+  adminCreateUser(input: AdminCreateUserInput!): User!
+  adminResetPassword(input: AdminResetPasswordInput!): AdminResetPasswordResult!
+  adminUpdateUser(id: String!, input: AdminUpdateUserInput!): User!
+  analyzeSourceDocument(id: ID!): SourceDocument!
+  applyCoupon(input: ApplyCouponInput!): ApplyCouponResponse!
+  approveConversion(id: String!): Boolean!
+  approveCourse(courseId: ID!): Course!
+  approveDocument(documentId: ID!): SourceDocument!
+  archiveCourse(id: ID!): Course!
+  assignConversationToAgent(agentId: String!, conversationId: String!): SupportConversation!
+  assignRolePermissions(input: AssignRolePermissionInput!): Boolean!
+  assignRoleToUser(expiresAt: DateTime, roleId: String!, userId: String!): UserRoleAssignmentType!
+
+  """Assign task to users"""
+  assignTask(taskId: String!, userIds: [ID!]!): Task!
+  assignTechnicalSupportTicket(assignedToId: String!, ticketId: String!): TechnicalSupportTicket!
+  assignUserPermissions(input: AssignUserPermissionInput!): Boolean!
+  assignUserRoles(input: AssignUserRoleInput!): Boolean!
+  batchUploadAndMap(items: JSON!): JSON!
+  bulkAnalyzeDocuments: String!
+  bulkCreateInvoices(input: BulkInvoiceInput!): DatabaseSyncResult!
+  bulkDeleteFiles(input: BulkDeleteFilesInput!): Int!
+  bulkImportData(data: JSON!, mappingConfig: JSON, modelName: String!): JSON!
+  bulkUpdateFiles(input: BulkUpdateFilesInput!): [File!]!
+  bulkUserAction(input: BulkUserActionInput!): BulkUserActionResult!
+  cancelOrder(input: CancelOrderInput!): CancelOrderResponse!
+  changePassword(input: ChangePasswordInput!): Boolean!
+
+  """Clear all cached data"""
+  clearCache: Boolean!
+  clearCart(sessionId: String): ClearCartResponse!
+  completeOffboarding(id: ID!): OffboardingProcess!
+  completeOnboardingTask(checklistId: ID!, taskId: ID!): OnboardingChecklist!
+  copyImageFromUrl(bucket: String = "images", editOptions: JSON, filename: String!, imageUrl: String!): JSON!
+
+  """Tạo AI provider mới"""
+  createAIProvider(input: CreateAIProviderInput!): AIProvider!
+  createAffiliateCampaign(input: CreateCampaignInput!): AffCampaign!
+  createAffiliateLink(input: CreateAffLinkInput!): AffLink!
+  createAffiliateUser(input: CreateAffUserInput!): AffUser!
+  createBlog(input: CreateBlogInput!): BlogType!
+  createBlogCategory(input: CreateBlogCategoryInput!): BlogCategoryType!
+  createBlogTag(input: CreateBlogTagInput!): BlogTagType!
+  createCallCenterConfig(input: CreateCallCenterConfigInput!): CallCenterConfig!
+  createCategory(input: CreateCategoryInput!): CategoryType!
+  createComment(input: CreateCommentInput!): Comment!
+  createCourse(createCourseInput: CreateCourseInput!): Course!
+  createCourseCategory(createCourseCategoryInput: CreateCourseCategoryInput!): CourseCategory!
+  createCustomTemplate(input: CreateCustomTemplateInput!): CustomTemplate!
+  createDiscussion(input: CreateDiscussionInput!): Discussion!
+  createEmployeeProfile(input: CreateEmployeeProfileInput!): EmployeeProfile!
+  createEmploymentHistory(input: CreateEmploymentHistoryInput!): EmploymentHistory!
+  createFileShare(input: CreateFileShareInput!): FileShare!
+  createFolder(input: CreateFolderInput!): FileFolder!
+  createInvoice(input: CreateInvoiceInput!): ExtListhoadon!
+  createInvoiceDetails(details: [CreateInvoiceDetailInput!]!, invoiceId: ID!): [ExtDetailhoadon!]!
+  createLesson(input: CreateLessonInput!): Lesson!
+
+  """Create multiple records in a single operation"""
+  createMany(input: UnifiedBulkCreateInput!, modelName: String!): JSONObject!
+  createMenu(input: CreateMenuInput!): MenuResponseDto!
+  createModule(input: CreateModuleInput!): CourseModule!
+  createOffboardingProcess(input: CreateOffboardingProcessInput!): OffboardingProcess!
+  createOnboardingChecklist(input: CreateOnboardingChecklistInput!): OnboardingChecklist!
+
+  """Create a single record with Prisma-like syntax"""
+  createOne(input: UnifiedCreateInput!, modelName: String!): JSONObject!
+  createOrder(input: CreateOrderInput!): CreateOrderResponse!
+  createPage(input: CreatePageInput!): Page!
+  createPaymentRequest(input: CreatePaymentRequestInput!): AffPaymentRequest!
+  createPermission(input: CreatePermissionInput!): Permission!
+  createPost(input: CreatePostInput!): Post!
+  createProduct(input: CreateProductInput!): ProductType!
+
+  """Tạo dự án mới"""
+  createProject(input: CreateProjectInput!): Project!
+
+  """Create task in project with @mentions"""
+  createProjectTask(input: CreateTaskInput!, projectId: ID!): Task!
+  createQuiz(input: CreateQuizInput!): Quiz!
+  createReply(input: CreateReplyInput!): DiscussionReply!
+  createReview(input: CreateReviewInput!): Review!
+  createRole(input: CreateRoleInput!): Role!
+  createSourceDocument(input: CreateSourceDocumentInput!): SourceDocument!
+  createSourceDocumentCategory(input: CreateSourceDocumentCategoryInput!): SourceDocumentCategory!
+  createSubtask(input: CreateTaskInput!, parentId: String!): Task!
+  createSupportConversation(input: CreateSupportConversationInput!): SupportConversation!
+  createSystemGuide(input: CreateSystemGuideInput!): SystemGuide!
+  createSystemRelease(input: CreateSystemReleaseInput!): SystemRelease!
+  createTask(input: CreateTaskInput!): Task!
+  createTaskComment(input: CreateTaskCommentInput!): TaskComment!
+  createTechnicalSupportMessage(input: CreateTechnicalSupportMessageInput!): TechnicalSupportMessage!
+  createTechnicalSupportTicket(input: CreateTechnicalSupportTicketInput!): TechnicalSupportTicket!
+  createWebsiteSetting(input: CreateWebsiteSettingInput!): WebsiteSetting!
+
+  """Create new ext_sanphamhoadon"""
+  createext_sanphamhoadon(data: JSON!, options: JSON): JSON!
+
+  """Xóa AI provider"""
+  deleteAIProvider(id: String!): Boolean!
+  deleteAffiliateCampaign(id: String!): Boolean!
+  deleteAllReadNotifications: Boolean!
+  deleteBlog(id: ID!): Boolean!
+  deleteBlogCategory(id: ID!): Boolean!
+  deleteBlogTag(id: ID!): Boolean!
+  deleteCallCenterConfig(id: String!): CallCenterConfig!
+  deleteCategory(deleteProducts: Boolean! = false, id: ID!): CategoryType!
+  deleteComment(id: String!): Boolean!
+  deleteCourse(id: ID!): Boolean!
+  deleteCourseCategory(id: ID!): Boolean!
+  deleteCustomTemplate(id: String!): Boolean!
+  deleteDiscussion(id: ID!): Boolean!
+  deleteEmployeeProfile(id: ID!): DeleteResponse!
+  deleteFile(id: ID!): Boolean!
+  deleteFolder(id: ID!): Boolean!
+  deleteInvoice(id: ID!): Boolean!
+  deleteLMSFile(bucket: String!, fileId: String!): Boolean!
+  deleteLesson(id: ID!): Boolean!
+
+  """Delete multiple records matching criteria"""
+  deleteMany(input: UnifiedBulkDeleteInput!, modelName: String!): JSONObject!
+  deleteMenu(id: ID!): Boolean!
+  deleteModule(id: ID!): Boolean!
+  deleteNotification(input: DeleteNotificationInput!): Boolean!
+
+  """Delete a single record by ID"""
+  deleteOne(input: UnifiedDeleteInput!, modelName: String!): JSONObject!
+  deletePage(id: String!): Page!
+  deletePageBlock(id: String!): PageBlock!
+  deletePermission(id: String!): Boolean!
+  deletePost(id: String!): Boolean!
+  deleteProduct(id: ID!): ProductType!
+  deleteProductImage(id: ID!): Boolean!
+  deleteProductVariant(id: ID!): Boolean!
+
+  """Archive/Soft delete project (owner/admin only)"""
+  deleteProject(id: ID!): Project!
+
+  """Delete a project/task/chat file"""
+  deleteProjectFile(fileId: ID!, type: String!): Boolean!
+  deleteQuiz(id: String!): Boolean!
+  deleteReview(reviewId: ID!): Boolean!
+  deleteRole(id: String!): Boolean!
+  deleteSourceDocument(id: ID!): SourceDocument!
+  deleteSourceDocumentCategory(id: ID!): SourceDocumentCategory!
+  deleteSystemGuide(id: String!): Boolean!
+  deleteSystemRelease(id: String!): Boolean!
+  deleteTask(id: String!): Boolean!
+  deleteTaskMedia(mediaId: String!): Boolean!
+  deleteUser(id: String!): Boolean!
+  deleteWebsiteSetting(key: String!): WebsiteSetting!
+
+  """Delete ext_sanphamhoadon"""
+  deleteext_sanphamhoadon(id: String!, options: JSON): JSON!
+  dropCourse(courseId: ID!): Enrollment!
+  duplicateCustomTemplate(newName: String, templateId: String!): CustomTemplate!
+  duplicatePage(id: String!, slug: String, title: String): Page!
+
+  """Create a new record"""
+  dynamicCreate(input: CreateInput!): JSONObject!
+
+  """Create multiple records in bulk"""
+  dynamicCreateMany(input: CreateManyInput!): JSONObject!
+
+  """Delete a single record"""
+  dynamicDelete(input: DeleteInput!): JSONObject!
+
+  """Delete multiple records in bulk"""
+  dynamicDeleteMany(input: DeleteManyInput!): JSONObject!
+
+  """Update a single record"""
+  dynamicUpdate(input: UpdateInput!): JSONObject!
+
+  """Update multiple records in bulk"""
+  dynamicUpdateMany(input: UpdateManyInput!): JSONObject!
+
+  """Create or update a record (upsert)"""
+  dynamicUpsert(input: UpsertInput!): JSONObject!
+  enrollCourse(enrollCourseInput: EnrollCourseInput!): Enrollment!
+  exportDataToExcel(modelName: String!, select: JSON, where: JSON): String!
+  generateCertificate(enrollmentId: ID!): Certificate!
+  generateCourseFromDocuments(input: GenerateCourseFromDocumentsInput!): Course!
+  generateCourseFromPrompt(categoryId: String, prompt: String!): Course!
+  generatePostSummary(postId: String!): String!
+  generateSummary(content: String!, maxLength: Float! = 200): String!
+  generateTags(content: String!, maxTags: Float! = 5): [String!]!
+  importExcelData(file: Upload!, mappingConfig: JSON, modelName: String!): JSON!
+  importJSONData(jsonString: String!, mappingConfig: JSON, modelName: String!): JSON!
+  importTextData(delimiter: String = "\t", mappingConfig: JSON, modelName: String!, text: String!): JSON!
+  improveContent(content: String!, instruction: String!): String!
+  incrementDocumentDownload(id: ID!): SourceDocument!
+  incrementGuideView(id: String!): SystemGuide!
+  incrementSystemReleaseDownloadCount(id: String!): Boolean!
+  incrementTemplateUsage(templateId: String!): CustomTemplate!
+  joinCampaign(input: JoinCampaignInput!): String!
+  linkDocumentToCourse(input: LinkDocumentToCourseInput!): CourseSourceDocument!
+  loginUser(input: LoginUserInput!): AuthResponse!
+  loginWithFacebook(input: SocialLoginInput!): AuthResponse!
+  loginWithGoogle(input: SocialLoginInput!): AuthResponse!
+  loginWithPhone(input: PhoneLoginInput!): AuthResponse!
+  markAllNotificationsAsRead: Boolean!
+  markLessonComplete(enrollmentId: ID!, lessonId: ID!): LessonProgress!
+  markMessagesAsRead(conversationId: String!, userId: String!): Int!
+  markNotificationAsRead(input: MarkNotificationAsReadInput!): NotificationType!
+  markReviewHelpful(reviewId: ID!): Review!
+  mergeCarts(input: MergeCartsInput!): MergeCartsResponse!
+
+  """Merge duplicate products (keep one, delete rest)"""
+  mergeDuplicates(
+    """Optional: ID of product to keep"""
+    keepId: String
+
+    """Normalized name of products to merge"""
+    ten2: String!
+  ): Float!
+  moveFiles(input: MoveFilesInput!): [File!]!
+  moveMenu(menuId: ID!, newOrder: Float, newParentId: ID): MenuResponseDto!
+
+  """Batch normalize products"""
+  normalizeProducts(
+    """Optional: specific product IDs to normalize"""
+    productIds: [String!]
+    threshold: Float! = 0.6
+  ): NormalizationStats!
+
+  """
+  Permanently delete project and all related data (owner only, cannot be undone)
+  """
+  permanentlyDeleteProject(id: ID!): Boolean!
+  processPaymentRequest(id: String!, status: String!): AffPaymentRequest!
+  publishCourse(id: ID!): Course!
+  publishPost(id: String!): Post!
+  publishSystemRelease(id: String!): SystemRelease!
+  rateTechnicalSupportTicket(input: RateTicketInput!): TechnicalSupportTicket!
+  registerUser(input: RegisterUserInput!): AuthResponse!
+
+  """Reindex all data from database into Orama search indexes"""
+  reindexAllData: ReindexResult!
+  rejectConversion(id: String!, reason: String): Boolean!
+  rejectCourse(courseId: ID!, reason: String!): Course!
+  rejectDocument(documentId: ID!, reason: String!): SourceDocument!
+  removeFromCart(input: RemoveFromCartInput!, sessionId: String): RemoveFromCartResponse!
+
+  """Xóa thành viên khỏi project"""
+  removeProjectMember(memberId: String!, projectId: ID!): Boolean!
+  removeRoleFromUser(roleId: String!, userId: String!): RemoveRoleResultType!
+  reorderLessons(input: ReorderLessonsInput!): [Lesson!]!
+  reorderMenus(menuOrders: [MenuOrderDto!]!): [MenuResponseDto!]!
+  reorderModules(input: ReorderModulesInput!): [CourseModule!]!
+  requestCourseApproval(courseId: ID!): Course!
+  requestDocumentApproval(documentId: ID!): SourceDocument!
+  requestForgotPassword(email: String!): OtpResponse!
+  requestPhoneVerification(input: RequestPhoneVerificationInput!): OtpResponse!
+  resetPasswordWithToken(email: String!, newPassword: String!, token: String!): OtpResponse!
+  resolveTechnicalSupportTicket(resolution: String!, ticketId: String!): TechnicalSupportTicket!
+
+  """Restore archived project (owner/admin only)"""
+  restoreProject(id: ID!): Project!
+  reviewCampaignApplication(input: ReviewCampaignApplicationInput!): String!
+  sendSupportMessage(input: CreateSupportMessageInput!): SupportMessage!
+
+  """Đặt AI provider làm mặc định"""
+  setDefaultAIProvider(id: String!): AIProvider!
+  setPassword(input: SetPasswordInput!): Boolean!
+  shareTask(input: ShareTaskInput!): TaskShare!
+  shareTemplate(input: ShareTemplateInput!): [TemplateShare!]!
+  submitQuiz(input: SubmitQuizInput!): QuizAttempt!
+  subscribeToPush(auth: String!, endpoint: String!, p256dh: String!): Boolean!
+  syncCallCenterData(input: SyncCallCenterInput): SyncCallCenterResponse!
+
+  """Test kết nối AI provider"""
+  testAIProvider(input: TestAIProviderInput!): AIProviderTestResult!
+  testPushNotification: Boolean!
+
+  """Bật/tắt AI provider"""
+  toggleAIProviderStatus(id: String!, isActive: Boolean!): AIProvider!
+  toggleDiscussionPin(id: ID!): Discussion!
+  toggleMenuActive(id: ID!): MenuResponseDto!
+  toggleMenuVisibility(id: ID!): MenuResponseDto!
+
+  """Execute any Prisma mutation operation dynamically"""
+  universalMutation(input: UniversalQueryInput!): JSONObject!
+  unlinkDocumentFromCourse(courseId: ID!, documentId: ID!): Boolean!
+  unshareTemplate(templateId: String!, userId: String!): Boolean!
+  unsubscribeFromPush(endpoint: String!): Boolean!
+
+  """Cập nhật AI provider"""
+  updateAIProvider(id: String!, input: UpdateAIProviderInput!): AIProvider!
+  updateAffiliateCampaign(id: String!, input: UpdateCampaignInput!): AffCampaign!
+  updateAffiliateUser(input: UpdateAffUserInput!): AffUser!
+  updateBlog(input: UpdateBlogInput!): BlogType!
+  updateBlogCategory(id: ID!, input: UpdateBlogCategoryInput!): BlogCategoryType!
+  updateBlogTag(input: UpdateBlogTagInput!): BlogTagType!
+  updateCallCenterConfig(id: String!, input: UpdateCallCenterConfigInput!): CallCenterConfig!
+  updateCartItem(input: UpdateCartItemInput!, sessionId: String): UpdateCartResponse!
+  updateCategory(input: UpdateCategoryInput!): CategoryType!
+  updateComment(id: String!, input: UpdateCommentInput!): Comment!
+  updateCourse(updateCourseInput: UpdateCourseInput!): Course!
+  updateCourseCategory(updateCourseCategoryInput: UpdateCourseCategoryInput!): CourseCategory!
+  updateCourseDocumentLink(id: ID!, input: UpdateCourseDocumentLinkInput!): CourseSourceDocument!
+  updateCustomTemplate(input: UpdateCustomTemplateInput!): CustomTemplate!
+  updateDiscussion(input: UpdateDiscussionInput!): Discussion!
+  updateEmployeeProfile(id: ID!, input: UpdateEmployeeProfileInput!): EmployeeProfile!
+  updateEmploymentHistory(id: ID!, input: UpdateEmploymentHistoryInput!): EmploymentHistory!
+  updateFile(input: UpdateFileInput!): File!
+  updateFolder(input: UpdateFolderInput!): FileFolder!
+  updateInvoice(id: ID!, input: CreateInvoiceInput!): ExtListhoadon!
+  updateLesson(input: UpdateLessonInput!): Lesson!
+
+  """Update multiple records matching criteria"""
+  updateMany(input: UnifiedBulkUpdateInput!, modelName: String!): JSONObject!
+  updateMenu(id: ID!, input: UpdateMenuInput!): MenuResponseDto!
+  updateModule(input: UpdateModuleInput!): CourseModule!
+  updateOffboardingProcess(id: ID!, input: UpdateOffboardingProcessInput!): OffboardingProcess!
+  updateOnboardingChecklist(id: ID!, input: UpdateOnboardingChecklistInput!): OnboardingChecklist!
+
+  """Update a single record by ID"""
+  updateOne(input: UnifiedUpdateInput!, modelName: String!): JSONObject!
+  updateOrderStatus(input: UpdateOrderStatusInput!): UpdateOrderResponse!
+  updatePage(id: String!, input: UpdatePageInput!): Page!
+  updatePageBlock(id: String!, input: UpdatePageBlockInput!): PageBlock!
+  updatePageBlocksOrder(pageId: String!, updates: [BulkUpdateBlockOrderInput!]!): [PageBlock!]!
+  updatePermission(id: String!, input: UpdatePermissionInput!): Permission!
+  updatePost(id: String!, input: UpdatePostInput!): Post!
+  updateProduct(input: UpdateProductInput!): ProductType!
+  updateProductStock(id: ID!, quantity: Float!): ProductType!
+  updateProductVariant(input: UpdateProductVariantInput!): ProductType!
+
+  """Update/create products from ext_detailhoadon with auto-normalization"""
+  updateProductsFromDetails(
+    """Preview mode - do not save to database"""
+    dryRun: Boolean! = false
+
+    """Limit number of records to process"""
+    limit: Int
+  ): UpdateProductsResult!
+  updateProfile(input: UpdateProfileInput!): User!
+
+  """Update project (owner/admin only)"""
+  updateProject(id: ID!, input: UpdateProjectInput!): Project!
+
+  """Update role của member (owner only)"""
+  updateProjectMemberRole(input: UpdateMemberRoleInput!, projectId: ID!): ProjectMember!
+  updateQuiz(id: String!, input: UpdateQuizInput!): Quiz!
+  updateReview(input: UpdateReviewInput!): Review!
+  updateRole(id: String!, input: UpdateRoleInput!): Role!
+  updateSourceDocument(id: ID!, input: UpdateSourceDocumentInput!): SourceDocument!
+  updateSourceDocumentCategory(id: ID!, input: UpdateSourceDocumentCategoryInput!): SourceDocumentCategory!
+  updateSystemGuide(input: UpdateSystemGuideInput!): SystemGuide!
+  updateSystemRelease(id: String!, input: UpdateSystemReleaseInput!): SystemRelease!
+  updateTask(input: UpdateTaskInput!): Task!
+
+  """Update task order for drag & drop"""
+  updateTaskOrder(newOrder: Int!, taskId: String!): Task!
+  updateTechnicalSupportTicket(id: String!, input: UpdateTechnicalSupportTicketInput!): TechnicalSupportTicket!
+  updateTemplatePublicity(input: UpdateTemplatePublicityInput!): CustomTemplate!
+  updateUser(id: String!, input: UpdateUserInput!): User!
+  updateWebsiteSetting(input: UpdateWebsiteSettingInput!, key: String!): WebsiteSetting!
+
+  """Update ext_sanphamhoadon"""
+  updateext_sanphamhoadon(data: JSON!, id: String!, options: JSON): JSON!
+  uploadAndMapImage(editOptions: JSON, file: Upload!, mappingConfig: JSON!): JSON!
+
+  """Upload file to chat message - Use Dynamic GraphQL createOne instead"""
+  uploadChatFile(caption: String, filename: String!, messageId: ID!, mimetype: String!, size: Float!, url: String!): ChatMedia!
+  uploadCourseMaterial(courseId: String!, file: Upload!): FileUploadResult!
+  uploadCourseThumbnail(courseId: String, file: Upload!): FileUploadResult!
+  uploadDocumentThumbnail(documentId: ID!, file: Upload!): String!
+  uploadFile(bucket: String!, file: Upload!): FileUploadResult!
+  uploadImage(bucket: String = "images", editOptions: JSON, file: Upload!): JSON!
+  uploadLessonVideo(courseId: String!, file: Upload!): FileUploadResult!
+  uploadMultipleImages(bucket: String = "images", editOptions: JSON, files: [Upload!]!): JSON!
+
+  """Upload file to project - Use Dynamic GraphQL createOne instead"""
+  uploadProjectFile(caption: String, filename: String!, mimetype: String!, projectId: ID!, size: Float!, url: String!): ProjectMedia!
+  uploadSourceDocumentFile(documentId: ID!, file: Upload!): String!
+
+  """Upload file to task - Use Dynamic GraphQL createOne instead"""
+  uploadTaskFile(caption: String, filename: String!, mimetype: String!, size: Float!, taskId: ID!, url: String!): ProjectMedia!
+  uploadTaskMedia(input: UploadTaskMediaInput!): TaskMedia!
+
+  """Create or update a record based on criteria"""
+  upsert(create: JSONObject!, include: JSONObject, modelName: String!, select: JSONObject, update: JSONObject!, where: JSONObject!): JSONObject!
+  verifyResetToken(email: String!, token: String!): OtpResponse!
+  voteGuideHelpful(id: String!, isHelpful: Boolean!): SystemGuide!
+}
+
+type NormalizationStats {
+  errors: Int!
+  skipped: Int!
+  updated: Int!
+}
+
+type NotificationListResponse {
+  hasMore: Boolean!
+  notifications: [NotificationType!]!
+  total: Int!
+  unreadCount: Int!
+}
+
+type NotificationType {
+  createdAt: DateTime!
+  data: JSON
+  id: String!
+  isRead: Boolean!
+  mentionedBy: String
+  mentioner: MentionerType
+  message: String!
+  taskId: String
+  title: String!
+  type: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+type OffboardingListResponse {
+  hasMore: Boolean!
+  processes: [OffboardingProcess!]!
+  total: Int!
+}
+
+type OffboardingProcess {
+  accessRevocationList: JSON
+  approvalWorkflow: JSON
+  assetReturnChecklist: JSON
+  bonusAmount: Float
+  clearanceStatus: ClearanceStatus!
+  clearanceSteps: JSON
+  completedAt: DateTime
+  completedBy: String
+  createdAt: DateTime!
+  deductions: JSON
+  effectiveDate: DateTime
+  eligibleForRehire: Boolean
+  employeeComments: String
+  employeeProfileId: String!
+  exitInterviewBy: String
+  exitInterviewDate: DateTime
+  exitInterviewForm: JSON
+  exitInterviewNotes: String
+  exitInterviewScheduled: Boolean!
+  exitReason: String!
+  exitType: TerminationType!
+  experienceCertificate: String
+  finalApprovedAt: DateTime
+  finalApprovedBy: String
+  finalDocuments: [String!]
+  finalSalaryAmount: Float
+  hrNotes: String
+  id: ID!
+  initiatedBy: String!
+  knowledgeTransferPlan: JSON
+  lastWorkingDay: DateTime!
+  leavePayoutAmount: Float
+  managerComments: String
+  noticeGivenDate: DateTime
+  noticePeriodDays: Int
+  noticeRequired: Boolean!
+  paymentDate: DateTime
+  paymentStatus: String
+  processOwner: String
+  referenceLetterProvided: Boolean!
+  referenceLetterRequested: Boolean!
+  rehireNotes: String
+  resignationLetter: String
+  status: OffboardingStatus!
+  totalSettlement: Float
+  unusedLeaveDays: Int
+  updatedAt: DateTime!
+  userId: String!
+}
+
+type OffboardingStats {
+  inProgress: Int!
+  pending: Int!
+  total: Int!
+}
+
+"""Offboarding process status"""
+enum OffboardingStatus {
+  APPROVED
+  CANCELLED
+  COMPLETED
+  INITIATED
+  IN_PROGRESS
+  PENDING_APPROVAL
+}
+
+type OnboardingChecklist {
+  actualCompletionDate: DateTime
+  assignedTo: String
+  buddyId: String
+  checklistTemplate: String
+  completedTasks: Int!
+  createdAt: DateTime!
+  createdBy: String
+  employeeFeedback: String
+  employeeProfileId: String!
+  hrNotes: String
+  id: ID!
+  lastReminderAt: DateTime
+  managerFeedback: String
+  progressPercentage: Float!
+  remindersSent: Int!
+  startDate: DateTime!
+  status: OnboardingStatus!
+  targetDate: DateTime
+  tasks: JSON!
+  totalTasks: Int!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+type OnboardingListResponse {
+  checklists: [OnboardingChecklist!]!
+  hasMore: Boolean!
+  total: Int!
+}
+
+type OnboardingStats {
+  inProgress: Int!
+  pending: Int!
+  total: Int!
+}
+
+"""Onboarding process status"""
+enum OnboardingStatus {
+  CANCELLED
+  COMPLETED
+  IN_PROGRESS
+  PENDING
+}
+
+type OramaElapsed {
+  formatted: String!
+}
+
+type OramaHealthCheck {
+  indexes: [String!]!
+  status: String!
+}
+
+type OramaSearchHit {
+  document: JSON!
+  id: String!
+  score: Float!
+}
+
+input OramaSearchInput {
+  facets: JSON
+  limit: Int = 20
+  offset: Int = 0
+  sortBy: OramaSortInput
+  term: String
+  where: JSON
+}
+
+type OramaSearchResult {
+  count: Int!
+  elapsed: OramaElapsed!
+  facets: JSON
+  hits: [OramaSearchHit!]!
+}
+
+input OramaSortInput {
+  order: OramaSortOrder!
+  property: String!
+}
+
+"""Sort order for search results"""
+enum OramaSortOrder {
+  ASC
+  DESC
+}
+
+input OrderFilterInput {
+  dateFrom: String
+  dateTo: String
+  paymentStatus: PaymentStatus
+  paymentStatuses: [PaymentStatus!]
+  searchQuery: String
+  skip: Int = 0
+  status: OrderStatus
+  statuses: [OrderStatus!]
+  take: Int = 20
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
+  variantId: ID
+}
+
+type OrderItemType {
+  createdAt: DateTime!
+  id: ID!
+  metadata: JSON
+  orderId: ID!
+  price: Float!
+  productId: ID
+  productName: String!
+  quantity: Int!
+  sku: String
+  subtotal: Float!
+  thumbnail: String
+  variantName: String
+}
+
+type OrderListResponse {
+  errors: [String!]
+  hasMore: Boolean!
+  message: String
+  orders: [OrderType!]!
+  total: Int!
+}
+
+type OrderStatisticsResponse {
+  byPaymentStatus: JSON!
+  byStatus: JSON!
+  message: String
+  success: Boolean!
+  totalOrders: Int!
+  totalRevenue: Float!
+}
+
+enum OrderStatus {
+  CANCELLED
+  COMPLETED
+  CONFIRMED
+  DELIVERED
+  PACKAGING
+  PENDING
+  PROCESSING
+  READY_TO_SHIP
+  REFUNDED
+  RETURNED
+  SHIPPING
+}
+
+type OrderTrackingEventType {
+  description: String!
+  eventTime: DateTime!
+  id: ID!
+  location: String
+  status: String!
+}
+
+type OrderTrackingType {
+  actualDelivery: DateTime
+  carrier: String
+  estimatedDelivery: DateTime
+  events: [OrderTrackingEventType!]!
+  id: ID!
+  orderId: ID!
+  status: String!
+  trackingNumber: String
+  trackingUrl: String
+}
+
+type OrderType {
+  billingAddress: JSON
+  cancelledAt: DateTime
+  confirmedAt: DateTime
+  createdAt: DateTime!
+  customerNote: String
+  deliveredAt: DateTime
+  discount: Float!
+  guestEmail: String
+  guestName: String
+  guestPhone: String
+  id: ID!
+  internalNote: String
+  items: [OrderItemType!]!
+  metadata: JSON
+  orderNumber: String!
+  payment: PaymentType
+  paymentMethod: PaymentMethod!
+  paymentStatus: PaymentStatus!
+  shippedAt: DateTime
+  shippingAddress: JSON!
+  shippingFee: Float!
+  shippingMethod: ShippingMethod!
+  status: OrderStatus!
+  subtotal: Float!
+  tax: Float!
+  total: Float!
+  tracking: OrderTrackingType
+  updatedAt: DateTime!
+  userId: ID
+}
+
+type OtpResponse {
+  message: String!
+  success: Boolean!
+}
+
+type Page {
+  blocks: [PageBlock!]!
+  content: JSONObject
+  createdAt: DateTime!
+  createdBy: String!
+  description: String
+  dynamicConfig: JSONObject
+  id: ID!
+  isDynamic: Boolean!
+  isHomepage: Boolean!
+  ogImage: String
+  publishedAt: DateTime
+  seoDescription: String
+  seoKeywords: [String!]
+  seoTitle: String
+  slug: String!
+  status: PageStatus!
+  title: String!
+  updatedAt: DateTime!
+  updatedBy: String
+}
+
+type PageBlock {
+  children: [PageBlock!]
+  config: JSONObject
+  content: JSONObject!
+  createdAt: DateTime!
+  depth: Int!
+  id: ID!
+  isVisible: Boolean!
+  order: Int!
+  pageId: String!
+  parentId: String
+  style: JSONObject
+  type: BlockType!
+  updatedAt: DateTime!
+}
+
+input PageFiltersInput {
+  createdBy: String
+  search: String
+  slug: String
+  status: PageStatus
+  title: String
+}
+
+type PagePaginationInfo {
+  currentPage: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+"""The status of a page"""
+enum PageStatus {
+  ARCHIVED
+  DRAFT
+  PUBLISHED
+}
+
+type PaginatedBlogs {
+  hasMore: Boolean!
+  items: [BlogType!]!
+  page: Int!
+  pageSize: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedCallCenterRecords {
+  items: [CallCenterRecord!]!
+  pagination: CallCenterRecordPaginationInfo!
+}
+
+type PaginatedCategories {
+  hasMore: Boolean!
+  items: [CategoryType!]!
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedCourses {
+  data: [Course!]!
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedFiles {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  items: [File!]!
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedPages {
+  items: [Page!]!
+  pagination: PagePaginationInfo!
+}
+
+type PaginatedPosts {
+  items: [Post!]!
+  meta: PaginationMeta!
+}
+
+type PaginatedProducts {
+  hasMore: Boolean!
+  items: [ProductType!]!
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginationInfo {
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+input PaginationInput {
+  limit: Int! = 10
+  page: Int! = 1
+  search: String
+  sortBy: String
+  sortOrder: String
+}
+
+type PaginationMeta {
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+input PaginationQueryInput {
+  limit: Int! = 20
+  page: Int! = 1
+  sortBy: String
+  sortOrder: String! = "desc"
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CASH_ON_DELIVERY
+  CREDIT_CARD
+  MOMO
+  VNPAY
+  ZALOPAY
+}
+
+enum PaymentStatus {
+  FAILED
+  PAID
+  PARTIALLY_REFUNDED
+  PENDING
+  PROCESSING
+  REFUNDED
+}
+
+type PaymentType {
+  amount: Float!
+  createdAt: DateTime!
+  currency: String!
+  gatewayTransactionId: String
+  id: ID!
+  method: PaymentMethod!
+  paidAt: DateTime
+  status: PaymentStatus!
+}
+
+type Permission {
+  action: String!
+  category: String!
+  conditions: JSON
+  createdAt: DateTime!
+  description: String
+  displayName: String!
+  id: ID!
+  isActive: Boolean!
+  isSystemPerm: Boolean!
+  metadata: JSON
+  name: String!
+  resource: String!
+  scope: String
+  updatedAt: DateTime!
+}
+
+input PermissionAssignmentInput {
+  conditions: JSON
+  effect: String! = "allow"
+  metadata: JSON
+  permissionId: String!
+}
+
+input PermissionSearchInput {
+  action: String
+  category: String
+  isActive: Boolean
+  page: Int = 0
+  resource: String
+  search: String
+  size: Int = 20
+  sortBy: String = "name"
+  sortOrder: String = "asc"
+}
+
+type PermissionSearchResult {
+  page: Int!
+  permissions: [Permission!]!
+  size: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PermissionType {
+  action: String!
+  category: String
+  createdAt: DateTime!
+  description: String
+  displayName: String!
+  id: ID!
+  isActive: Boolean!
+  isSystemPerm: Boolean!
+  name: String!
+  resource: String!
+  roleName: String
+  scope: String
+  source: String
+  updatedAt: DateTime!
+}
+
+type PermissionsByCategoryType {
+  data: JSON!
+}
+
+input PhoneLoginInput {
+  otp: String!
+  phone: String!
+  rememberMe: Boolean
+}
+
+type PlatformBreakdown {
+  count: Int!
+  platform: String!
+}
+
+type Post {
+  author: User!
+  authorId: String!
+  comments: [Comment!]!
+  commentsCount: Float!
+  content: String!
+  createdAt: DateTime!
+  excerpt: String
+  featuredImage: String
+  id: ID!
+  likesCount: Float!
+  publishedAt: DateTime
+  slug: String!
+  status: PostStatus!
+  tags: [Tag!]
+  title: String!
+  updatedAt: DateTime!
+}
+
+input PostFiltersInput {
+  authorId: String
+  search: String
+  status: PostStatus
+  tags: [String!]
+}
+
+"""Post status types"""
+enum PostStatus {
+  ARCHIVED
+  DRAFT
+  PUBLISHED
+}
+
+input ProductFiltersInput {
+  categoryId: ID
+  inStock: Boolean
+  isBestSeller: Boolean
+  isFeatured: Boolean
+  isNewArrival: Boolean
+  isOnSale: Boolean
+  maxPrice: Float
+  minPrice: Float
+  origin: String
+  search: String
+  status: ProductStatus
+  units: [ProductUnit!]
+}
+
+type ProductGroup {
+  count: Int!
+  products: [ProductSummary!]!
+  ten2: String!
+}
+
+type ProductGroupAdvanced {
+  avg_price: Float!
+  dvt: String!
+  max_price: Float!
+  min_price: Float!
+  price_variance: Float!
+  product_count: Int!
+  ten2: String!
+}
+
+type ProductImageType {
+  alt: String
+  createdAt: DateTime!
+  id: ID!
+  isPrimary: Boolean!
+  order: Int!
+  productId: String!
+  title: String
+  updatedAt: DateTime!
+  url: String!
+}
+
+type ProductRatingSummaryType {
+  averageRating: Float!
+  ratingDistribution: RatingDistributionType!
+  totalReviews: Int!
+}
+
+type ProductReviewType {
+  comment: String
+  createdAt: DateTime!
+  guestEmail: String
+  guestName: String
+  helpfulCount: Int!
+  id: ID!
+  images: [String!]
+  isApproved: Boolean!
+  isVerifiedPurchase: Boolean!
+  moderatedAt: DateTime
+  moderatedBy: String
+  orderId: ID
+  product: ReviewProductType
+  productId: ID!
+  rating: Int!
+  title: String
+  updatedAt: DateTime!
+  user: ReviewUserType
+  userId: ID
+}
+
+type ProductSimilarityTest {
+  dvtMatch: Boolean!
+  isDuplicate: Boolean!
+  nameSimilarity: Float!
+  priceDiffPercent: Float!
+  product1Dvt: String
+  product1Name: String!
+  product1Price: Float!
+  product2Dvt: String
+  product2Name: String!
+  product2Price: Float!
+}
+
+"""Trạng thái sản phẩm"""
+enum ProductStatus {
+  ACTIVE
+  DISCONTINUED
+  DRAFT
+  INACTIVE
+  OUT_OF_STOCK
+}
+
+type ProductSummary {
+  dgia: Float
+  id: String!
+  ma: String
+  ten: String!
+}
+
+type ProductSummaryType {
+  id: ID!
+  name: String!
+  price: Float!
+  slug: String!
+  status: String!
+  stock: Int!
+  thumbnail: String
+}
+
+type ProductType {
+  attributes: JSON
+  barcode: String
+  category: CategoryType
+  categoryId: String!
+  costPrice: Float
+  createdAt: DateTime!
+  createdBy: String
+  description: String
+  dimensions: String
+  discountPercentage: Float
+  displayOrder: Int!
+  id: ID!
+  imageUrl: String
+  images: [ProductImageType!]
+  isBestSeller: Boolean!
+  isFeatured: Boolean!
+  isNew: Boolean
+  isNewArrival: Boolean!
+  isOnSale: Boolean!
+  isOrganic: Boolean
+  manufacturer: String
+  maxStock: Int
+  metaDescription: String
+  metaKeywords: String
+  metaTitle: String
+  minStock: Int!
+  name: String!
+  origin: String
+  originalPrice: Float
+  price: Float!
+  profitMargin: Float
+  publishedAt: DateTime
+  shortDesc: String
+  shortDescription: String
+  sku: String
+  slug: String!
+  soldCount: Int!
+  status: ProductStatus!
+  stock: Int!
+  thumbnail: String
+  unit: ProductUnit!
+  updatedAt: DateTime!
+  updatedBy: String
+  variants: [ProductVariantType!]
+  viewCount: Int!
+  weight: Float
+}
+
+"""Đơn vị tính sản phẩm"""
+enum ProductUnit {
+  BAG
+  BOX
+  BUNDLE
+  G
+  KG
+  PIECE
+}
+
+type ProductVariantSummaryType {
+  id: ID!
+  isActive: Boolean!
+  name: String!
+  price: Float!
+  stock: Int!
+}
+
+type ProductVariantType {
+  attributes: JSON
+  barcode: String
+  createdAt: DateTime!
+  id: ID!
+  isActive: Boolean!
+  name: String!
+  order: Int!
+  price: Float!
+  productId: String!
+  sku: String
+  stock: Int!
+  updatedAt: DateTime!
+}
+
+type Project {
+  _count: ProjectStats
+  avatar: String
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  isArchived: Boolean!
+  members: [ProjectMember!]!
+  name: String!
+  owner: ProjectUser!
+  ownerId: ID!
+  updatedAt: DateTime!
+}
+
+type ProjectMedia {
+  caption: String
+  createdAt: DateTime!
+  filename: String!
+  id: ID!
+  mimeType: String!
+  projectId: String!
+  size: Int!
+  type: MediaType!
+  updatedAt: DateTime!
+  uploadedBy: String!
+  uploader: MediaUploader
+  url: String!
+}
+
+type ProjectMember {
+  id: ID!
+  joinedAt: DateTime!
+  projectId: ID!
+  role: String!
+  user: ProjectUser!
+  userId: ID!
+}
+
+type ProjectStats {
+  chatMessages: Int!
+  members: Int!
+  tasks: Int!
+}
+
+type ProjectUser {
+  avatar: String
+  email: String
+  firstName: String
+  id: ID!
+  lastName: String
+}
+
+type Query {
+  affiliateCampaign(id: String!): AffCampaign
+  affiliateCampaigns(search: CampaignSearchInput): [AffCampaign!]!
+  affiliateConversions(search: AffConversionSearchInput): AffConversionsResponse!
+  affiliateEarningsReport(endDate: DateTime, startDate: DateTime): AffEarningsReport!
+  affiliateLinks(search: AffLinkSearchInput): [AffLink!]!
+  affiliatePaymentRequests(search: AffPaymentRequestSearchInput): [AffPaymentRequest!]!
+  affiliateUser: AffUser
+
+  """Aggregate operations (count, sum, avg, min, max)"""
+  aggregate(model: String!, options: JSON!): JSON!
+  analyzeDocumentsForCourse(input: AnalyzeDocumentsForCourseInput!): CourseAnalysisResult!
+  blog(id: ID!): BlogType!
+  blogBySlug(slug: String!): BlogType!
+  blogCategories: [BlogCategoryType!]!
+  blogCategory(id: ID!): BlogCategoryType!
+  blogTags: [BlogTagType!]!
+  blogs(categoryId: ID, limit: Int, page: Int, search: String, sort: String, statusFilter: String): PaginatedBlogs!
+  blogsByCategory(categoryId: ID!, limit: Int, page: Int): PaginatedBlogs!
+
+  """Get month view for calendar"""
+  calendarMonthView(month: Float!, projectId: ID, year: Float!): String!
+
+  """Get calendar statistics for a period"""
+  calendarStatistics(endDate: DateTime!, projectId: ID, startDate: DateTime!): String!
+
+  """Get tasks for calendar view (returned as JSON string)"""
+  calendarTasks(endDate: DateTime!, projectId: ID, startDate: DateTime!): String!
+
+  """Get week view for calendar"""
+  calendarWeekView(projectId: ID, startDate: DateTime!): String!
+  canReviewProduct(productId: ID!): CanReviewResponse!
+  categories(input: GetCategoriesInput): PaginatedCategories!
+  category(id: ID!): CategoryType!
+  categoryBySlug(slug: String!): CategoryType!
+  categoryTree: [CategoryType!]!
+  certificate(id: ID!): Certificate!
+  certificateStats: CertificateStats!
+  checkMyPermission(action: String!, resource: String!, scope: String): Boolean!
+  checkUserPermission(action: String!, resource: String!, scope: String, userId: String!): Boolean!
+
+  """Count records matching the criteria"""
+  count(modelName: String!, where: JSONObject): Float!
+  course(id: ID!): Course!
+  courseBySlug(slug: String!): Course!
+  courseCategories: [CourseCategory!]!
+  courseCategory(id: ID!): CourseCategory!
+  courseCategoryTree: [CourseCategory!]!
+  courseDiscussions(courseId: ID!, lessonId: ID): [Discussion!]!
+  courseDocuments(courseId: ID!): [CourseSourceDocument!]!
+  courseEnrollments(courseId: ID!): [Enrollment!]!
+  coursePromptTemplates: JSON!
+  courses(filters: CourseFiltersInput): PaginatedCourses!
+  discussion(id: ID!): Discussion!
+
+  """Compute aggregations (sum, avg, min, max, count)"""
+  dynamicAggregate(input: AggregateInput!): JSONObject!
+
+  """Count records matching criteria"""
+  dynamicCount(input: CountInput!): JSONObject!
+
+  """Find first matching record"""
+  dynamicFindFirst(input: FindManyInput!): JSONObject!
+
+  """Find many records with pagination and filters"""
+  dynamicFindMany(input: FindManyInput!): JSONObject!
+
+  """Find unique record by identifier"""
+  dynamicFindUnique(input: FindUniqueInput!): JSONObject!
+
+  """Group records and compute aggregations"""
+  dynamicGroupBy(input: GroupByInput!): JSONObject!
+  employeeProfile(id: ID!): EmployeeProfile!
+  employeeProfileByCode(employeeCode: String!): EmployeeProfile!
+  employeeProfileByUserId(userId: ID!): EmployeeProfile!
+  employmentHistory(employeeProfileId: ID!): [EmploymentHistory!]!
+  enrollment(courseId: ID!): Enrollment
+
+  """Check if a record exists matching the criteria"""
+  exists(modelName: String!, where: JSONObject!): Boolean!
+
+  """Export tasks as iCal format (.ics file)"""
+  exportICalendar(projectId: ID): String!
+  featuredBlogs(limit: Int): [BlogType!]!
+  file(id: ID!): File!
+  fileStorageStats: FileStorageStats!
+  files(input: GetFilesInput): PaginatedFiles!
+
+  """Find a unique record by ID"""
+  findById(input: UnifiedFindByIdInput!, modelName: String!): JSONObject!
+
+  """Find canonical (normalized) name for a product"""
+  findCanonicalName(productName: String!, threshold: Float! = 0.6): String
+
+  """Find canonical name with DVT and price"""
+  findCanonicalNameAdvanced(priceTolerance: Float! = 10, productDvt: String, productName: String!, productPrice: Float, threshold: Float! = 0.6): CanonicalNameAdvanced
+
+  """Find duplicate products (same ten2)"""
+  findDuplicates: [DuplicateGroup!]!
+
+  """Find duplicates with DVT and price matching"""
+  findDuplicatesAdvanced(priceTolerance: Float! = 10): [DuplicateGroupAdvanced!]!
+
+  """Find first matching record"""
+  findFirst(include: JSON, model: String!, orderBy: JSON, select: JSON, where: JSON): JSON
+
+  """Find all records for a model with Prisma-like syntax"""
+  findMany(input: UnifiedFindManyInput, modelName: String!): [JSONObject!]!
+
+  """Find records with pagination"""
+  findManyPaginated(input: UnifiedPaginatedInput, modelName: String!): JSONObject!
+
+  """Find products similar to search text using fuzzy matching"""
+  findSimilarProducts(
+    searchText: String!
+
+    """Similarity threshold (0.0-1.0)"""
+    threshold: Float! = 0.3
+  ): [SimilarProduct!]!
+
+  """Find similar products with DVT and price matching"""
+  findSimilarProductsAdvanced(
+    """Price tolerance percentage (default 10%)"""
+    priceTolerance: Float! = 10
+
+    """Đơn vị tính (optional)"""
+    searchDvt: String
+
+    """Đơn giá (optional)"""
+    searchPrice: Float
+    searchText: String!
+
+    """Similarity threshold (0.0-1.0)"""
+    threshold: Float! = 0.3
+  ): [SimilarProductAdvanced!]!
+
+  """Find a unique record"""
+  findUnique(include: JSON, model: String!, select: JSON, where: JSON!): JSON
+  folder(id: ID!): FileFolder!
+  folders: [FileFolder!]!
+  footerMenus: [MenuHierarchicalDto!]!
+  footerSettings: [WebsiteSetting!]!
+
+  """Lấy AI provider theo ID"""
+  getAIProvider(id: String!): AIProvider
+
+  """Lấy thống kê AI providers"""
+  getAIProviderStats: AIProviderStats!
+
+  """Lấy danh sách tất cả AI providers"""
+  getAIProviders: [AIProvider!]!
+
+  """Lấy AI provider đang active"""
+  getActiveAIProvider(providerType: AIProviderType): AIProvider
+  getAllModels: [String!]!
+
+  """Get list of all available Prisma models"""
+  getAvailableModels: [String!]!
+  getCallCenterConfig: CallCenterConfig!
+  getCallCenterRecordById(id: String!): CallCenterRecord!
+  getCallCenterRecords(filters: CallCenterRecordFiltersInput, pagination: PaginationInput! = {limit: 20, page: 1}): PaginatedCallCenterRecords!
+  getCallCenterSyncLogs(pagination: PaginationInput! = {limit: 20, page: 1}): [CallCenterSyncLog!]!
+  getCart(sessionId: String): CartType
+  getCommentById(id: String!): Comment!
+  getCommentsByPost(postId: String!): [Comment!]!
+  getCustomTemplate(id: String!): CustomTemplate!
+  getHomepage: Page
+  getInvoice(id: ID!): ExtListhoadon!
+  getInvoiceStats: InvoiceStats!
+  getMappableFields(modelName: String!): JSON!
+  getMe: User!
+  getModelSchema(modelName: String!): JSON!
+  getMyCustomTemplates(archived: Boolean, category: TemplateCategory): [CustomTemplate!]!
+  getMyOrders(skip: Float = 0, take: Float = 20): OrderListResponse!
+  getMyPosts: [Post!]!
+  getNotifications(isRead: Boolean, skip: Int, take: Int, type: String): NotificationListResponse!
+  getOrder(orderId: ID!): OrderType
+  getOrderByNumber(email: String, orderNumber: String!): OrderType
+  getOrderStatistics(endDate: DateTime, startDate: DateTime): OrderStatisticsResponse!
+  getPageById(id: String!): Page!
+  getPageBySlug(slug: String!): Page
+  getPageBySlugPattern(slugPattern: String!): Page
+  getPages(filters: PageFiltersInput, pagination: PaginationInput! = {limit: 10, page: 1}): PaginatedPages!
+  getPermissionById(id: String!): Permission!
+  getPostById(id: String!): Post!
+  getPostBySlug(slug: String!): Post!
+  getPosts(filters: PostFiltersInput, pagination: PaginationInput! = {limit: 10, page: 1}): PaginatedPosts!
+  getPresignedUrl(bucket: String!, expiresIn: Float, fileId: String!): String!
+
+  """Get product groups by normalized name (ten2)"""
+  getProductGroups(
+    """Minimum products per group"""
+    minGroupSize: Float! = 2
+  ): [ProductGroup!]!
+
+  """Get product groups with DVT and price statistics"""
+  getProductGroupsAdvanced(minGroupSize: Float! = 2, priceTolerance: Float! = 10): [ProductGroupAdvanced!]!
+  getPublicTemplates(category: TemplateCategory): [CustomTemplate!]!
+  getPublishedPages(pagination: PaginationInput! = {limit: 10, page: 1}): PaginatedPages!
+  getRequiredFields(modelName: String!): [String!]!
+  getReservedSlugs: [String!]!
+  getRoleById(id: String!): Role!
+  getSharedTasks(filters: TaskFilterInput): [Task!]!
+  getSharedTemplates: [CustomTemplate!]!
+  getTask(id: String!): Task
+  getTaskById(id: ID!): Task!
+  getTasks(filters: TaskFilterInput): [Task!]!
+  getTasksPaginated(filters: TaskFilterInput, limit: Int! = 10, page: Int! = 1): TasksPaginatedResult!
+  getUnreadNotificationsCount: Float!
+  getUserById(id: String!): User!
+  getUserRolePermissions(userId: String!): UserRolePermissionSummary!
+  getUserStats: UserStats!
+  getUsers: [User!]!
+  getVapidPublicKey: String!
+
+  """Get all ext_detailhoadon records"""
+  getext_detailhoadons(filters: JSON): [JSON!]!
+
+  """Get all ext_listhoadon records"""
+  getext_listhoadons(filters: JSON): [JSON!]!
+
+  """Get single ext_sanphamhoadon by ID"""
+  getext_sanphamhoadonById(id: String!, options: JSON): JSON!
+
+  """Get all ext_sanphamhoadon records"""
+  getext_sanphamhoadons(filters: JSON): [JSON!]!
+
+  """Get paginated ext_sanphamhoadon records"""
+  getext_sanphamhoadonsPaginated(filters: JSON): JSON!
+
+  """Group records by field(s)"""
+  groupBy(model: String!, options: JSON!): [JSON!]!
+  hasPassword: Boolean!
+  headerMenus: [MenuHierarchicalDto!]!
+  headerSettings: [WebsiteSetting!]!
+
+  """Hello world query"""
+  hello: String!
+  hrStatistics: HRStatistics!
+  invoiceExists(idServer: String!, khmshdon: String!, nbmst: String!, shdon: String!): Boolean!
+  latestSystemRelease: SystemRelease
+
+  """Get list of all available Prisma models"""
+  listAvailableModels: [String!]!
+  listEmployeeProfiles(department: String, isActive: Boolean, position: String, skip: Float, take: Float): EmployeeListResponse!
+  listOffboardingProcesses(clearanceStatus: ClearanceStatus, skip: Int, status: OffboardingStatus, take: Int): OffboardingListResponse!
+  listOnboardingChecklists(skip: Int, status: OnboardingStatus, take: Int): OnboardingListResponse!
+  listOrders(filter: OrderFilterInput): OrderListResponse!
+
+  """Get member performance statistics"""
+  memberStatistics(projectId: ID!): String!
+  menu(id: ID!): MenuResponseDto
+  menuBySlug(slug: String!): MenuResponseDto
+  menuTree(parentId: String, type: String): [MenuResponseDto!]!
+  menus(direction: String, filter: MenuFilterDto, limit: Float, orderBy: String, page: Float): MenuPaginationResponseDto!
+  mobileMenus: [MenuHierarchicalDto!]!
+  myCertificates: [Certificate!]!
+  myCourses: [Course!]!
+  myEnrollments: [Enrollment!]!
+  myMenus(type: String): [MenuResponseDto!]!
+  myPermissions: [PermissionType!]!
+
+  """Lấy tất cả projects mà user là thành viên (dùng cho Sidebar)"""
+  myProjects(includeArchived: Boolean! = false): [Project!]!
+  myRoles: [UserRoleAssignmentType!]!
+  myTechnicalSupportTickets(status: String): [TechnicalSupportTicket!]!
+
+  """Normalize a product name"""
+  normalizeProductName(productName: String!, threshold: Float! = 0.6): String!
+
+  """Normalize product name with DVT and price"""
+  normalizeProductNameAdvanced(priceTolerance: Float! = 10, productDvt: String, productName: String!, productPrice: Float, threshold: Float! = 0.6): String!
+  offboardingProcess(id: ID!): OffboardingProcess!
+  onboardingChecklist(id: ID!): OnboardingChecklist!
+  onboardingChecklistByEmployee(employeeProfileId: ID!): OnboardingChecklist!
+
+  """Check Orama search engine health status"""
+  oramaHealthCheck: OramaHealthCheck!
+
+  """Get overdue tasks"""
+  overdueTasks(projectId: ID!): String!
+  permissions: PermissionsByCategoryType!
+  product(id: ID!): ProductType!
+  productBySlug(slug: String!): ProductType!
+  productRatingSummary(productId: ID!): ProductRatingSummaryType!
+  productReviews(limit: Int = 10, page: Int = 1, productId: ID!, rating: Int): ReviewsResponse!
+  products(input: GetProductsInput): PaginatedProducts!
+  productsByCategory(categoryId: ID!, input: GetProductsInput): PaginatedProducts!
+
+  """Lấy chi tiết 1 project"""
+  project(id: String!): Project!
+
+  """Get comprehensive project analytics (returned as JSON string)"""
+  projectAnalytics(endDate: DateTime, projectId: ID!, startDate: DateTime): String!
+
+  """Get all files for a project"""
+  projectFiles(projectId: ID!): [ProjectMedia!]!
+
+  """Get project health score (0-100)"""
+  projectHealthScore(projectId: ID!): String!
+
+  """Lấy danh sách members (dùng cho @mention autocomplete)"""
+  projectMembers(projectId: ID!): [ProjectMember!]!
+
+  """Get tasks by project ID (for TaskFeed)"""
+  projectTasks(filters: TaskFilterInput, projectId: ID!): [Task!]!
+
+  """Get a specific public menu item by ID (no authentication required)"""
+  publicMenuById(id: String!, includeChildren: Boolean = true): JSON
+
+  """Get public menu items (no authentication required)"""
+  publicMenus(includeChildren: Boolean = true, isActive: Boolean, isVisible: Boolean, orderBy: JSON, skip: Int, take: Int, type: String): [JSON!]!
+  publicWebsiteSettings(category: String, group: String, keys: [String!]): [WebsiteSetting!]!
+  quiz(id: String!): Quiz!
+  quizAttempt(id: String!): QuizAttempt!
+  quizAttempts(quizId: String!): [QuizAttempt!]!
+  quizzesByLesson(lessonId: String!): [Quiz!]!
+  relatedBlogs(blogId: ID!, limit: Int): [BlogType!]!
+  review(id: ID!): ProductReviewType
+  reviewStats(courseId: ID!): ReviewStats!
+  reviews(input: GetReviewsInput!): ReviewsWithStats!
+  role(id: String!): RoleType!
+  roles: [RoleType!]!
+  sampleCoursePrompts: [String!]!
+
+  """Search affiliate campaigns using Orama full-text search engine"""
+  searchAffiliateCampaigns(input: OramaSearchInput!): OramaSearchResult!
+
+  """Search affiliate links using Orama full-text search engine"""
+  searchAffiliateLinks(input: OramaSearchInput!): OramaSearchResult!
+  searchInvoices(input: InvoiceSearchInput!): InvoiceSearchResult!
+  searchPermissions(input: PermissionSearchInput!): PermissionSearchResult!
+
+  """Search projects using Orama full-text search engine"""
+  searchProjects(input: OramaSearchInput!): OramaSearchResult!
+  searchRoles(input: RoleSearchInput!): RoleSearchResult!
+
+  """Search tasks using Orama full-text search engine"""
+  searchTasks(input: OramaSearchInput!): OramaSearchResult!
+
+  """Search users using Orama full-text search engine"""
+  searchUsers(input: OramaSearchInput!): OramaSearchResult!
+  sidebarMenus: [MenuResponseDto!]!
+  sourceDocument(id: ID!): SourceDocument!
+  sourceDocumentCategories: [SourceDocumentCategory!]!
+  sourceDocumentCategory(id: ID!): SourceDocumentCategory!
+  sourceDocumentCategoryTree: [SourceDocumentCategory!]!
+  sourceDocumentStats: String!
+  sourceDocuments(filter: SourceDocumentFilterInput, limit: Int! = 20, page: Int! = 1): [SourceDocument!]!
+  suggestMapping(modelName: String!, sourceFields: [String!]!): JSON!
+  supportAnalytics: SupportAnalytics!
+  supportConversation(id: String!): SupportConversation!
+  supportConversations(take: Int, where: SupportConversationWhereInput): [SupportConversation!]!
+  supportMessages(conversationId: String!): [SupportMessage!]!
+  systemGuide(id: String!): SystemGuide!
+  systemGuideBySlug(slug: String!): SystemGuide!
+  systemGuides(parentId: String, search: String, type: GuideType): [SystemGuide!]!
+  systemRelease(id: String!): SystemRelease
+  systemReleaseBySlug(slug: String!): SystemRelease
+  systemReleaseByVersion(version: String!): SystemRelease
+  systemReleases(skip: Int = 0, take: Int = 20, where: SystemReleaseWhereInput): [SystemRelease!]!
+
+  """Get tag usage statistics"""
+  tagStatistics(projectId: ID!): String!
+
+  """Get all files for a task"""
+  taskFiles(taskId: ID!): [ProjectMedia!]!
+
+  """Get task statistics by status and priority"""
+  taskStatistics(projectId: ID!): String!
+
+  """Get task completion velocity"""
+  taskVelocity(days: Float! = 30, projectId: ID!): String!
+  technicalSupportTicket(id: String!): TechnicalSupportTicket
+  technicalSupportTicketByNumber(ticketNumber: String!): TechnicalSupportTicket
+  technicalSupportTickets(skip: Int = 0, take: Int = 20, where: TechnicalSupportTicketWhereInput): [TechnicalSupportTicket!]!
+
+  """Test similarity between two products"""
+  testProductSimilarity(productId1: String!, productId2: String!): ProductSimilarityTest
+
+  """Test similarity between two strings"""
+  testSimilarity(text1: String!, text2: String!): Float!
+
+  """Execute any Prisma query operation dynamically"""
+  universalQuery(input: UniversalQueryInput!): JSONObject!
+
+  """
+  Search across all entity types (tasks, users, projects, affiliate campaigns, affiliate links)
+  """
+  universalSearch(input: OramaSearchInput!): UniversalSearchResult!
+
+  """Get tasks with upcoming deadlines (next 7 days)"""
+  upcomingDeadlines(projectId: ID!): String!
+
+  """Get upcoming tasks for reminders"""
+  upcomingTasks(hours: Float! = 24): String!
+  userReview(courseId: ID!): Review
+  usersByRole(roleId: String!): [UserRoleAssignmentType!]!
+  validateCart(sessionId: String): ValidateCartResponse!
+  validateImportData(data: JSON!, requiredFields: [String!]!): JSON!
+  validateMapping(mapping: JSON!, modelName: String!): JSON!
+  verifyCertificate(certificateNumber: String!): CertificateVerification!
+
+  """Get API version"""
+  version: String!
+  websiteSetting(key: String!): WebsiteSetting
+  websiteSettings(category: String, group: String, isActive: Boolean, isPublic: Boolean): [WebsiteSetting!]!
+  websiteSettingsByCategory(category: String!): [WebsiteSetting!]!
+}
+
+type Question {
+  answers: [Answer!]!
+  createdAt: DateTime!
+  explanation: String
+  id: ID!
+  order: Int!
+  points: Int!
+  question: String!
+  quizId: String!
+  type: String!
+  updatedAt: DateTime!
+}
+
+type Quiz {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  lessonId: String!
+  passingScore: Int!
+  questions: [Question!]!
+  timeLimit: Int
+  title: String!
+  updatedAt: DateTime!
+}
+
+input QuizAnswerInput {
+  questionId: String!
+  selectedAnswerIds: [String!]!
+}
+
+type QuizAttempt {
+  answers: String
+  completedAt: DateTime
+  createdAt: DateTime!
+  enrollmentId: String!
+  id: ID!
+  passed: Boolean!
+  quiz: Quiz!
+  quizId: String!
+  score: Float
+  startedAt: DateTime!
+  timeSpent: Int
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input RateTicketInput {
+  feedback: String
+  rating: Int!
+  ticketId: String!
+}
+
+type RatingDistributionType {
+  rating1: Int!
+  rating2: Int!
+  rating3: Int!
+  rating4: Int!
+  rating5: Int!
+}
+
+input RegisterUserInput {
+  avatar: String
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  phone: String
+  username: String!
+}
+
+type ReindexResult {
+  message: String!
+  success: Boolean!
+  totalIndexed: Int
+}
+
+enum ReleaseStatus {
+  DEPRECATED
+  DRAFT
+  RELEASED
+  SCHEDULED
+}
+
+enum ReleaseType {
+  HOTFIX
+  MAJOR
+  MINOR
+  PATCH
+}
+
+input RemoveFromCartInput {
+  itemId: ID!
+}
+
+type RemoveFromCartResponse {
+  cart: CartType
+  errors: [String!]
+  message: String
+  success: Boolean!
+}
+
+type RemoveRoleResultType {
+  message: String!
+  success: Boolean!
+}
+
+input ReorderLessonsInput {
+  lessonIds: [ID!]!
+  moduleId: ID!
+}
+
+input ReorderModulesInput {
+  courseId: ID!
+  moduleIds: [ID!]!
+}
+
+input RequestPhoneVerificationInput {
+  phone: String!
+}
+
+type Review {
+  comment: String
+  courseId: ID!
+  createdAt: DateTime!
+  helpfulCount: Int!
+  helpfulVoters: [String!]!
+  id: ID!
+
+  """Rating from 1 to 5 stars"""
+  rating: Int!
+  updatedAt: DateTime!
+  user: ReviewUser
+  userId: ID!
+}
+
+input ReviewCampaignApplicationInput {
+  action: String!
+  applicationId: String!
+  reason: String
+}
+
+type ReviewProductType {
+  id: ID!
+  name: String!
+  slug: String!
+}
+
+type ReviewResponse {
+  helpfulCount: Int
+  message: String
+  success: Boolean!
+}
+
+type ReviewStats {
+  avgRating: Float!
+  fiveStars: Int!
+  fourStars: Int!
+  oneStar: Int!
+  threeStars: Int!
+  totalReviews: Int!
+  twoStars: Int!
+}
+
+type ReviewUser {
+  avatar: String
+  firstName: String
+  id: ID!
+  lastName: String
+  username: String!
+}
+
+type ReviewUserType {
+  avatar: String
+  email: String
+  fullName: String
+  id: ID!
+}
+
+type ReviewsResponse {
+  hasMore: Boolean!
+  items: [ProductReviewType!]!
+  page: Int!
+  pageSize: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type ReviewsWithStats {
+  page: Int!
+  pageSize: Int!
+  reviews: [Review!]!
+  stats: ReviewStats!
+  total: Int!
+}
+
+type Role {
+  children: [Role!]!
+  createdAt: DateTime!
+  description: String
+  displayName: String!
+  id: ID!
+  isActive: Boolean!
+  isSystemRole: Boolean!
+  metadata: JSON
+  name: String!
+  parent: Role
+  parentId: String
+  permissions: [RolePermission!]!
+  priority: Int!
+  updatedAt: DateTime!
+}
+
+input RoleAssignmentInput {
+  conditions: JSON
+  effect: String! = "allow"
+  metadata: JSON
+  roleId: String!
+}
+
+type RolePermission {
+  conditions: JSON
+  effect: String!
+  id: ID!
+  metadata: JSON
+  permission: Permission!
+}
+
+type RolePermissionType {
+  createdAt: DateTime!
+  effect: String!
+  expiresAt: DateTime
+  id: ID!
+  permission: PermissionType!
+  permissionId: ID!
+  roleId: ID!
+}
+
+input RoleSearchInput {
+  isActive: Boolean
+  page: Int = 0
+  parentId: String
+  search: String
+  size: Int = 20
+  sortBy: String = "name"
+  sortOrder: String = "asc"
+}
+
+type RoleSearchResult {
+  page: Int!
+  roles: [Role!]!
+  size: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type RoleType {
+  createdAt: DateTime!
+  description: String
+  displayName: String!
+  id: ID!
+  isActive: Boolean!
+  isSystemRole: Boolean!
+  name: String!
+  parentId: String
+  permissions: [RolePermissionType!]
+  priority: Int!
+  updatedAt: DateTime!
+  userCount: Int
+  userRoles: [UserRoleAssignmentType!]
+}
+
+input SetPasswordInput {
+  confirmPassword: String!
+  password: String!
+}
+
+"""The permission level for shared tasks"""
+enum SharePermission {
+  ADMIN
+  EDIT
+  VIEW
+}
+
+input ShareTaskInput {
+  permission: SharePermission!
+  sharedWithId: String!
+  taskId: String!
+}
+
+input ShareTemplateInput {
+  templateId: String!
+  userIds: [String!]!
+}
+
+input ShippingAddressInput {
+  address: String!
+  city: String!
+  district: String!
+  name: String!
+  phone: String!
+  ward: String!
+  zipCode: String
+}
+
+enum ShippingMethod {
+  EXPRESS
+  PICKUP
+  SAME_DAY
+  STANDARD
+}
+
+type SimilarProduct {
+  id: String!
+  ma: String
+  similarityScore: Float!
+  ten: String!
+  ten2: String
+}
+
+type SimilarProductAdvanced {
+  dgia: Float
+  dvt: String
+  dvtMatch: Boolean!
+  id: String!
+  ma: String
+  priceDiffPercent: Float
+  similarityScore: Float!
+  ten: String!
+  ten2: String
+}
+
+input SocialLoginInput {
+  avatar: String
+  email: String
+  firstName: String
+  lastName: String
+  provider: AuthProvider!
+  providerId: String
+  rememberMe: Boolean
+  token: String!
+}
+
+type SourceDocument {
+  aiAnalyzedAt: DateTime
+  aiKeywords: [String!]!
+  aiSummary: String
+  aiTopics: [String!]!
+  approvalRequested: Boolean!
+  approvalRequestedAt: DateTime
+  approvalRequestedBy: String
+  approvedAt: DateTime
+  approvedBy: String
+  category: SourceDocumentCategory
+  categoryId: ID
+  content: String
+  createdAt: DateTime!
+  description: String
+  downloadCount: Int!
+  duration: Int
+  fileName: String
+
+  """File size in bytes (supports large files)"""
+  fileSize: Float
+  id: ID!
+  isAiAnalyzed: Boolean!
+  metadata: JSON
+  mimeType: String
+  publishedAt: DateTime
+  rejectionReason: String
+  status: SourceDocumentStatus!
+  tags: [String!]!
+  thumbnailUrl: String
+  title: String!
+  type: SourceDocumentType!
+  updatedAt: DateTime!
+  url: String
+  usageCount: Int!
+  user: User
+  userId: ID!
+  viewCount: Int!
+}
+
+type SourceDocumentCategory {
+  children: [SourceDocumentCategory!]
+  color: String
+  createdAt: DateTime!
+  description: String
+  icon: String
+  id: ID!
+  name: String!
+  parent: SourceDocumentCategory
+  parentId: ID
+  slug: String!
+  sourceDocuments: [SourceDocument!]
+  updatedAt: DateTime!
+}
+
+input SourceDocumentFilterInput {
+  categoryId: ID
+  isAiAnalyzed: Boolean
+  search: String
+  statuses: [SourceDocumentStatus!]
+  tags: [String!]
+  types: [SourceDocumentType!]
+  userId: ID
+}
+
+"""Status of source document"""
+enum SourceDocumentStatus {
+  ARCHIVED
+  DRAFT
+  PROCESSING
+  PUBLISHED
+}
+
+"""Type of source document"""
+enum SourceDocumentType {
+  AUDIO
+  FILE
+  IMAGE
+  LINK
+  TEXT
+  VIDEO
+}
+
+input SubmitQuizInput {
+  answers: [QuizAnswerInput!]!
+  enrollmentId: String!
+  quizId: String!
+  timeSpent: Int
+}
+
+type Subscription {
+  newComment(postId: String): Comment
+  postCreated: Post
+  postUpdated: Post
+  taskCommentCreated: TaskComment
+  taskCreated: Task
+  taskUpdated: Task
+  userRegistered: User!
+}
+
+type SupportAnalytics {
+  activeConversations: Int!
+  agentPerformance: [AgentPerformance!]!
+  aiGeneratedMessages: Int!
+  averageResolutionTime: Int!
+  averageResponseTime: Int!
+  closedConversations: Int!
+  customerSatisfactionScore: Float!
+  platformBreakdown: [PlatformBreakdown!]!
+  totalConversations: Int!
+  totalMessages: Int!
+  waitingConversations: Int!
+}
+
+type SupportConversation {
+  assignedAgent: User
+  assignedAgentId: String
+  assignedAt: DateTime
+  closedAt: DateTime
+  conversationCode: String!
+  createdAt: DateTime!
+  customer: User
+  customerEmail: String
+  customerId: String
+  customerIp: String
+  customerLocation: String
+  customerName: String
+  customerPhone: String
+  feedback: String
+  id: ID!
+  lastMessageAt: DateTime
+  lastMessagePreview: String
+  messages: [SupportMessage!]
+  notes: String
+  platform: IntegrationPlatform!
+  platformUserId: String
+  platformUserName: String
+  priority: TicketPriority!
+  rating: Float
+  startedAt: DateTime!
+  status: SupportConversationStatus!
+  subject: String
+  tags: [String!]!
+  updatedAt: DateTime!
+}
+
+enum SupportConversationStatus {
+  ACTIVE
+  ASSIGNED
+  CLOSED
+  RESOLVED
+  WAITING
+}
+
+input SupportConversationWhereInput {
+  assignedAgentId: String
+  customerId: String
+  platform: String
+  status: String
+}
+
+type SupportMessage {
+  aiConfidence: Float
+  content: String!
+  conversationId: String!
+  createdAt: DateTime!
+  id: ID!
+  isAIGenerated: Boolean!
+  isRead: Boolean!
+  sender: User
+  senderName: String
+  senderType: String!
+  sentAt: DateTime!
+}
+
+enum SupportTicketCategory {
+  ACCOUNT
+  BILLING
+  BUG_REPORT
+  FEATURE_REQUEST
+  GENERAL_INQUIRY
+  OTHER
+  TECHNICAL
+}
+
+enum SupportTicketPriority {
+  CRITICAL
+  HIGH
+  LOW
+  MEDIUM
+}
+
+enum SupportTicketStatus {
+  CLOSED
+  IN_PROGRESS
+  OPEN
+  RESOLVED
+  WAITING_CUSTOMER
+}
+
+input SyncCallCenterInput {
+  configId: String
+  fromDate: DateTime
+  fullSync: Boolean! = false
+  toDate: DateTime
+}
+
+type SyncCallCenterResponse {
+  error: String
+  message: String!
+  recordsCreated: Int!
+  recordsFetched: Int!
+  recordsUpdated: Int!
+  success: Boolean!
+  syncLogId: String
+}
+
+type SystemGuide {
+  attachmentUrls: [String!]!
+  author: GuideAuthor
+  authorId: String
+  category: String
+  children: [SystemGuide!]!
+  content: String!
+  createdAt: DateTime!
+  description: String
+  difficulty: String
+  helpfulCount: Int!
+  icon: String
+  id: ID!
+  isPublished: Boolean!
+  keywords: [String!]!
+  metaDescription: String
+  metaTitle: String
+  notHelpfulCount: Int!
+  order: Int!
+  orderIndex: Int!
+  parent: SystemGuide
+  parentId: String
+  publishedAt: DateTime
+  readingTime: Int
+  relatedGuideIds: [String!]!
+  slug: String!
+  tags: [String!]!
+  thumbnailUrl: String
+  title: String!
+  type: GuideType!
+  updatedAt: DateTime!
+  updatedBy: GuideAuthor
+  updatedById: String
+  videoUrl: String
+  viewCount: Int!
+}
+
+type SystemRelease {
+  breakingChanges: [String!]!
+  bugfixes: [String!]!
+  createdAt: DateTime!
+  createdById: String
+  deploymentDate: DateTime
+  deprecations: [String!]!
+  description: String
+  downloadCount: Int!
+  features: [String!]!
+  id: ID!
+  improvements: [String!]!
+  keywords: [String!]!
+  metaDescription: String
+  metaTitle: String
+  publishedAt: DateTime
+  releaseDate: DateTime
+  releaseNotes: String
+  releaseType: ReleaseType!
+  screenshotUrls: [String!]!
+  slug: String!
+  status: ReleaseStatus!
+  summary: String
+  thumbnailUrl: String
+  title: String!
+  updatedAt: DateTime!
+  updatedById: String
+  upgradeGuide: String
+  version: String!
+  versionNumber: String!
+  videoUrl: String
+  viewCount: Int!
+}
+
+input SystemReleaseWhereInput {
+  releaseType: ReleaseType
+  search: String
+  status: ReleaseStatus
+}
+
+type Tag {
+  color: String
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  posts: [Post!]
+  postsCount: Float!
+  slug: String!
+  updatedAt: DateTime!
+}
+
+type Task {
+  _count: TaskCount
+  assignedTo: [ID!]
+  author: User!
+  category: TaskCategory!
+  commentAuthor: User!
+  commentCount: Float!
+  commentParent: TaskComment
+  commentReplies: [TaskComment!]!
+  comments: [TaskComment!]
+  completedAt: DateTime
+  createdAt: DateTime!
+  description: String
+  dueDate: DateTime
+  id: ID!
+  media: [TaskMedia!]
+  mediaCount: Float!
+  mentions: [ID!]
+  order: Int
+  parent: Task
+  parentId: String
+  priority: TaskPriority!
+  progress: Float
+  projectId: String
+  shares: [TaskShare!]
+  status: TaskStatus!
+  subtaskCount: Float!
+  subtasks: [Task!]
+  tags: [String!]
+  title: String!
+  updatedAt: DateTime!
+  user: User!
+  userId: String!
+}
+
+"""The category of a task"""
+enum TaskCategory {
+  HEALTH
+  OTHER
+  PERSONAL
+  SHOPPING
+  WORK
+}
+
+type TaskComment {
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  parent: TaskComment
+  parentId: String
+  replies: [TaskComment!]
+  taskId: String!
+  updatedAt: DateTime!
+  user: User!
+  userId: String!
+}
+
+type TaskCount {
+  comments: Int!
+  subtasks: Int!
+}
+
+input TaskFilterInput {
+  category: TaskCategory
+  dueAfter: String
+  dueBefore: String
+  priority: TaskPriority
+  search: String
+  status: TaskStatus
+}
+
+type TaskMedia {
+  caption: String
+  createdAt: DateTime!
+  filename: String!
+  id: ID!
+  mimeType: String!
+  size: Float!
+  taskId: String!
+  type: MediaType!
+  updatedAt: DateTime!
+  uploadedBy: String!
+  uploader: User!
+  url: String!
+}
+
+"""The priority level of a task"""
+enum TaskPriority {
+  HIGH
+  LOW
+  MEDIUM
+  URGENT
+}
+
+type TaskShare {
+  createdAt: DateTime!
+  expiresAt: DateTime
+  id: ID!
+  isActive: Boolean!
+  permission: SharePermission!
+  shareToken: String!
+  sharedBy: String!
+  sharedByUser: User!
+  sharedWith: String
+  sharedWithUser: User
+  taskId: String!
+  updatedAt: DateTime!
+}
+
+"""The status of a task"""
+enum TaskStatus {
+  CANCELLED
+  COMPLETED
+  IN_PROGRESS
+  PENDING
+}
+
+type TasksPaginatedResult {
+  data: [Task!]!
+  meta: PaginationInfo!
+}
+
+type TechnicalSupportMessage {
+  attachmentUrls: [String!]!
+  authorEmail: String
+  authorId: String
+  authorName: String
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  isInternal: Boolean!
+  isRead: Boolean!
+  readAt: DateTime
+  ticketId: String!
+  updatedAt: DateTime!
+}
+
+type TechnicalSupportTicket {
+  assignedAt: DateTime
+  assignedToId: String
+  attachmentUrls: [String!]!
+  browserInfo: String
+  category: SupportTicketCategory!
+  closedAt: DateTime
+  createdAt: DateTime!
+  customerEmail: String
+  customerFeedback: String
+  customerId: String
+  customerName: String
+  customerPhone: String
+  customerRating: Int
+  description: String!
+  deviceInfo: String
+  environment: String
+  errorLogs: String
+  firstResponseAt: DateTime
+  id: ID!
+  lastResponseAt: DateTime
+  osInfo: String
+  priority: SupportTicketPriority!
+  relatedOrderId: String
+  relatedUrl: String
+  resolution: String
+  resolvedAt: DateTime
+  resolvedById: String
+  screenshotUrls: [String!]!
+  status: SupportTicketStatus!
+  subject: String!
+  tags: [String!]!
+  ticketNumber: String!
+  updatedAt: DateTime!
+}
+
+input TechnicalSupportTicketWhereInput {
+  assignedToId: String
+  category: SupportTicketCategory
+  customerId: String
+  priority: SupportTicketPriority
+  search: String
+  status: SupportTicketStatus
+}
+
+"""Template category for organization"""
+enum TemplateCategory {
+  CONTACT
+  CTA
+  CUSTOM
+  FAQ
+  FEATURES
+  FOOTER
+  HERO
+  NEWSLETTER
+  PRICING
+  TEAM
+  TESTIMONIALS
+}
+
+type TemplateShare {
+  createdAt: DateTime!
+  id: String!
+  sharedWith: String!
+  template: CustomTemplate!
+  templateId: String!
+  user: User!
+}
+
+"""Employment termination types"""
+enum TerminationType {
+  CONTRACT_END
+  MUTUAL_AGREEMENT
+  RESIGNATION
+  RETIREMENT
+  TERMINATION
+}
+
+input TestAIProviderInput {
+  providerId: String!
+  testMessage: String = "Hello, how are you?"
+}
+
+enum TicketPriority {
+  HIGH
+  LOW
+  MEDIUM
+  URGENT
+}
+
+input UnifiedBulkCreateInput {
+  """Array of data objects for bulk creation"""
+  data: [JSONObject!]!
+
+  """Include related data in results (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields from results (Prisma select clause)"""
+  select: JSONObject
+
+  """Skip duplicate records during bulk creation"""
+  skipDuplicates: Boolean = false
+}
+
+input UnifiedBulkDeleteInput {
+  """Include related data from deleted records (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields from deleted records (Prisma select clause)"""
+  select: JSONObject
+
+  """Filter conditions for records to delete (Prisma where clause)"""
+  where: JSONObject!
+}
+
+input UnifiedBulkUpdateInput {
+  """Data for bulk update (Prisma data clause)"""
+  data: JSONObject!
+
+  """Include related data in results (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields from results (Prisma select clause)"""
+  select: JSONObject
+
+  """Filter conditions for records to update (Prisma where clause)"""
+  where: JSONObject!
+}
+
+input UnifiedCreateInput {
+  """Data for record creation (Prisma data clause)"""
+  data: JSONObject!
+
+  """Include related data in result (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields from result (Prisma select clause)"""
+  select: JSONObject
+}
+
+input UnifiedDeleteInput {
+  """Unique identifier of the record to delete"""
+  id: ID!
+
+  """Include related data from deleted record (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields from deleted record (Prisma select clause)"""
+  select: JSONObject
+}
+
+input UnifiedFindByIdInput {
+  """Unique identifier of the record"""
+  id: ID!
+
+  """Include related data (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields (Prisma select clause)"""
+  select: JSONObject
+}
+
+input UnifiedFindManyInput {
+  """Include related data (Prisma include clause)"""
+  include: JSONObject
+
+  """Order by fields (Prisma orderBy clause)"""
+  orderBy: JSONObject
+
+  """Select specific fields (Prisma select clause)"""
+  select: JSONObject
+
+  """Number of records to skip"""
+  skip: Int
+
+  """Maximum number of records to return"""
+  take: Int
+
+  """Filter conditions (Prisma where clause)"""
+  where: JSONObject
+}
+
+input UnifiedPaginatedInput {
+  """Include related data (Prisma include clause)"""
+  include: JSONObject
+
+  """Number of records per page"""
+  limit: Int! = 10
+
+  """Order by fields (Prisma orderBy clause)"""
+  orderBy: JSONObject
+
+  """Page number (starts from 1)"""
+  page: Int! = 1
+
+  """Select specific fields (Prisma select clause)"""
+  select: JSONObject
+
+  """Filter conditions (Prisma where clause)"""
+  where: JSONObject
+}
+
+input UnifiedUpdateInput {
+  """Data for record update (Prisma data clause)"""
+  data: JSONObject!
+
+  """Unique identifier of the record to update"""
+  id: ID!
+
+  """Include related data in result (Prisma include clause)"""
+  include: JSONObject
+
+  """Select specific fields from result (Prisma select clause)"""
+  select: JSONObject
+}
+
+input UniversalQueryInput {
+  cursor: JSONObject
+  data: JSONObject
+  distinct: [String!]
+  include: JSONObject
+  model: String!
+  operation: String!
+  orderBy: JSONObject
+  select: JSONObject
+  skip: Int
+  take: Int
+  where: JSONObject
+}
+
+type UniversalSearchResult {
+  affiliateCampaigns: OramaSearchResult!
+  affiliateLinks: OramaSearchResult!
+  projects: OramaSearchResult!
+  tasks: OramaSearchResult!
+  users: OramaSearchResult!
+}
+
+input UpdateAIProviderInput {
+  apiKey: String
+  description: String
+  isActive: Boolean
+  isDefault: Boolean
+  maxTokens: Int
+  model: String
+  name: String
+  priority: Int
+  systemPrompt: String
+  tags: [String!]
+  temperature: Float
+}
+
+input UpdateAffUserInput {
+  bankAccount: String
+  businessType: String
+  companyName: String
+  description: String
+  isActive: Boolean
+  paymentMethod: AffPaymentMethod
+  paypalEmail: String
+  taxId: String
+  website: String
+}
+
+input UpdateBlogCategoryInput {
+  description: String
+  isActive: Boolean
+  name: String
+  order: Int
+  slug: String
+  thumbnail: String
+}
+
+input UpdateBlogInput {
+  author: String
+  canonicalUrl: String
+  categoryId: String
+  commentsEnabled: Boolean
+  content: String
+  excerpt: String
+  featuredImage: String
+  id: ID!
+  images: [String!]
+  isFeatured: Boolean
+  isPinned: Boolean
+  metaDescription: String
+  metaKeywords: [String!]
+  metaTitle: String
+  publishedAt: DateTime
+  readingTime: Float
+  slug: String
+  status: String
+  tagIds: [String!]
+  title: String
+  visibility: String
+}
+
+input UpdateBlogTagInput {
+  id: ID!
+  name: String
+  slug: String
+}
+
+input UpdateCallCenterConfigInput {
+  apiKey: String
+  apiUrl: String
+  batchSize: Int
+  cronExpression: String
+  defaultDaysBack: Int
+  domain: String
+  isActive: Boolean
+  syncMode: CallCenterSyncMode
+}
+
+input UpdateCampaignInput {
+  commissionRate: Float
+  commissionType: String
+  description: String
+  endDate: DateTime
+  fixedAmount: Float
+  maxAffiliates: Int
+  name: String
+  productImage: String
+  productName: String
+  productUrl: String
+  requireApproval: Boolean
+  startDate: DateTime
+  status: AffCampaignStatus
+}
+
+input UpdateCartItemInput {
+  itemId: ID!
+  quantity: Int!
+}
+
+type UpdateCartResponse {
+  cart: CartType
+  errors: [String!]
+  message: String
+  success: Boolean!
+}
+
+input UpdateCategoryInput {
+  description: String
+  displayOrder: Int
+  icon: String
+  id: ID!
+  isActive: Boolean
+  isFeatured: Boolean
+  metaDescription: String
+  metaKeywords: String
+  metaTitle: String
+  name: String
+  parentId: ID
+  slug: String
+  thumbnail: String
+}
+
+input UpdateCommentInput {
+  content: String
+}
+
+input UpdateCourseCategoryInput {
+  description: String
+  icon: String
+  id: ID!
+  name: String
+  parentId: String
+}
+
+input UpdateCourseDocumentLinkInput {
+  description: String
+  isRequired: Boolean
+  order: Int
+}
+
+input UpdateCourseInput {
+  categoryId: String
+  description: String
+  duration: Int
+  id: ID!
+  level: CourseLevel = BEGINNER
+  metaDescription: String
+  metaTitle: String
+  price: Float = 0
+  requirements: [String!] = []
+  status: CourseStatus = DRAFT
+  tags: [String!] = []
+  targetAudience: [String!] = []
+  thumbnail: String
+  title: String
+  trailer: String
+  whatYouWillLearn: [String!] = []
+}
+
+input UpdateCustomTemplateInput {
+  blocks: JSON
+  category: TemplateCategory
+  description: String
+  id: String!
+  name: String
+  thumbnail: String
+}
+
+input UpdateDiscussionInput {
+  content: String
+  id: ID!
+  title: String
+}
+
+input UpdateEmployeeProfileInput {
+  bankAccountName: String
+  bankAccountNumber: String
+  bankBranch: String
+  bankName: String
+  certifications: JSON
+  citizenId: String
+  citizenIdIssueDate: String
+  citizenIdIssuePlace: String
+  city: String
+  contractType: ContractType
+  currentAddress: String
+  dateOfBirth: String
+  department: String
+  directManager: String
+  displayName: String
+  district: String
+  education: JSON
+  emergencyContactAddress: String
+  emergencyContactName: String
+  emergencyContactPhone: String
+  emergencyContactRelationship: String
+  fullName: String
+  gender: Gender
+  healthInsuranceNumber: String
+  isActive: Boolean
+  languages: JSON
+  level: String
+  maritalStatus: MaritalStatus
+  nationality: String
+  notes: String
+  passportExpiryDate: String
+  passportIssueDate: String
+  passportNumber: String
+  permanentAddress: String
+  personalEmail: String
+  personalPhone: String
+  placeOfBirth: String
+  position: String
+  postalCode: String
+  probationEndDate: String
+  salaryGrade: String
+  skills: [String!]
+  socialInsuranceNumber: String
+  startDate: String
+  taxCode: String
+  team: String
+  ward: String
+  workLocation: String
+}
+
+input UpdateEmploymentHistoryInput {
+  approvalStatus: String
+  approvedAt: String
+  approvedBy: String
+  contractEndDate: String
+  contractNumber: String
+  contractStartDate: String
+  contractType: ContractType
+  documentIds: [String!]
+  effectiveDate: String
+  eventDate: String
+  eventType: EmploymentEventType
+  fromDepartment: String
+  fromLevel: String
+  fromPosition: String
+  internalNotes: String
+  lastWorkingDay: String
+  newSalaryGrade: String
+  newValue: JSON
+  notes: String
+  noticePeriodDays: Int
+  previousValue: JSON
+  salaryChangePercentage: Float
+  terminationReason: String
+  terminationType: TerminationType
+  toDepartment: String
+  toLevel: String
+  toPosition: String
+}
+
+input UpdateFileInput {
+  alt: String
+  description: String
+  folderId: ID
+  id: ID!
+  metadata: JSON
+  tags: [String!]
+  title: String
+  visibility: FileVisibility
+}
+
+input UpdateFolderInput {
+  color: String
+  description: String
+  icon: String
+  id: ID!
+  name: String
+  parentId: ID
+}
+
+input UpdateInput {
+  data: JSONObject!
+  include: JSONObject
+  model: String!
+  select: JSONObject
+  where: JSONObject!
+}
+
+input UpdateLessonInput {
+  content: String
+  description: String
+  duration: Int
+  id: ID!
+  order: Int
+  title: String
+  type: String
+}
+
+input UpdateManyInput {
+  data: JSONObject!
+  model: String!
+  where: JSONObject!
+}
+
+input UpdateMemberRoleInput {
+  role: String!
+  userId: ID!
+}
+
+input UpdateMenuInput {
+  badge: String
+  badgeColor: String
+  blogCategoryId: String
+  blogPostId: String
+  categoryId: String
+  cssClass: String
+  customData: JSON
+  description: String
+  externalUrl: String
+  icon: String
+  iconType: String
+  image: String
+  isActive: Boolean
+  isProtected: Boolean
+  isPublic: Boolean
+  isVisible: Boolean
+  linkType: String
+  metadata: JSON
+  order: Int
+  pageId: String
+  parentId: String
+  productId: String
+  queryConditions: JSON
+  requiredPermissions: [String!]
+  requiredRoles: [String!]
+  route: String
+  slug: String
+  target: String
+  title: String
+  type: String
+  url: String
+}
+
+input UpdateModuleInput {
+  description: String
+  id: ID!
+  order: Int
+  title: String
+}
+
+input UpdateOffboardingProcessInput {
+  accessRevocationList: JSON
+  approvalWorkflow: JSON
+  assetReturnChecklist: JSON
+  bonusAmount: Float
+  clearanceStatus: ClearanceStatus
+  clearanceSteps: JSON
+  completedAt: String
+  completedBy: String
+  deductions: JSON
+  effectiveDate: String
+  eligibleForRehire: Boolean
+  employeeComments: String
+  exitInterviewBy: String
+  exitInterviewDate: String
+  exitInterviewForm: JSON
+  exitInterviewNotes: String
+  exitInterviewScheduled: Boolean
+  exitReason: String
+  exitType: TerminationType
+  experienceCertificate: String
+  finalApprovedAt: String
+  finalApprovedBy: String
+  finalDocuments: [String!]
+  finalSalaryAmount: Float
+  hrNotes: String
+  knowledgeTransferPlan: JSON
+  lastWorkingDay: String
+  leavePayoutAmount: Float
+  managerComments: String
+  noticeGivenDate: String
+  noticePeriodDays: Int
+  noticeRequired: Boolean
+  paymentDate: String
+  paymentStatus: String
+  processOwner: String
+  referenceLetterProvided: Boolean
+  referenceLetterRequested: Boolean
+  rehireNotes: String
+  resignationLetter: String
+  status: OffboardingStatus
+  totalSettlement: Float
+  unusedLeaveDays: Int
+}
+
+input UpdateOnboardingChecklistInput {
+  actualCompletionDate: String
+  assignedTo: String
+  buddyId: String
+  checklistTemplate: String
+  completedTasks: Int
+  employeeFeedback: String
+  hrNotes: String
+  managerFeedback: String
+  progressPercentage: Float
+  startDate: String
+  status: OnboardingStatus
+  targetDate: String
+  tasks: JSON
+  totalTasks: Int
+}
+
+type UpdateOrderResponse {
+  errors: [String!]
+  message: String
+  order: OrderType
+  success: Boolean!
+}
+
+input UpdateOrderStatusInput {
+  internalNote: String
+  orderId: ID!
+  status: OrderStatus!
+}
+
+input UpdatePageBlockInput {
+  children: [UpdatePageBlockInput!]
+  config: JSONObject
+  content: JSONObject
+  depth: Int
+  id: ID
+  isVisible: Boolean
+  order: Int
+  parentId: String
+  style: JSONObject
+  type: BlockType
+}
+
+input UpdatePageInput {
+  blocks: [UpdatePageBlockInput!]
+  content: JSONObject
+  description: String
+  dynamicConfig: JSONObject
+  isDynamic: Boolean
+  isHomepage: Boolean
+  ogImage: String
+  seoDescription: String
+  seoKeywords: [String!]
+  seoTitle: String
+  slug: String
+  status: PageStatus
+  title: String
+}
+
+input UpdatePermissionInput {
+  category: String
+  conditions: JSON
+  description: String
+  displayName: String
+  isActive: Boolean
+  metadata: JSON
+  scope: String
+}
+
+input UpdatePostInput {
+  content: String
+  excerpt: String
+  featuredImage: String
+  slug: String
+  status: PostStatus
+  tags: [String!]
+  title: String
+}
+
+input UpdateProductInput {
+  attributes: JSON
+  barcode: String
+  categoryId: ID
+  costPrice: Float
+  description: String
+  dimensions: String
+  displayOrder: Int
+  id: ID!
+  imageUrl: String
+  isBestSeller: Boolean
+  isFeatured: Boolean
+  isNew: Boolean
+  isNewArrival: Boolean
+  isOnSale: Boolean
+  isOrganic: Boolean
+  manufacturer: String
+  maxStock: Int
+  metaDescription: String
+  metaKeywords: String
+  metaTitle: String
+  minStock: Int
+  name: String
+  origin: String
+  originalPrice: Float
+  price: Float
+  shortDesc: String
+  shortDescription: String
+  sku: String
+  slug: String
+  status: ProductStatus
+  stock: Int
+  thumbnail: String
+  unit: ProductUnit
+  weight: Float
+}
+
+input UpdateProductVariantInput {
+  attributes: JSON
+  barcode: String
+  id: ID!
+  isActive: Boolean
+  name: String
+  order: Int
+  price: Float
+  sku: String
+  stock: Int
+}
+
+type UpdateProductsResult {
+  message: String!
+  output: String
+  stats: UpdateProductsStats
+  success: Boolean!
+}
+
+type UpdateProductsStats {
+  created: Int!
+  errors: Int!
+  processed: Int!
+  skipped: Int!
+  totalDetails: Int!
+  updated: Int!
+}
+
+input UpdateProfileInput {
+  avatar: String
+  firstName: String
+  lastName: String
+  phone: String
+}
+
+input UpdateProjectInput {
+  avatar: String
+  description: String
+  isArchived: Boolean
+  name: String
+}
+
+input UpdateQuizInput {
+  description: String
+  passingScore: Int
+  timeLimit: Int
+  title: String
+}
+
+input UpdateReviewInput {
+  comment: String
+  rating: Int
+  reviewId: ID!
+}
+
+input UpdateRoleInput {
+  description: String
+  displayName: String
+  isActive: Boolean
+  metadata: JSON
+  parentId: String
+  priority: Int
+}
+
+input UpdateSourceDocumentCategoryInput {
+  color: String
+  description: String
+  icon: String
+  name: String
+  parentId: ID
+  slug: String
+}
+
+input UpdateSourceDocumentInput {
+  categoryId: ID
+  content: String
+  description: String
+  duration: Int
+  fileName: String
+  fileSize: Int
+  metadata: JSON
+  mimeType: String
+  status: SourceDocumentStatus
+  tags: [String!]
+  thumbnailUrl: String
+  title: String
+  type: SourceDocumentType
+  url: String
+}
+
+input UpdateSystemGuideInput {
+  content: String
+  description: String
+  icon: String
+  id: String!
+  isPublished: Boolean
+  order: Float
+  parentId: String
+  title: String
+  type: String
+}
+
+input UpdateSystemReleaseInput {
+  breakingChanges: [String!]
+  bugfixes: [String!]
+  deploymentDate: DateTime
+  deprecations: [String!]
+  description: String
+  features: [String!]
+  improvements: [String!]
+  keywords: [String!]
+  metaDescription: String
+  metaTitle: String
+  releaseDate: DateTime
+  releaseNotes: String
+  releaseType: ReleaseType
+  screenshotUrls: [String!]
+  slug: String
+  status: ReleaseStatus
+  summary: String
+  thumbnailUrl: String
+  title: String
+  upgradeGuide: String
+  version: String
+  versionNumber: String
+  videoUrl: String
+}
+
+input UpdateTaskInput {
+  category: TaskCategory
+  description: String
+  dueDate: String
+  id: String!
+  priority: TaskPriority
+  status: TaskStatus
+  title: String
+}
+
+input UpdateTechnicalSupportTicketInput {
+  assignedToId: String
+  category: SupportTicketCategory
+  description: String
+  priority: SupportTicketPriority
+  resolution: String
+  status: SupportTicketStatus
+  subject: String
+  tags: [String!]
+}
+
+input UpdateTemplatePublicityInput {
+  isPublic: Boolean!
+  templateId: String!
+}
+
+input UpdateUserInput {
+  avatar: String
+  email: String
+  firstName: String
+  lastName: String
+  username: String
+}
+
+input UpdateWebsiteSettingInput {
+  category: String
+  description: String
+  group: String
+  isActive: Boolean
+  isPublic: Boolean
+  label: String
+  options: JSON
+  order: Float
+  type: String
+  updatedBy: String
+  validation: JSON
+  value: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UploadTaskMediaInput {
+  caption: String
+  filename: String!
+  mimeType: String!
+  size: Float!
+  taskId: String!
+  type: String!
+  url: String!
+}
+
+input UpsertInput {
+  create: JSONObject!
+  include: JSONObject
+  model: String!
+  select: JSONObject
+  update: JSONObject!
+  where: JSONObject!
+}
+
+type User {
+  address: String
+  avatar: String
+  city: String
+  createdAt: DateTime!
+  district: String
+  email: String
+  failedLoginAttempts: Float!
+  firstName: String
+  id: ID!
+  isActive: Boolean!
+  isTwoFactorEnabled: Boolean!
+  isVerified: Boolean!
+  lastLoginAt: DateTime
+  lastName: String
+  lockedUntil: DateTime
+  permissions: [Permission!]
+  phone: String
+  role: String!
+  roleType: String
+  roles: [Role!]
+  updatedAt: DateTime!
+  username: String!
+  ward: String
+}
+
+type UserBasicType {
+  avatar: String
+  email: String!
+  firstName: String
+  id: ID!
+  isActive: Boolean!
+  lastName: String
+  username: String
+}
+
+type UserPermission {
+  assignedAt: DateTime!
+  assignedBy: String
+  conditions: JSON
+  createdAt: DateTime!
+  effect: String!
+  expiresAt: DateTime
+  id: ID!
+  metadata: JSON
+  permission: Permission!
+  permissionId: String!
+  reason: String
+  scope: String
+  updatedAt: DateTime!
+  userId: String!
+}
+
+type UserRoleAssignment {
+  assignedAt: DateTime!
+  assignedBy: String
+  conditions: JSON
+  createdAt: DateTime!
+  effect: String!
+  expiresAt: DateTime
+  id: ID!
+  metadata: JSON
+  role: Role!
+  roleId: String!
+  scope: String
+  updatedAt: DateTime!
+  userId: String!
+}
+
+type UserRoleAssignmentType {
+  assignedAt: DateTime!
+  assignedBy: String
+  effect: String!
+  expiresAt: DateTime
+  id: ID!
+  role: RoleType
+  roleId: ID!
+  user: UserBasicType
+  userId: ID!
+}
+
+type UserRolePermissionSummary {
+  directPermissions: [UserPermission!]!
+  effectivePermissions: [Permission!]!
+  roleAssignments: [UserRoleAssignment!]!
+  summary: UserSummary!
+  userId: String!
+}
+
+enum UserRoleType {
+  ADMIN
+  GUEST
+  USER
+}
+
+type UserSearchResult {
+  page: Float!
+  size: Float!
+  total: Float!
+  totalPages: Float!
+  users: [User!]!
+}
+
+type UserStats {
+  activeUsers: Float!
+  adminUsers: Float!
+  guestUsers: Float!
+  newUsersThisMonth: Float!
+  regularUsers: Float!
+  totalUsers: Float!
+  verifiedUsers: Float!
+}
+
+type UserSummary {
+  lastUpdated: DateTime!
+  totalDirectPermissions: Int!
+  totalEffectivePermissions: Int!
+  totalRoleAssignments: Int!
+}
+
+type ValidateCartResponse {
+  cart: CartType
+  errors: [String!]!
+  isValid: Boolean!
+  warnings: [String!]!
+}
+
+type VisibilityCount {
+  count: Int!
+  visibility: FileVisibility!
+}
+
+type WebsiteSetting {
+  category: String!
+  createdAt: DateTime!
+  createdBy: String
+  description: String
+  group: String
+  id: String!
+  isActive: Boolean!
+  isPublic: Boolean!
+  key: String!
+  label: String!
+  options: JSON
+  order: Float!
+  type: String!
+  updatedAt: DateTime!
+  updatedBy: String
+  validation: JSON
+  value: String
+}

@@ -1,0 +1,133 @@
+type WebsiteSetting {
+  id: ID!
+  key: String!
+  value: String
+  type: SettingType!
+  category: SettingCategory!
+  label: String!
+  description: String
+  group: String
+  order: Int!
+  isActive: Boolean!
+  isPublic: Boolean!
+  options: JSON
+  validation: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: String
+  updatedBy: String
+  creator: User
+  updater: User
+}
+
+enum SettingType {
+  TEXT
+  TEXTAREA
+  NUMBER
+  BOOLEAN
+  COLOR
+  IMAGE
+  URL
+  JSON
+  SELECT
+}
+
+enum SettingCategory {
+  GENERAL
+  HEADER
+  FOOTER
+  SEO
+  SOCIAL
+  CONTACT
+  APPEARANCE
+  ANALYTICS
+  PAYMENT
+  SHIPPING
+  SUPPORT_CHAT
+}
+
+input CreateWebsiteSettingInput {
+  key: String!
+  value: String
+  type: SettingType!
+  category: SettingCategory!
+  label: String!
+  description: String
+  group: String
+  order: Int
+  isActive: Boolean
+  isPublic: Boolean
+  options: JSON
+  validation: JSON
+}
+
+input UpdateWebsiteSettingInput {
+  value: String
+  type: SettingType
+  category: SettingCategory
+  label: String
+  description: String
+  group: String
+  order: Int
+  isActive: Boolean
+  isPublic: Boolean
+  options: JSON
+  validation: JSON
+}
+
+input UpdateSettingKeyValue {
+  key: String!
+  value: String!
+}
+
+type Query {
+  # Lấy tất cả settings (cần auth)
+  websiteSettings(
+    category: SettingCategory
+    group: String
+    isActive: Boolean
+    isPublic: Boolean
+  ): [WebsiteSetting!]!
+
+  # Lấy settings public (không cần auth)
+  publicWebsiteSettings(
+    category: SettingCategory
+    group: String
+  ): [WebsiteSetting!]!
+
+  # Lấy 1 setting theo key
+  websiteSetting(key: String!): WebsiteSetting
+
+  # Lấy settings theo category
+  websiteSettingsByCategory(category: SettingCategory!): [WebsiteSetting!]!
+
+  # Lấy header settings
+  headerSettings: [WebsiteSetting!]!
+
+  # Lấy footer settings
+  footerSettings: [WebsiteSetting!]!
+
+  # Lấy settings dạng key-value object
+  websiteSettingsMap(
+    category: SettingCategory
+    group: String
+    isPublic: Boolean
+  ): JSON!
+}
+
+type Mutation {
+  # Tạo setting mới
+  createWebsiteSetting(input: CreateWebsiteSettingInput!): WebsiteSetting!
+
+  # Update 1 setting
+  updateWebsiteSetting(key: String!, input: UpdateWebsiteSettingInput!): WebsiteSetting!
+
+  # Update nhiều settings
+  updateWebsiteSettings(settings: [UpdateSettingKeyValue!]!): [WebsiteSetting!]!
+
+  # Xóa setting
+  deleteWebsiteSetting(key: String!): WebsiteSetting!
+
+  # Bulk update từ JSON
+  bulkUpdateWebsiteSettings(data: String!): [WebsiteSetting!]!
+}

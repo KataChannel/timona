@@ -1,0 +1,1281 @@
+/**
+ * Dynamic Template Examples
+ * Demonstrates template creation with products, tasks, and custom data
+ */
+
+import { DynamicTemplate, TemplateVariable, TemplateDataSource, TemplateRegistry } from '@/lib/dynamicTemplateSystem';
+import { PageElement } from '@/types/template';
+
+// ============================================================================
+// Product Showcase Template
+// ============================================================================
+
+const PRODUCT_SHOWCASE_TEMPLATE: DynamicTemplate = {
+  id: 'product-showcase-1',
+  name: 'Sản phẩm nổi bật',
+  description: 'Template hiển thị danh sách sản phẩm nổi bật với giá và hình ảnh',
+  category: 'ecommerce',
+  thumbnail: '/templates/product-showcase.jpg',
+  author: 'KataTeam',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  tags: ['ecommerce', 'products', 'showcase'],
+  isDefault: false,
+  
+  // Template Variables
+  variables: [
+    {
+      id: 'title',
+      name: 'title',
+      label: 'Tiêu đề section',
+      type: 'text',
+      defaultValue: 'Sản phẩm nổi bật',
+      required: true,
+      description: 'Tiêu đề chính của section sản phẩm',
+    },
+    {
+      id: 'subtitle',
+      name: 'subtitle',
+      label: 'Mô tả phụ',
+      type: 'rich_text',
+      defaultValue: 'Khám phá những sản phẩm chất lượng cao được yêu thích nhất',
+      description: 'Mô tả ngắn về section sản phẩm',
+    },
+    {
+      id: 'backgroundColor',
+      name: 'backgroundColor',
+      label: 'Màu nền',
+      type: 'color',
+      defaultValue: '#ffffff',
+      description: 'Màu nền cho section',
+    },
+    {
+      id: 'productsPerRow',
+      name: 'productsPerRow',
+      label: 'Số sản phẩm mỗi hàng',
+      type: 'select',
+      defaultValue: '4',
+      validation: {
+        options: ['2', '3', '4', '6'],
+      },
+      description: 'Số lượng sản phẩm hiển thị trên mỗi hàng',
+    },
+    {
+      id: 'showPrice',
+      name: 'showPrice',
+      label: 'Hiển thị giá',
+      type: 'boolean',
+      defaultValue: true,
+      description: 'Có hiển thị giá sản phẩm không',
+    },
+    {
+      id: 'showDiscount',
+      name: 'showDiscount',
+      label: 'Hiển thị khuyến mãi',
+      type: 'boolean',
+      defaultValue: true,
+      description: 'Có hiển thị phần trăm giảm giá không',
+    },
+  ],
+
+  // Data Sources
+  dataSources: [
+    {
+      id: 'featuredProducts',
+      name: 'Sản phẩm nổi bật',
+      type: 'product',
+      query: 'getFeaturedProducts',
+      fields: ['id', 'name', 'description', 'price', 'originalPrice', 'discountPercentage', 'images', 'category', 'stock'],
+      filters: {
+        isFeatured: true,
+        isActive: true,
+        status: 'ACTIVE',
+      },
+      pagination: {
+        limit: 8,
+        offset: 0,
+      },
+    },
+  ],
+
+  // Template Structure
+  structure: [
+    {
+      id: 'product-showcase-container',
+      type: 'container',
+      props: {
+        tag: 'section',
+        className: 'product-showcase-section',
+      },
+      styles: {
+        layout: {
+          padding: { all: '60px 20px' },
+          backgroundColor: '{{backgroundColor}}',
+        },
+      },
+      children: [
+        // Header
+        {
+          id: 'showcase-header',
+          type: 'container',
+          content: {
+            tag: 'div',
+            className: 'showcase-header',
+          },
+          styles: {
+            layout: {
+              maxWidth: '1200px',
+              margin: { all: '0 auto 40px auto' },
+              textAlign: 'center',
+            },
+          },
+          children: [
+            {
+              id: 'showcase-title',
+              type: 'text',
+              content: {
+                tag: 'h2',
+                text: '{{title}}',
+                className: 'showcase-title',
+              },
+              styles: {
+                typography: {
+                  fontSize: '2.5rem',
+                  fontWeight: 'bold',
+                  color: '#1a1a1a',
+                  marginBottom: '16px',
+                },
+              },
+            },
+            {
+              id: 'showcase-subtitle',
+              type: 'text',
+              content: {
+                tag: 'p',
+                text: '{{subtitle}}',
+                className: 'showcase-subtitle',
+              },
+              styles: {
+                typography: {
+                  fontSize: '1.125rem',
+                  color: '#666666',
+                  lineHeight: '1.6',
+                },
+              },
+            },
+          ],
+        },
+        // Products Grid
+        {
+          id: 'products-grid',
+          type: 'container',
+          content: {
+            tag: 'div',
+            className: 'products-grid',
+          },
+          styles: {
+            layout: {
+              maxWidth: '1200px',
+              margin: { all: '0 auto' },
+              display: 'grid',
+              gridTemplateColumns: `repeat({{productsPerRow}}, 1fr)`,
+              gap: '24px',
+            },
+            responsive: {
+              mobile: {
+                gridTemplateColumns: 'repeat(1, 1fr)',
+                gap: '16px',
+              },
+              tablet: {
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '20px',
+              },
+            },
+          },
+          dataBinding: {
+            source: 'featuredProducts',
+            itemVariable: 'product',
+          },
+          children: [
+            {
+              id: 'product-card',
+              type: 'container',
+              content: {
+                tag: 'div',
+                className: 'product-card',
+              },
+              styles: {
+                layout: {
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  padding: { all: '20px' },
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                },
+                effects: {
+                  hover: {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                  },
+                },
+              },
+              children: [
+                // Product Image
+                {
+                  id: 'product-image',
+                  type: 'image',
+                  content: {
+                    src: '{{item.images.0.url}}',
+                    alt: '{{item.images.0.alt}}',
+                    className: 'product-image',
+                  },
+                  styles: {
+                    layout: {
+                      width: '100%',
+                      height: '200px',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                      marginBottom: '16px',
+                    },
+                  },
+                },
+                // Product Info
+                {
+                  id: 'product-info',
+                  type: 'container',
+                  content: {
+                    tag: 'div',
+                    className: 'product-info',
+                  },
+                  children: [
+                    // Category Badge
+                    {
+                      id: 'product-category',
+                      type: 'text',
+                      content: {
+                        tag: 'span',
+                        text: '{{item.category.name}}',
+                        className: 'product-category',
+                      },
+                      styles: {
+                        layout: {
+                          display: 'inline-block',
+                          backgroundColor: '#f0f9ff',
+                          color: '#0369a1',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          padding: { all: '4px 8px' },
+                          borderRadius: '4px',
+                          marginBottom: '8px',
+                        },
+                      },
+                    },
+                    // Product Name
+                    {
+                      id: 'product-name',
+                      type: 'text',
+                      content: {
+                        tag: 'h3',
+                        text: '{{item.name}}',
+                        className: 'product-name',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '1.125rem',
+                          fontWeight: '600',
+                          color: '#1a1a1a',
+                          marginBottom: '8px',
+                          lineHeight: '1.4',
+                        },
+                      },
+                    },
+                    // Product Description
+                    {
+                      id: 'product-description',
+                      type: 'text',
+                      content: {
+                        tag: 'p',
+                        text: '{{item.description}}',
+                        className: 'product-description',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '0.875rem',
+                          color: '#666666',
+                          lineHeight: '1.5',
+                          marginBottom: '16px',
+                        },
+                        layout: {
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          WebkitLineClamp: '2',
+                          WebkitBoxOrient: 'vertical',
+                        },
+                      },
+                    },
+                    // Price Section
+                    {
+                      id: 'product-price-section',
+                      type: 'container',
+                      content: {
+                        tag: 'div',
+                        className: 'product-price-section',
+                      },
+                      styles: {
+                        layout: {
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          marginBottom: '16px',
+                        },
+                      },
+                      children: [
+                        // Price Container
+                        {
+                          id: 'price-container',
+                          type: 'container',
+                          content: {
+                            tag: 'div',
+                            className: 'price-container',
+                          },
+                          styles: {
+                            layout: {
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                            },
+                          },
+                          children: [
+                            // Current Price
+                            {
+                              id: 'current-price',
+                              type: 'text',
+                              content: {
+                                tag: 'span',
+                                text: '{{item.price | currency}}',
+                                className: 'current-price',
+                              },
+                              styles: {
+                                typography: {
+                                  fontSize: '1.25rem',
+                                  fontWeight: 'bold',
+                                  color: '#059669',
+                                },
+                              },
+                              conditional: {
+                                show: '{{showPrice}}',
+                              },
+                            },
+                            // Original Price (if discounted)
+                            {
+                              id: 'original-price',
+                              type: 'text',
+                              content: {
+                                tag: 'span',
+                                text: '{{item.originalPrice | currency}}',
+                                className: 'original-price',
+                              },
+                              styles: {
+                                typography: {
+                                  fontSize: '0.875rem',
+                                  color: '#999999',
+                                  textDecoration: 'line-through',
+                                },
+                              },
+                              conditional: {
+                                show: '{{showPrice && item.originalPrice > item.price}}',
+                              },
+                            },
+                          ],
+                        },
+                        // Discount Badge
+                        {
+                          id: 'discount-badge',
+                          type: 'text',
+                          content: {
+                            tag: 'span',
+                            text: '-{{item.discountPercentage}}%',
+                            className: 'discount-badge',
+                          },
+                          styles: {
+                            layout: {
+                              backgroundColor: '#ef4444',
+                              color: '#ffffff',
+                              fontSize: '0.75rem',
+                              fontWeight: 'bold',
+                              padding: { all: '4px 8px' },
+                              borderRadius: '4px',
+                            },
+                          },
+                          conditional: {
+                            show: '{{showDiscount && item.discountPercentage > 0}}',
+                          },
+                        },
+                      ],
+                    },
+                    // Stock Status
+                    {
+                      id: 'stock-status',
+                      type: 'text',
+                      content: {
+                        tag: 'div',
+                        text: '{{item.stock > 0 ? `Còn ${item.stock} ${item.unit}` : "Hết hàng"}}',
+                        className: 'stock-status',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          color: '{{item.stock > 0 ? "#059669" : "#ef4444"}}',
+                        },
+                        layout: {
+                          marginBottom: '16px',
+                        },
+                      },
+                    },
+                    // Add to Cart Button
+                    {
+                      id: 'add-to-cart-btn',
+                      type: 'button',
+                      content: {
+                        text: 'Thêm vào giỏ',
+                        className: 'add-to-cart-btn',
+                        onClick: 'addToCart({{item.id}})',
+                      },
+                      styles: {
+                        layout: {
+                          width: '100%',
+                          backgroundColor: '#3b82f6',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '8px',
+                          padding: { all: '12px 24px' },
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          transition: 'background-color 0.2s ease',
+                        },
+                        effects: {
+                          hover: {
+                            backgroundColor: '#2563eb',
+                          },
+                          disabled: {
+                            backgroundColor: '#d1d5db',
+                            cursor: 'not-allowed',
+                          },
+                        },
+                      },
+                      conditional: {
+                        disabled: '{{item.stock === 0}}',
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+// ============================================================================
+// Task Dashboard Template
+// ============================================================================
+
+export const TASK_DASHBOARD_TEMPLATE: DynamicTemplate = {
+  id: 'task-dashboard-1',
+  name: 'Bảng điều khiển công việc',
+  description: 'Template hiển thị danh sách công việc với trạng thái và tiến độ',
+  category: 'productivity',
+  thumbnail: '/templates/task-dashboard.jpg',
+  author: 'KataTeam',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  tags: ['productivity', 'tasks', 'dashboard'],
+  isDefault: false,
+
+  // Template Variables
+  variables: [
+    {
+      id: 'title',
+      name: 'title',
+      label: 'Tiêu đề bảng điều khiển',
+      type: 'text',
+      defaultValue: 'Bảng điều khiển công việc',
+      required: true,
+    },
+    {
+      id: 'showProgress',
+      name: 'showProgress',
+      label: 'Hiển thị thanh tiến độ',
+      type: 'boolean',
+      defaultValue: true,
+    },
+    {
+      id: 'groupBy',
+      name: 'groupBy',
+      label: 'Nhóm theo',
+      type: 'select',
+      defaultValue: 'status',
+      validation: {
+        options: ['status', 'priority', 'category', 'assignee'],
+      },
+    },
+    {
+      id: 'cardStyle',
+      name: 'cardStyle',
+      label: 'Kiểu card',
+      type: 'select',
+      defaultValue: 'compact',
+      validation: {
+        options: ['compact', 'detailed', 'minimal'],
+      },
+    },
+  ],
+
+  // Data Sources
+  dataSources: [
+    {
+      id: 'activeTasks',
+      name: 'Công việc đang thực hiện',
+      type: 'task',
+      query: 'getActiveTasks',
+      fields: ['id', 'title', 'description', 'status', 'priority', 'category', 'dueDate', 'progress', 'assignee', 'tags'],
+      filters: {
+        status: ['TODO', 'IN_PROGRESS'],
+      },
+      pagination: {
+        limit: 20,
+        offset: 0,
+      },
+    },
+  ],
+
+  // Template Structure
+  structure: [
+    {
+      id: 'task-dashboard-container',
+      type: 'container',
+      content: {
+        tag: 'section',
+        className: 'task-dashboard-section',
+      },
+      styles: {
+        layout: {
+          padding: { all: '40px 20px' },
+          backgroundColor: '#f8fafc',
+          minHeight: '100vh',
+        },
+      },
+      children: [
+        // Dashboard Header
+        {
+          id: 'dashboard-header',
+          type: 'container',
+          content: {
+            tag: 'div',
+            className: 'dashboard-header',
+          },
+          styles: {
+            layout: {
+              maxWidth: '1200px',
+              margin: { all: '0 auto 32px auto' },
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            },
+          },
+          children: [
+            {
+              id: 'dashboard-title',
+              type: 'text',
+              content: {
+                tag: 'h1',
+                text: '{{title}}',
+                className: 'dashboard-title',
+              },
+              styles: {
+                typography: {
+                  fontSize: '2rem',
+                  fontWeight: 'bold',
+                  color: '#1e293b',
+                },
+              },
+            },
+            {
+              id: 'task-stats',
+              type: 'container',
+              content: {
+                tag: 'div',
+                className: 'task-stats',
+              },
+              styles: {
+                layout: {
+                  display: 'flex',
+                  gap: '16px',
+                },
+              },
+              children: [
+                {
+                  id: 'total-tasks',
+                  type: 'text',
+                  content: {
+                    tag: 'span',
+                    text: 'Tổng: {{data.activeTasks.length}} công việc',
+                    className: 'stat-badge',
+                  },
+                  styles: {
+                    layout: {
+                      backgroundColor: '#e2e8f0',
+                      color: '#475569',
+                      padding: { all: '8px 12px' },
+                      borderRadius: '6px',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        // Tasks Grid
+        {
+          id: 'tasks-grid',
+          type: 'container',
+          content: {
+            tag: 'div',
+            className: 'tasks-grid',
+          },
+          styles: {
+            layout: {
+              maxWidth: '1200px',
+              margin: { all: '0 auto' },
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+              gap: '20px',
+            },
+          },
+          dataBinding: {
+            source: 'activeTasks',
+            itemVariable: 'task',
+          },
+          children: [
+            {
+              id: 'task-card',
+              type: 'container',
+              content: {
+                tag: 'div',
+                className: 'task-card',
+              },
+              styles: {
+                layout: {
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  padding: { all: '20px' },
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  border: '1px solid #e2e8f0',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                },
+                effects: {
+                  hover: {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  },
+                },
+              },
+              children: [
+                // Task Header
+                {
+                  id: 'task-header',
+                  type: 'container',
+                  content: {
+                    tag: 'div',
+                    className: 'task-header',
+                  },
+                  styles: {
+                    layout: {
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      marginBottom: '12px',
+                    },
+                  },
+                  children: [
+                    {
+                      id: 'task-title',
+                      type: 'text',
+                      content: {
+                        tag: 'h3',
+                        text: '{{item.title}}',
+                        className: 'task-title',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '1.125rem',
+                          fontWeight: '600',
+                          color: '#1e293b',
+                          lineHeight: '1.4',
+                        },
+                        layout: {
+                          flex: '1',
+                          marginRight: '12px',
+                        },
+                      },
+                    },
+                    {
+                      id: 'task-priority',
+                      type: 'text',
+                      content: {
+                        tag: 'span',
+                        text: '{{item.priority}}',
+                        className: 'priority-badge priority-{{item.priority | lowercase}}',
+                      },
+                      styles: {
+                        layout: {
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          padding: { all: '4px 8px' },
+                          borderRadius: '4px',
+                          backgroundColor: '{{item.priority === "HIGH" ? "#fef2f2" : item.priority === "MEDIUM" ? "#fffbeb" : "#f0fdf4"}}',
+                          color: '{{item.priority === "HIGH" ? "#dc2626" : item.priority === "MEDIUM" ? "#d97706" : "#16a34a"}}',
+                        },
+                      },
+                    },
+                  ],
+                },
+                // Task Description
+                {
+                  id: 'task-description',
+                  type: 'text',
+                  content: {
+                    tag: 'p',
+                    text: '{{item.description}}',
+                    className: 'task-description',
+                  },
+                  styles: {
+                    typography: {
+                      fontSize: '0.875rem',
+                      color: '#64748b',
+                      lineHeight: '1.5',
+                    },
+                    layout: {
+                      marginBottom: '16px',
+                      overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitLineClamp: '3',
+                      WebkitBoxOrient: 'vertical',
+                    },
+                  },
+                },
+                // Progress Bar
+                {
+                  id: 'progress-container',
+                  type: 'container',
+                  content: {
+                    tag: 'div',
+                    className: 'progress-container',
+                  },
+                  styles: {
+                    layout: {
+                      marginBottom: '16px',
+                    },
+                  },
+                  conditional: {
+                    show: '{{showProgress}}',
+                  },
+                  children: [
+                    {
+                      id: 'progress-label',
+                      type: 'text',
+                      content: {
+                        tag: 'div',
+                        text: 'Tiến độ: {{item.progress}}%',
+                        className: 'progress-label',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '0.75rem',
+                          color: '#64748b',
+                          fontWeight: '500',
+                        },
+                        layout: {
+                          marginBottom: '4px',
+                        },
+                      },
+                    },
+                    {
+                      id: 'progress-bar',
+                      type: 'container',
+                      content: {
+                        tag: 'div',
+                        className: 'progress-bar',
+                      },
+                      styles: {
+                        layout: {
+                          width: '100%',
+                          height: '6px',
+                          backgroundColor: '#e2e8f0',
+                          borderRadius: '3px',
+                          overflow: 'hidden',
+                        },
+                      },
+                      children: [
+                        {
+                          id: 'progress-fill',
+                          type: 'container',
+                          content: {
+                            tag: 'div',
+                            className: 'progress-fill',
+                          },
+                          styles: {
+                            layout: {
+                              width: '{{item.progress}}%',
+                              height: '100%',
+                              backgroundColor: '#3b82f6',
+                              transition: 'width 0.3s ease',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+                // Task Meta
+                {
+                  id: 'task-meta',
+                  type: 'container',
+                  content: {
+                    tag: 'div',
+                    className: 'task-meta',
+                  },
+                  styles: {
+                    layout: {
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                    },
+                  },
+                  children: [
+                    {
+                      id: 'task-assignee',
+                      type: 'container',
+                      content: {
+                        tag: 'div',
+                        className: 'task-assignee',
+                      },
+                      styles: {
+                        layout: {
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                        },
+                      },
+                      children: [
+                        {
+                          id: 'assignee-avatar',
+                          type: 'image',
+                          content: {
+                            src: '{{item.assignee.avatar}}',
+                            alt: '{{item.assignee.name}}',
+                            className: 'assignee-avatar',
+                          },
+                          styles: {
+                            layout: {
+                              width: '24px',
+                              height: '24px',
+                              borderRadius: '50%',
+                              objectFit: 'cover',
+                            },
+                          },
+                        },
+                        {
+                          id: 'assignee-name',
+                          type: 'text',
+                          content: {
+                            tag: 'span',
+                            text: '{{item.assignee.name}}',
+                            className: 'assignee-name',
+                          },
+                          styles: {
+                            typography: {
+                              fontSize: '0.75rem',
+                              color: '#64748b',
+                              fontWeight: '500',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      id: 'task-due-date',
+                      type: 'text',
+                      content: {
+                        tag: 'span',
+                        text: '{{item.dueDate | formatDate}}',
+                        className: 'task-due-date',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '0.75rem',
+                          color: '{{new Date(item.dueDate) < new Date() ? "#dc2626" : "#64748b"}}',
+                          fontWeight: '500',
+                        },
+                      },
+                    },
+                  ],
+                },
+                // Task Tags
+                {
+                  id: 'task-tags',
+                  type: 'container',
+                  content: {
+                    tag: 'div',
+                    className: 'task-tags',
+                  },
+                  styles: {
+                    layout: {
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '6px',
+                      marginTop: '12px',
+                    },
+                  },
+                  dataBinding: {
+                    source: 'item.tags',
+                    itemVariable: 'tag',
+                  },
+                  children: [
+                    {
+                      id: 'task-tag',
+                      type: 'text',
+                      content: {
+                        tag: 'span',
+                        text: '{{tag}}',
+                        className: 'task-tag',
+                      },
+                      styles: {
+                        layout: {
+                          fontSize: '0.625rem',
+                          backgroundColor: '#f1f5f9',
+                          color: '#475569',
+                          padding: { all: '2px 6px' },
+                          borderRadius: '3px',
+                          fontWeight: '500',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+// ============================================================================
+// Category Grid Template
+// ============================================================================
+
+export const CATEGORY_GRID_TEMPLATE: DynamicTemplate = {
+  id: 'category-grid-1',
+  name: 'Lưới danh mục sản phẩm',
+  description: 'Template hiển thị danh mục sản phẩm dạng lưới với hình ảnh và số lượng',
+  category: 'ecommerce',
+  thumbnail: '/templates/category-grid.jpg',
+  author: 'KataTeam',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  tags: ['ecommerce', 'categories', 'grid'],
+  isDefault: false,
+
+  variables: [
+    {
+      id: 'title',
+      name: 'title',
+      label: 'Tiêu đề section',
+      type: 'text',
+      defaultValue: 'Danh mục sản phẩm',
+      required: true,
+    },
+    {
+      id: 'columnsDesktop',
+      name: 'columnsDesktop',
+      label: 'Số cột trên desktop',
+      type: 'select',
+      defaultValue: '4',
+      validation: {
+        options: ['2', '3', '4', '6'],
+      },
+    },
+    {
+      id: 'showProductCount',
+      name: 'showProductCount',
+      label: 'Hiển thị số lượng sản phẩm',
+      type: 'boolean',
+      defaultValue: true,
+    },
+  ],
+
+  dataSources: [
+    {
+      id: 'categories',
+      name: 'Danh mục sản phẩm',
+      type: 'category',
+      query: 'getCategories',
+      fields: ['id', 'name', 'slug', 'description', 'image', 'productCount', 'children'],
+      filters: {
+        isActive: true,
+      },
+      pagination: {
+        limit: 12,
+        offset: 0,
+      },
+    },
+  ],
+
+  structure: [
+    {
+      id: 'category-grid-container',
+      type: 'container',
+      content: {
+        tag: 'section',
+        className: 'category-grid-section',
+      },
+      styles: {
+        layout: {
+          padding: { all: '60px 20px' },
+          backgroundColor: '#ffffff',
+        },
+      },
+      children: [
+        {
+          id: 'section-header',
+          type: 'container',
+          content: {
+            tag: 'div',
+            className: 'section-header',
+          },
+          styles: {
+            layout: {
+              maxWidth: '1200px',
+              margin: { all: '0 auto 40px auto' },
+              textAlign: 'center',
+            },
+          },
+          children: [
+            {
+              id: 'section-title',
+              type: 'text',
+              content: {
+                tag: 'h2',
+                text: '{{title}}',
+                className: 'section-title',
+              },
+              styles: {
+                typography: {
+                  fontSize: '2.5rem',
+                  fontWeight: 'bold',
+                  color: '#1a1a1a',
+                  marginBottom: '16px',
+                },
+              },
+            },
+          ],
+        },
+        {
+          id: 'categories-grid',
+          type: 'container',
+          content: {
+            tag: 'div',
+            className: 'categories-grid',
+          },
+          styles: {
+            layout: {
+              maxWidth: '1200px',
+              margin: { all: '0 auto' },
+              display: 'grid',
+              gridTemplateColumns: `repeat({{columnsDesktop}}, 1fr)`,
+              gap: '24px',
+            },
+            responsive: {
+              mobile: {
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '16px',
+              },
+              tablet: {
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: '20px',
+              },
+            },
+          },
+          dataBinding: {
+            source: 'categories',
+            itemVariable: 'category',
+          },
+          children: [
+            {
+              id: 'category-card',
+              type: 'container',
+              content: {
+                tag: 'div',
+                className: 'category-card',
+              },
+              styles: {
+                layout: {
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  cursor: 'pointer',
+                },
+                effects: {
+                  hover: {
+                    transform: 'translateY(-8px)',
+                    boxShadow: '0 12px 30px rgba(0, 0, 0, 0.15)',
+                  },
+                },
+              },
+              children: [
+                {
+                  id: 'category-image',
+                  type: 'image',
+                  content: {
+                    src: '{{item.image}}',
+                    alt: '{{item.name}}',
+                    className: 'category-image',
+                  },
+                  styles: {
+                    layout: {
+                      width: '100%',
+                      height: '200px',
+                      objectFit: 'cover',
+                    },
+                  },
+                },
+                {
+                  id: 'category-info',
+                  type: 'container',
+                  content: {
+                    tag: 'div',
+                    className: 'category-info',
+                  },
+                  styles: {
+                    layout: {
+                      padding: { all: '20px' },
+                    },
+                  },
+                  children: [
+                    {
+                      id: 'category-name',
+                      type: 'text',
+                      content: {
+                        tag: 'h3',
+                        text: '{{item.name}}',
+                        className: 'category-name',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '1.25rem',
+                          fontWeight: '600',
+                          color: '#1a1a1a',
+                          marginBottom: '8px',
+                        },
+                      },
+                    },
+                    {
+                      id: 'category-product-count',
+                      type: 'text',
+                      content: {
+                        tag: 'p',
+                        text: '{{item.productCount}} sản phẩm',
+                        className: 'category-product-count',
+                      },
+                      styles: {
+                        typography: {
+                          fontSize: '0.875rem',
+                          color: '#666666',
+                        },
+                      },
+                      conditional: {
+                        show: '{{showProductCount}}',
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+// ============================================================================
+// Template Registry Setup
+// ============================================================================
+
+export function setupExampleTemplates(): TemplateRegistry {
+  const registry = new TemplateRegistry();
+
+  // Register example templates
+  registry.register({
+    id: PRODUCT_SHOWCASE_TEMPLATE.id,
+    template: PRODUCT_SHOWCASE_TEMPLATE,
+    metadata: {
+      name: PRODUCT_SHOWCASE_TEMPLATE.name,
+      description: PRODUCT_SHOWCASE_TEMPLATE.description,
+      author: PRODUCT_SHOWCASE_TEMPLATE.author || 'KataTeam',
+      version: '1.0.0',
+      tags: PRODUCT_SHOWCASE_TEMPLATE.tags || [],
+      previewImage: PRODUCT_SHOWCASE_TEMPLATE.thumbnail,
+      lastModified: PRODUCT_SHOWCASE_TEMPLATE.updatedAt,
+    },
+  });
+
+  registry.register({
+    id: TASK_DASHBOARD_TEMPLATE.id,
+    template: TASK_DASHBOARD_TEMPLATE,
+    metadata: {
+      name: TASK_DASHBOARD_TEMPLATE.name,
+      description: TASK_DASHBOARD_TEMPLATE.description,
+      author: TASK_DASHBOARD_TEMPLATE.author || 'KataTeam',
+      version: '1.0.0',
+      tags: TASK_DASHBOARD_TEMPLATE.tags || [],
+      previewImage: TASK_DASHBOARD_TEMPLATE.thumbnail,
+      lastModified: TASK_DASHBOARD_TEMPLATE.updatedAt,
+    },
+  });
+
+  registry.register({
+    id: CATEGORY_GRID_TEMPLATE.id,
+    template: CATEGORY_GRID_TEMPLATE,
+    metadata: {
+      name: CATEGORY_GRID_TEMPLATE.name,
+      description: CATEGORY_GRID_TEMPLATE.description,
+      author: CATEGORY_GRID_TEMPLATE.author || 'KataTeam',
+      version: '1.0.0',
+      tags: CATEGORY_GRID_TEMPLATE.tags || [],
+      previewImage: CATEGORY_GRID_TEMPLATE.thumbnail,
+      lastModified: CATEGORY_GRID_TEMPLATE.updatedAt,
+    },
+  });
+
+  return registry;
+}
+
+// Export example templates
+export {
+  PRODUCT_SHOWCASE_TEMPLATE,
+  TASK_DASHBOARD_TEMPLATE,
+  CATEGORY_GRID_TEMPLATE,
+};

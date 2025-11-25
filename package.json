@@ -1,0 +1,129 @@
+{
+  "name": "timona-starter",
+  "version": "1.0.0",
+  "description": "Modern Fullstack Starter Kit with Next.js + NestJS + GraphQL + Prisma + Redis + TailwindCSS v4 - Timona Domain",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "./vscode-menu.sh",
+    "dev:backend": "cd backend && bun run dev",
+    "dev:frontend": "cd frontend && bun run dev",
+    "dev:timona": "cp .env.timona backend/.env && cp .env.timona frontend/.env.local && concurrently \"bun run dev:timona:backend\" \"bun run dev:timona:frontend\"",
+    "dev:timona:backend": "cp .env.timona backend/.env && cd backend && PORT=15001 bun run dev",
+    "dev:timona:frontend": "cp .env.timona frontend/.env.local && cd frontend && bun run dev -- -p 15000",
+    "build": "bun run build:backend && bun run build:frontend",
+    "build:backend": "cd backend && bun run build",
+    "build:frontend": "cd frontend && bun run build",
+    "test": "bun run test:backend && bun run test:frontend",
+    "test:backend": "cd backend && bun test",
+    "test:frontend": "cd frontend && bun test",
+    "lint": "bun run lint:backend && bun run lint:frontend",
+    "lint:backend": "cd backend && bun run lint",
+    "lint:frontend": "cd frontend && bun run lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "docker:devfull": "docker compose -f docker-compose.hybrid.yml up -d",
+    "docker:dev": "docker compose -f docker-compose.hybrid.yml up -d --build",
+    "docker:prod": "docker compose -f docker-compose.hybrid.yml up -d --build",
+    "docker:prod:timona": "docker compose -f docker-compose.hybrid.yml up -d --build",
+    "docker:down": "docker compose -f docker-compose.hybrid.yml down",
+    "docker:down:timona": "docker compose -f docker-compose.hybrid.yml down",
+    "setup": "bun install && cd backend && bun install && cd ../frontend && bun install",
+    "clean": "rm -rf node_modules backend/node_modules frontend/node_modules bun.lockb backend/bun.lockb frontend/bun.lockb",
+    "db:migrate": "cd backend && npx prisma migrate dev",
+    "db:reset": "cd backend && npx prisma migrate reset",
+    "db:seed": "cd backend && npx prisma db seed",
+    "db:studio": "cd backend && npx prisma studio",
+    "db:pushforce": "cd backend && npx prisma db push --force-reset",
+    "db:push": "cd backend && npx prisma db push",
+    "db:restore": "cd backend && bun run prisma/restore.ts",
+    "db:backup": "cd backend && bun run prisma/backup.ts",
+    "db:migrate:timona": "cp .env.timona backend/.env && cd backend && npx prisma migrate dev",
+    "db:reset:timona": "cp .env.timona backend/.env && cd backend && npx prisma migrate reset",
+    "db:push:timona": "cp .env.timona backend/.env && cd backend && npx prisma db push",
+    "db:studio:timona": "cp .env.timona backend/.env && cd backend && npx prisma studio",
+    "db:seed:timona": "cp .env.timona backend/.env && cd backend && npx prisma db seed",
+    "db:backup:timona": "cp .env.timona backend/.env && cd backend && bun run prisma/backup.ts",
+    "db:restore:timona": "cp .env.timona backend/.env && cd backend && bun run prisma/restore.ts",
+    "kill:15000": "./scripts/kill-ports.sh 15000",
+    "kill:15001": "./scripts/kill-ports.sh 15001",
+    "kill:15002": "./scripts/kill-ports.sh 15002",
+    "kill:15003": "./scripts/kill-ports.sh 15003",
+    "kill:15004": "./scripts/kill-ports.sh 15004",
+    "kill:15007": "./scripts/kill-ports.sh 15007",
+    "kill:15008": "./scripts/kill-ports.sh 15008",
+    "kill:all": "./scripts/kill-ports.sh"
+  },
+  "devDependencies": {
+    "@types/validator": "^13.15.3",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "prisma": "^6.18.0"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "keywords": [
+    "bun",
+    "bunjs",
+    "fullstack",
+    "typescript",
+    "starter-kit",
+    "nextjs",
+    "nestjs",
+    "graphql",
+    "prisma",
+    "postgresql",
+    "redis",
+    "minio",
+    "docker",
+    "tailwindcss",
+    "apollo",
+    "enterprise",
+    "modern",
+    "fast"
+  ],
+  "author": "Timona Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KataChannel/timona.git"
+  },
+  "homepage": "https://github.com/KataChannel/katastarterkit#readme",
+  "bugs": {
+    "url": "https://github.com/KataChannel/katastarterkit/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@apollo/server": "^4.12.2",
+    "@heroicons/react": "^2.2.0",
+    "apollo-upload-client": "^19.0.0",
+    "cross-fetch": "^4.1.0",
+    "graphql-request": "^7.2.0",
+    "graphql-type-json": "^0.3.2",
+    "install": "^0.13.0",
+    "recharts": "^3.3.0",
+    "validator": "^13.15.20"
+  }
+}

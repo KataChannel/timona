@@ -1,0 +1,73 @@
+/**
+ * Test GraphQL Schema Inspector Queries
+ * Copy các query này vào GraphQL Playground để test
+ */
+
+// Query 1: Lấy tất cả models
+query GetAllModels {
+  getAllModels
+}
+
+// Query 2: Lấy schema của Product
+query GetProductSchema {
+  getModelSchema(modelName: "Product")
+}
+
+// Query 3: Lấy mappable fields của Product
+query GetProductMappableFields {
+  getMappableFields(modelName: "Product")
+}
+
+// Query 4: Lấy required fields của Product
+query GetProductRequiredFields {
+  getRequiredFields(modelName: "Product")
+}
+
+// Query 5: Auto-suggest mapping
+query SuggestProductMapping {
+  suggestMapping(
+    sourceFields: ["Tên SP", "Giá", "Mô tả", "Hình ảnh", "Danh mục"]
+    modelName: "Product"
+  )
+}
+
+// Query 6: Validate mapping
+query ValidateProductMapping {
+  validateMapping(
+    modelName: "Product"
+    mapping: {
+      "Tên SP": "name"
+      "Giá": "price"
+      "Mô tả": "description"
+      "Danh mục": "categoryId"
+    }
+  )
+}
+
+/**
+ * Expected Results:
+ * 
+ * Query 1: ["User", "Post", "Product", "Category", ...]
+ * 
+ * Query 2: {
+ *   name: "Product",
+ *   fields: [{name: "id", type: "text", isId: true, ...}, ...],
+ *   primaryKey: "id"
+ * }
+ * 
+ * Query 3: [{name: "name", type: "text", isRequired: true, ...}, ...]
+ * 
+ * Query 4: ["name", "slug", "price", "categoryId", ...]
+ * 
+ * Query 5: {
+ *   "Tên SP": "name",
+ *   "Giá": "price",
+ *   "Mô tả": "description",
+ *   ...
+ * }
+ * 
+ * Query 6: {
+ *   valid: false,
+ *   errors: ["Required field 'slug' is not mapped"]
+ * }
+ */
