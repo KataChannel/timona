@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "Modern Fullstack Starter Kit with Next.js + NestJS + GraphQL + Prisma + Redis + TailwindCSS v4 - Timona Domain",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ],
   "scripts": {
     "dev": "./vscode-menu.sh",
-    "dev:backend": "cd backend && bun run dev",
-    "dev:frontend": "cd frontend && bun run dev",
-    "dev:timona": "cp .env.timona backend/.env && cp .env.timona frontend/.env.local && concurrently \"bun run dev:timona:backend\" \"bun run dev:timona:frontend\"",
+    "dev:localhost": "cp .env.dev backend/.env && cp .env.dev frontend/.env.local && bunx concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
+    "dev:backend": "cp .env.dev backend/.env && cd backend && PORT=15001 bun run dev",
+    "dev:frontend": "cp .env.dev frontend/.env.local && cd frontend && bun run dev -- -p 15000",
+    "prod": "cp .env.production backend/.env && cp .env.production frontend/.env.local && bunx concurrently \"bun run prod:backend\" \"bun run prod:frontend\"",
+    "prod:backend": "cp .env.production backend/.env && cd backend && PORT=15001 bun run dev",
+    "prod:frontend": "cp .env.production frontend/.env.local && cd frontend && bun run dev -- -p 15000",
+    "dev:timona": "cp .env.timona backend/.env && cp .env.timona frontend/.env.local && bunx concurrently \"bun run dev:timona:backend\" \"bun run dev:timona:frontend\"",
     "dev:timona:backend": "cp .env.timona backend/.env && cd backend && PORT=15001 bun run dev",
     "dev:timona:frontend": "cp .env.timona frontend/.env.local && cd frontend && bun run dev -- -p 15000",
     "build": "bun run build:backend && bun run build:frontend",
@@ -30,8 +30,8 @@
     "docker:prod:timona": "docker compose -f docker-compose.hybrid.yml up -d --build",
     "docker:down": "docker compose -f docker-compose.hybrid.yml down",
     "docker:down:timona": "docker compose -f docker-compose.hybrid.yml down",
-    "setup": "bun install && cd backend && bun install && cd ../frontend && bun install",
-    "clean": "rm -rf node_modules backend/node_modules frontend/node_modules bun.lockb backend/bun.lockb frontend/bun.lockb",
+    "setup": "cd backend && bun install && cd ../frontend && bun install",
+    "clean": "rm -rf backend/node_modules frontend/node_modules backend/bun.lockb frontend/bun.lockb backend/.next frontend/.next",
     "db:migrate": "cd backend && npx prisma migrate dev",
     "db:reset": "cd backend && npx prisma migrate reset",
     "db:seed": "cd backend && npx prisma db seed",
@@ -57,16 +57,7 @@
     "kill:all": "./scripts/kill-ports.sh"
   },
   "devDependencies": {
-    "@types/validator": "^13.15.3",
-    "@typescript-eslint/eslint-plugin": "^8.40.0",
-    "@typescript-eslint/parser": "^8.40.0",
-    "concurrently": "^9.2.0",
-    "eslint": "^9.34.0",
-    "eslint-config-prettier": "^10.1.8",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.5",
-    "prettier": "^3.6.2",
-    "prisma": "^6.18.0"
+    "concurrently": "^9.2.0"
   },
   "engines": {
     "bun": ">=1.1.0"
@@ -114,16 +105,5 @@
     "*.{json,md}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@apollo/server": "^4.12.2",
-    "@heroicons/react": "^2.2.0",
-    "apollo-upload-client": "^19.0.0",
-    "cross-fetch": "^4.1.0",
-    "graphql-request": "^7.2.0",
-    "graphql-type-json": "^0.3.2",
-    "install": "^0.13.0",
-    "recharts": "^3.3.0",
-    "validator": "^13.15.20"
   }
 }

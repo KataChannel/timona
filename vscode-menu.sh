@@ -30,107 +30,113 @@ while true; do
     print_color $CYAN "╚════════════════════════════════════════════════════════════╝"
     echo ""
     
-    print_color $GREEN "📦 GENERAL DEVELOPMENT:"
-    echo "  1)  dev                    - Run both backend + frontend"
-    echo "  2)  dev:backend            - Run backend only"
-    echo "  3)  dev:frontend           - Run frontend only"
+    print_color $GREEN "📦 DEVELOPMENT (localhost):"
+    echo "  1)  dev:localhost          - Run both backend + frontend (localhost)"
+    echo "  2)  dev:backend            - Run backend only (localhost)"
+    echo "  3)  dev:frontend           - Run frontend only (localhost)"
     echo ""
     
-    print_color $BLUE "🌐 TIMONA DOMAIN (Port 15000/15001):"
-    echo "  4)  dev:timona             - Run Timona (backend + frontend)"
-    echo "  5)  dev:timona:backend     - Run Timona backend only"
-    echo "  6)  dev:timona:frontend    - Run Timona frontend only"
+    print_color $RED "🚀 PRODUCTION (116.118.49.243):"
+    echo "  4)  prod                   - Run both backend + frontend (server)"
+    echo "  5)  prod:backend           - Run backend only (server)"
+    echo "  6)  prod:frontend          - Run frontend only (server)"
     echo ""
     
     print_color $CYAN "🗄️  DATABASE OPERATIONS:"
-    echo "  7)  db:studio              - Open Prisma Studio"
-    echo "  8)  db:studio:timona       - Open Prisma Studio (Timona DB)"
-    echo "  9)  db:migrate:timona      - Run database migrations"
-    echo "  10) db:push:timona         - Push schema changes to DB"
+    echo "  7)  db:studio:dev          - Open Prisma Studio (localhost)"
+    echo "  8)  db:studio:prod         - Open Prisma Studio (server)"
+    echo "  9)  db:migrate             - Run database migrations"
+    echo "  10) db:push                - Push schema changes to DB"
     echo ""
     
     print_color $RED "🐳 DOCKER OPERATIONS:"
     echo "  11) docker:start           - Start: PgAdmin, PostgreSQL, Redis, MinIO"
-    echo "  12) docker:down            - Stop all Docker services"
-    echo "  13) docker:prune:builder   - Remove Docker build cache"
-    echo "  14) docker:prune:images    - Remove unused Docker images"
-    echo "  15) docker:logs            - View all container logs"
-    echo "  16) docker:ps              - Show running containers"
+    echo "  12) docker:down            - Stop Docker (docker-compose down)"
+    echo "  13) docker:rm:containers   - Remove Docker containers"
+    echo "  14) docker:rm:builder      - Remove Docker build cache"
+    echo "  15) docker:rm:images       - Remove Docker images"
+    echo "  16) docker:logs            - View all container logs"
+    echo "  17) docker:ps              - Show running containers"
     echo ""
     
     print_color $GREEN "🔧 UTILITIES:"
-    echo "  17) lint                   - Run linters"
-    echo "  18) format                 - Format code"
-    echo "  19) test                   - Run tests"
+    echo "  18) lint                   - Run linters"
+    echo "  19) format                 - Format code"
+    echo "  20) test                   - Run tests"
     echo ""
     
     print_color $RED "⚡ KILL PORTS:"
-    echo "  20) kill:15000             - Kill port 15000 (Frontend)"
-    echo "  21) kill:15001             - Kill port 15001 (Backend)"
-    echo "  22) kill:15003             - Kill port 15003 (PostgreSQL)"
-    echo "  23) kill:15004             - Kill port 15004 (Redis)"
-    echo "  24) kill:all               - Kill all dev ports"
+    echo "  21) kill:15000             - Kill port 15000 (Frontend)"
+    echo "  22) kill:15001             - Kill port 15001 (Backend)"
+    echo "  23) kill:15003             - Kill port 15003 (PostgreSQL)"
+    echo "  24) kill:15004             - Kill port 15004 (Redis)"
+    echo "  25) kill:all               - Kill all dev ports"
     echo ""
     
     print_color $YELLOW "  0)  Exit"
     echo ""
     print_color $CYAN "💡 Quick start: Option 11 to start core services"
-    print_color $CYAN "💡 Access URLs: http://116.118.49.243:150XX"
+    print_color $CYAN "💡 Dev (localhost): http://localhost:150XX"
+    print_color $CYAN "💡 Prod (server): http://116.118.49.243:150XX"
     echo ""
     
-    read -p "$(print_color $CYAN 'Select option (0-24): ')" choice
+    read -p "$(print_color $CYAN 'Select option (0-25): ')" choice
     
     case $choice in
         1)
-            print_color $GREEN "🚀 Starting development (backend + frontend)..."
+            print_color $GREEN "🚀 Starting development (localhost - backend + frontend)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run dev:timona
+            bun run dev:localhost
             ;;
         2)
-            print_color $GREEN "🚀 Starting backend..."
+            print_color $GREEN "🚀 Starting backend (localhost)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run dev:timona:backend
+            bun run dev:backend
             ;;
         3)
-            print_color $GREEN "🚀 Starting frontend..."
+            print_color $GREEN "🚀 Starting frontend (localhost)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run dev:timona:frontend
+            bun run dev:frontend
             ;;
         4)
-            print_color $BLUE "🌐 Starting Timona (backend + frontend)..."
+            print_color $RED "🚀 Starting production (server - backend + frontend)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run dev:timona
+            bun run prod
             ;;
         5)
-            print_color $BLUE "🌐 Starting Timona backend..."
+            print_color $RED "🚀 Starting backend (server)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run dev:timona:backend
+            bun run prod:backend
             ;;
         6)
-            print_color $BLUE "🌐 Starting Timona frontend..."
+            print_color $RED "🚀 Starting frontend (server)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run dev:timona:frontend
+            bun run prod:frontend
             ;;
         7)
-            print_color $CYAN "🗄️  Opening Prisma Studio..."
+            print_color $CYAN "🗄️  Opening Prisma Studio (localhost)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run db:studio
+            cp .env.dev backend/.env && cd backend && npx prisma studio
             ;;
         8)
-            print_color $CYAN "🗄️  Opening Prisma Studio (Timona)..."
+            print_color $CYAN "🗄️  Opening Prisma Studio (server)..."
             print_color $YELLOW "Press Ctrl+C to stop"
-            bun run db:studio:timona
+            cp .env.production backend/.env && cd backend && npx prisma studio
             ;;
         9)
             print_color $CYAN "🗄️  Running database migrations..."
-            bun run db:migrate:timona
+            cd backend && npx prisma migrate dev
             ;;
         10)
             print_color $CYAN "🗄️  Pushing schema to database..."
-            bun run db:push:timona
+            cd backend && npx prisma db push
             ;;
         11)
             print_color $RED "🐳 Starting Docker services (PgAdmin, PostgreSQL, Redis, MinIO)..."
+            print_color $YELLOW "⚠️  Cleaning up existing containers..."
+            docker rm -f timona-postgres timona-pgadmin timona-redis timona-minio 2>/dev/null || true
+            echo ""
+            print_color $CYAN "🚀 Starting services..."
             docker compose -f docker-compose.hybrid.yml up -d postgres pgadmin redis minio
             echo ""
             print_color $GREEN "✅ Services started successfully!"
@@ -149,69 +155,95 @@ while true; do
             sleep 3
             ;;
         12)
-            print_color $RED "🐳 Stopping all Docker services (docker-compose.hybrid.yml)..."
+            print_color $RED "🐳 Stopping Docker services (docker-compose down)..."
             docker compose -f docker-compose.hybrid.yml down
             print_color $GREEN "✅ All services stopped!"
             sleep 2
             ;;
         13)
+            print_color $RED "🗑️  Removing Docker containers..."
+            print_color $YELLOW "This will remove all Timona containers"
+            echo ""
+            print_color $CYAN "Current containers:"
+            docker ps -a | grep timona || echo "No Timona containers found"
+            echo ""
+            read -p "$(print_color $YELLOW 'Continue? (y/N): ')" confirm
+            if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+                docker rm -f $(docker ps -a | grep timona | awk '{print $1}') 2>/dev/null || print_color $YELLOW "No containers to remove"
+                print_color $GREEN "✅ Containers removed!"
+            else
+                print_color $YELLOW "Cancelled"
+            fi
+            sleep 2
+            ;;
+        14)
             print_color $RED "🧹 Removing Docker build cache..."
             print_color $YELLOW "This will free up disk space by removing build cache"
+            echo ""
             docker builder prune -af
             print_color $GREEN "✅ Build cache removed!"
             sleep 2
             ;;
-        14)
-            print_color $RED "🧹 Removing unused Docker images..."
-            print_color $YELLOW "This will remove dangling and unused images"
-            docker image prune -af
-            print_color $GREEN "✅ Unused images removed!"
+        15)
+            print_color $RED "🧹 Removing Docker images..."
+            print_color $YELLOW "This will remove unused and dangling images"
+            echo ""
+            print_color $CYAN "Current images:"
+            docker images | grep -E "timona|REPOSITORY" || echo "No Timona images found"
+            echo ""
+            read -p "$(print_color $YELLOW 'Continue? (y/N): ')" confirm
+            if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+                docker image prune -af
+                print_color $GREEN "✅ Images removed!"
+            else
+                print_color $YELLOW "Cancelled"
+            fi
             sleep 2
             ;;
-        15)
-            print_color $RED "� Viewing all container logs..."
+        16)
+            print_color $RED "📋 Viewing all container logs..."
             docker compose -f docker-compose.hybrid.yml logs -f
             ;;
-        16)
+        17)
             print_color $RED "📊 Showing running containers..."
             echo ""
             docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|timona"
             echo ""
             sleep 3
             ;;
-        17)
+        18)
             print_color $GREEN "🔧 Running linters..."
             bun run lint
             ;;
-        18)
+        19)
             print_color $GREEN "🔧 Formatting code..."
             bun run format
             ;;
-        19)
+        20)
             print_color $GREEN "🔧 Running tests..."
             bun run test
             ;;
-        20)
+        21)
             print_color $RED "⚡ Killing process on port 15000..."
             $(pwd)/scripts/kill-ports.sh 15000
             sleep 1
             ;;
-        21)
+        22)
             print_color $RED "⚡ Killing process on port 15001..."
             $(pwd)/scripts/kill-ports.sh 15001
             sleep 1
             ;;
-        22)
+        23)
             print_color $RED "⚡ Killing process on port 15003..."
             $(pwd)/scripts/kill-ports.sh 15003
             sleep 1
             ;;
-        23)
+        24)
             print_color $RED "⚡ Killing process on port 15004..."
             $(pwd)/scripts/kill-ports.sh 15004
             sleep 1
             ;;
-        24)
+        25)
             print_color $RED "⚡ Killing all dev ports and processes..."
             $(pwd)/scripts/kill-ports.sh
             sleep 1
